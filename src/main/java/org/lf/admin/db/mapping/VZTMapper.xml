@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.admin.db.dao.VZTMapper">
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VZT">
+    <result column="ztid" jdbcType="INTEGER" property="ztid" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="zcdm" jdbcType="VARCHAR" property="zcdm" />
+    <result column="jlsj" jdbcType="DATE" property="jlsj" />
+    <result column="jlr" jdbcType="VARCHAR" property="jlr" />
+    <result column="poi" jdbcType="VARCHAR" property="poi" />
+    <result column="old_zt" jdbcType="INTEGER" property="oldZt" />
+    <result column="new_zt" jdbcType="INTEGER" property="newZt" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="MEDIA_TYPE" jdbcType="VARCHAR" property="mediaType" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <association property="jlrmc" column="{userid=jlr,appid=app_id}" javaType="java.lang.String"
+         select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">
+    </association>
+<!--     <collection property="ztxzList" javaType="java.util.ArrayList" column="ztid"  ofType="org.lf.admin.db.pojo.LZTXZ" -->
+<!--          select="org.lf.admin.db.dao.LZTXZMapper.selectByZtid"/> -->
+  </resultMap>
+  <sql id="query_zt_where">
+  	<if test="ztid != null">
+        AND ztid = #{ztid,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        AND app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="zcdm != null">
+        AND zcdm = #{zcdm,jdbcType=VARCHAR}
+      </if>
+      <if test="jlsj != null">
+        AND jlsj = #{jlsj,jdbcType=DATE}
+      </if>
+      <if test="jlr != null">
+        AND jlr = #{jlr,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null">
+        AND poi = #{poi,jdbcType=VARCHAR}
+      </if>
+      <if test="oldZt != null">
+        AND old_zt = #{oldZt,jdbcType=INTEGER}
+      </if>
+      <if test="newZt != null">
+        AND new_zt = #{newZt,jdbcType=INTEGER}
+      </if>
+      <if test="remark != null">
+        AND remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="mediaType != null">
+        AND MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR}
+      </if>
+      <if test="imageUrl != null">
+        AND image_url = #{imageUrl,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="countVZTList" resultType="java.lang.Integer" parameterType="org.lf.admin.db.pojo.VZT">
+  	select count(*) from v_zt
+  	<where>
+  	    <include refid="query_zt_where"></include>
+  	</where>
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VZT">
+ 	  	select * from v_zt
+  	<where>
+  	  <include refid="query_zt_where"></include>
+  	</where>
+  	<if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},
+		#{offset,jdbcType=INTEGER}
+	</if>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VZT">
+ 	  	select * from v_zt
+  	<where>
+  	  <include refid="query_zt_where"></include>
+  	</where>
+  	<if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},
+		#{offset,jdbcType=INTEGER}
+	</if>
+  </select>
+  
+</mapper>

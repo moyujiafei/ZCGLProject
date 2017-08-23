@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuBackupMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuBackup" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="BFSJ" property="bfsj" jdbcType="TIMESTAMP" />
+    <result column="CZR" property="czr" jdbcType="VARCHAR" />
+    <result column="BACKUPSET" property="backupset" jdbcType="VARCHAR" />
+    <result column="BACKUPTYPE" property="backuptype" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <association property="czrmc" column="{userid=czr,appid=app_id}" javaType="java.lang.String"  select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, APP_ID, BFSJ, CZR, BACKUPSET, BACKUPTYPE,STATUS, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from chu_backup
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from chu_backup
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.ChuBackup" >
+    insert into chu_backup (ID, APP_ID, BFSJ, 
+      CZR, BACKUPSET, BACKUPTYPE, STATUS, 
+      REMARK)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{bfsj,jdbcType=TIMESTAMP}, 
+      #{czr,jdbcType=VARCHAR}, #{backupset,jdbcType=VARCHAR}, #{backuptype,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuBackup" >
+    insert into chu_backup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="bfsj != null" >
+        BFSJ,
+      </if>
+      <if test="czr != null" >
+        CZR,
+      </if>
+      <if test="backupset != null" >
+        BACKUPSET,
+      </if>
+       <if test="backuptype != null" >
+        BACKUPTYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="bfsj != null" >
+        #{bfsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="czr != null" >
+        #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="backupset != null" >
+        #{backupset,jdbcType=VARCHAR},
+      </if>
+       <if test="backuptype != null" >
+         #{backuptype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuBackup" >
+    update chu_backup
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="bfsj != null" >
+        BFSJ = #{bfsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="czr != null" >
+        CZR = #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="backupset != null" >
+        BACKUPSET = #{backupset,jdbcType=VARCHAR},
+      </if>
+      <if test="backuptype != null" >
+        BACKUPTYPE = #{backuptype,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuBackup" >
+    update chu_backup
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      BFSJ = #{bfsj,jdbcType=TIMESTAMP},
+      CZR = #{czr,jdbcType=VARCHAR},
+      BACKUPSET = #{backupset,jdbcType=VARCHAR},
+      BACKUPTYPE = #{backuptype,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectBackupList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuBackup">
+    select * from chu_backup
+    <where>
+        <if test="appId != null">
+			and APP_ID = #{appId,jdbcType=INTEGER}
+		</if>
+        <if test="bfsj != null">
+			and BFSJ = #{bfsj,jdbcType=TIMESTAMP}
+		</if>
+		<if test="czr != null">
+			and CZR = #{czr,jdbcType=VARCHAR}
+		</if>
+		<if test="backupset != null">
+			and BACKUPSET = #{backupset,jdbcType=VARCHAR}
+		</if>
+		<if test="backupset != null">
+			and BACKUPTYPE = #{backuptype,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+			and STATUS = #{status,jdbcType=INTEGER}
+		</if>
+		<if test="remark != null">
+			and REMARK = #{remark,jdbcType=VARCHAR}
+		</if>
+    </where>
+    <if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},
+			#{offset,jdbcType=INTEGER}
+	</if>
+  </select>
+  <select id="countBackupList" resultType="int">
+     select count(*) from chu_backup
+     <where>
+       STATUS=#{status,jdbcType=INTEGER}
+     </where>     
+  </select>
+</mapper>

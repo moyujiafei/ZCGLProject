@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuUserMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuUser" >
+    <id column="UID" property="uid" jdbcType="INTEGER" />
+    <result column="UPW" property="upw" jdbcType="VARCHAR" />
+    <result column="UNAME" property="uname" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+    <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="APP_ID" jdbcType="INTEGER" property="appId" />
+    <result column="WX_USERNAME" property="wxUsername" jdbcType="VARCHAR" />
+    <result column="CORP_NAME" property="corpName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UID, UPW, UNAME, NAME, SALT, ROLE_ID, APP_ID, WX_USERNAME
+  </sql>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuUser" >
+    select * from chu_user 
+    <where >
+      <if test="upw != null" >
+        and UPW = #{upw,jdbcType=VARCHAR}
+      </if>
+      <if test="uname != null" >
+        and UNAME = #{uname,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and NAME = #{name,jdbcType=VARCHAR}
+      </if> 
+      <if test="salt != null" >
+        and SALT = #{salt,jdbcType=VARCHAR}
+      </if>
+      <if test="roleId != null" >
+        and ROLE_ID = #{roleId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        and APP_ID = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="wxUsername != null" >
+        and WX_USERNAME = #{wxUsername,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuUser" >
+    select * from chu_user 
+    <where>
+      <if test="upw != null" >
+        and UPW = #{upw,jdbcType=VARCHAR}
+      </if>
+      <if test="uname != null" >
+        and UNAME = #{uname,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and NAME = #{name,jdbcType=VARCHAR}
+      </if> 
+      <if test="salt != null" >
+        and SALT = #{salt,jdbcType=VARCHAR}
+      </if>
+      <if test="roleId != null" >
+        and ROLE_ID = #{roleId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        and APP_ID = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="wxUsername != null" >
+        and WX_USERNAME = #{wxUsername,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="selectAllInfo" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuUser" >
+    select cu.*,cr.NAME ROLE_NAME from chu_user cu,chu_role cr
+    <where>
+        cu.ROLE_ID = cr.ID 
+      <if test="upw != null" >
+        and cu.UPW = #{upw,jdbcType=VARCHAR}
+      </if>
+      <if test="uname != null" >
+        and cu.UNAME = #{uname,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and cu.NAME = #{name,jdbcType=VARCHAR}
+      </if> 
+      <if test="salt != null" >
+        and cu.SALT = #{salt,jdbcType=VARCHAR}
+      </if>
+      <if test="roleId != null" >
+        and cu.ROLE_ID = #{roleId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        and cu.APP_ID = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="wxUsername != null" >
+        and cu.WX_USERNAME = #{wxUsername,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  <select id="countUserList" resultType="int" parameterType="org.lf.admin.db.pojo.ChuUser">
+      select count(*) from chu_user
+      <where>
+	      <if test="upw != null" >
+	        and UPW = #{upw,jdbcType=VARCHAR}
+	      </if>
+	      <if test="uname != null" >
+	        and UNAME = #{uname,jdbcType=VARCHAR}
+	      </if>
+	      <if test="name != null" >
+	        and NAME = #{name,jdbcType=VARCHAR}
+	      </if> 
+	      <if test="salt != null" >
+	        and SALT = #{salt,jdbcType=VARCHAR}
+	      </if>
+	      <if test="roleId != null" >
+	        and ROLE_ID = #{roleId,jdbcType=INTEGER}
+	      </if>
+	      <if test="appId != null">
+	        and APP_ID = #{appId,jdbcType=INTEGER}
+	      </if>
+	      <if test="wxUsername != null" >
+	        and WX_USERNAME = #{wxUsername,jdbcType=VARCHAR}
+	      </if>
+      </where>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chu_user
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from chu_user
+    where UID = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.ChuUser">
+    insert into chu_user (UID, UPW, UNAME, 
+      NAME, SALT, ROLE_ID, 
+      APP_ID, WX_USERNAME)
+    values (#{uid,jdbcType=INTEGER}, #{upw,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
+      #{appId,jdbcType=INTEGER}, #{wxUsername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuUser">
+    insert into chu_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        UID,
+      </if>
+      <if test="upw != null">
+        UPW,
+      </if>
+      <if test="uname != null">
+        UNAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="salt != null">
+        SALT,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="appId != null">
+        APP_ID,
+      </if>
+      <if test="wxUsername != null">
+        WX_USERNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="upw != null">
+        #{upw,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="wxUsername != null">
+        #{wxUsername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuUser">
+    update chu_user
+    <set>
+      <if test="upw != null">
+        UPW = #{upw,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        UNAME = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        SALT = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="wxUsername != null">
+        WX_USERNAME = #{wxUsername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuUser">
+    update chu_user
+    set UPW = #{upw,jdbcType=VARCHAR},
+      UNAME = #{uname,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
+      ROLE_ID = #{roleId,jdbcType=INTEGER},
+      APP_ID = #{appId,jdbcType=INTEGER},
+      WX_USERNAME = #{wxUsername,jdbcType=VARCHAR}
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

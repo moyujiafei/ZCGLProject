@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.admin.db.dao.CFJMapper">
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CFJ">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="APP_ID" jdbcType="INTEGER" property="appId" />
+    <result column="JZW_ID" jdbcType="INTEGER" property="jzwId" />
+    <result column="FLOOR" jdbcType="VARCHAR" property="floor" />
+    <result column="ROOM" jdbcType="VARCHAR" property="room" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="GLR" jdbcType="VARCHAR" property="glr" />
+    <result column="TYBZ" jdbcType="INTEGER" property="tybz" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, APP_ID, JZW_ID, FLOOR, ROOM, DEPT_NAME, GLR, TYBZ
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_fj
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_fj
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.CFJ" useGeneratedKeys="true" keyProperty="id">
+    insert into c_fj (ID, APP_ID, JZW_ID, 
+      FLOOR, ROOM, DEPT_NAME, 
+      GLR, TYBZ)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{jzwId,jdbcType=INTEGER}, 
+      #{floor,jdbcType=VARCHAR}, #{room,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+      #{glr,jdbcType=VARCHAR}, #{tybz,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CFJ" useGeneratedKeys="true" keyProperty="id">
+    insert into c_fj
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="appId != null">
+        APP_ID,
+      </if>
+      <if test="jzwId != null">
+        JZW_ID,
+      </if>
+      <if test="floor != null">
+        FLOOR,
+      </if>
+      <if test="room != null">
+        ROOM,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="glr != null">
+        GLR,
+      </if>
+      <if test="tybz != null">
+        TYBZ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="jzwId != null">
+        #{jzwId,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="glr != null">
+        #{glr,jdbcType=VARCHAR},
+      </if>
+      <if test="tybz != null">
+        #{tybz,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CFJ">
+    update c_fj
+    <set>
+      <if test="appId != null">
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="jzwId != null">
+        JZW_ID = #{jzwId,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null">
+        FLOOR = #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null">
+        ROOM = #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="glr != null">
+        GLR = #{glr,jdbcType=VARCHAR},
+      </if>
+      <if test="tybz != null">
+        TYBZ = #{tybz,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CFJ">
+    update c_fj
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      JZW_ID = #{jzwId,jdbcType=INTEGER},
+      FLOOR = #{floor,jdbcType=VARCHAR},
+      ROOM = #{room,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      GLR = #{glr,jdbcType=VARCHAR},
+      TYBZ = #{tybz,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+   <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CFJ">
+		select * from c_fj
+	<where>
+	  <if test="id != null" >
+       and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="jzwId != null" >
+       and jzw_Id = #{jzwId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if>           
+     </where>
+	</select>
+	
+	<select id="countFJList" resultType="int" parameterType="org.lf.admin.db.pojo.CFJ">
+		select count(*) from c_fj
+		<where>
+	  <if test="id != null" >
+       and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="jzwId != null" >
+       and jzw_Id = #{jzwId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if>           
+     </where>
+	</select>
+   <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CFJ">
+		select * from c_fj
+	<where>
+	  <if test="id != null" >
+       and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="jzwId != null" >
+       and jzw_Id = #{jzwId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if>           
+     </where>
+     <if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},
+		#{offset,jdbcType=INTEGER}
+	</if>
+	</select>
+	<select id="selectFloorList" resultType="String" parameterType="org.lf.admin.db.pojo.CFJ">
+		select distinct floor from c_fj
+		<where>
+		  <if test="id != null" >
+	       and id = #{id,jdbcType=INTEGER}
+	      </if>
+	      <if test="appId != null" >
+	       and app_id = #{appId,jdbcType=INTEGER}
+	      </if>
+	      <if test="jzwId != null" >
+	       and jzw_Id = #{jzwId,jdbcType=INTEGER}
+	      </if>
+	      <if test="floor != null" >
+	       and floor = #{floor,jdbcType=VARCHAR}
+	      </if>
+	      <if test="room != null" >
+	       and room = #{room,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptName != null" >
+	       and dept_name = #{deptName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="glr != null" >
+	       and glr = #{glr,jdbcType=VARCHAR}
+	      </if>
+	      <if test="tybz != null" >
+	       and tybz = #{tybz,jdbcType=INTEGER}
+	      </if>           
+	     </where>
+	</select>
+</mapper>

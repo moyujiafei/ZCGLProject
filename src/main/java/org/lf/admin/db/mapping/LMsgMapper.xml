@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.LMsgMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.LMsg" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="FSSJ" property="fssj" jdbcType="TIMESTAMP" />
+    <result column="JSR" property="jsr" jdbcType="VARCHAR" />
+    <result column="LX" property="lx" jdbcType="INTEGER" />
+    <result column="NR" property="nr" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, APP_ID, FSSJ, JSR, LX, NR
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_msg
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_msg
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.LMsg" useGeneratedKeys="true" keyProperty="id">
+    insert into l_msg (ID, APP_ID, FSSJ, 
+      JSR, LX, NR)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{fssj,jdbcType=TIMESTAMP}, 
+      #{jsr,jdbcType=VARCHAR}, #{lx,jdbcType=INTEGER}, #{nr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.LMsg" useGeneratedKeys="true" keyProperty="id">
+    insert into l_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="fssj != null" >
+        FSSJ,
+      </if>
+      <if test="jsr != null" >
+        JSR,
+      </if>
+      <if test="lx != null" >
+        LX,
+      </if>
+      <if test="nr != null" >
+        NR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fssj != null" >
+        #{fssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jsr != null" >
+        #{jsr,jdbcType=VARCHAR},
+      </if>
+      <if test="lx != null" >
+        #{lx,jdbcType=INTEGER},
+      </if>
+      <if test="nr != null" >
+        #{nr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.LMsg" >
+    update l_msg
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="fssj != null" >
+        FSSJ = #{fssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jsr != null" >
+        JSR = #{jsr,jdbcType=VARCHAR},
+      </if>
+      <if test="lx != null" >
+        LX = #{lx,jdbcType=INTEGER},
+      </if>
+      <if test="nr != null" >
+        NR = #{nr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.LMsg" >
+    update l_msg
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      FSSJ = #{fssj,jdbcType=TIMESTAMP},
+      JSR = #{jsr,jdbcType=VARCHAR},
+      LX = #{lx,jdbcType=INTEGER},
+      NR = #{nr,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="countMsgList" parameterType="org.lf.admin.db.pojo.LMsg" resultType="java.lang.Integer">
+  	select count(*) from l_msg
+  	<where>
+  		<if test="id != null">
+  			and ID=#{id,jdbcType=INTEGER}
+  		</if>
+  		<if test="appId != null">
+  			and APP_ID=#{appId,jdbcType=INTEGER}
+  		</if>
+  		<if test="fssj != null">
+  			and FSSJ=#{fssj,jdbcType=INTEGER}
+  		</if>
+  		<if test="jsr != null">
+  			and JSR=#{jsr,jdbcType=VARCHAR}
+  		</if>
+  		<if test="lx != null">
+  			and LX=#{lx,jdbcType=INTEGER}
+  		</if>
+  		<if test="nr != null">
+  			and NR=#{nr,jdbcType=VARCHAR}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="getMsgList" parameterType="org.lf.admin.db.pojo.LMsg" resultType="org.lf.admin.db.pojo.LMsg">
+ 	 select * from l_msg
+	  	<where>
+	  		<if test="id != null">
+	  			and ID=#{id,jdbcType=INTEGER}
+	  		</if>
+	  		<if test="appId != null">
+	  			and APP_ID=#{appId,jdbcType=INTEGER}
+	  		</if>
+	  		<if test="fssj != null">
+	  			and FSSJ=#{fssj,jdbcType=INTEGER}
+	  		</if>
+	  		<if test="jsr != null">
+	  			and JSR=#{jsr,jdbcType=VARCHAR}
+	  		</if>
+	  		<if test="lx != null">
+	  			and LX=#{lx,jdbcType=INTEGER}
+	  		</if>
+	  		<if test="nr != null">
+	  			and NR=#{nr,jdbcType=VARCHAR}
+	  		</if>
+	  		<if test="appId != null">
+	  			and app_id=#{appId,jdbcType=INTEGER}
+	  		</if>
+	  	</where>
+	  <if test="start != null and offset != null ">
+	 	limit #{start,jdbcType=INTEGER} , #{offset,jdbcType=INTEGER}
+	  </if>
+  </select>
+  
+  <select id="getMsgListByJsr" parameterType="org.lf.admin.db.pojo.LMsg" resultType="org.lf.admin.db.pojo.LMsg">
+  	select * from l_msg where jsr REGEXP #{jsr,jdbcType=VARCHAR} and APP_ID=#{appId,jdbcType=INTEGER}
+  	<if test="lx != null">
+	  	and LX=#{lx,jdbcType=INTEGER}
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.JRWMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.JRW" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="LX" property="lx" jdbcType="INTEGER" />
+    <result column="KSSJ" property="kssj" jdbcType="TIMESTAMP" />
+    <result column="JSSJ" property="jssj" jdbcType="TIMESTAMP" />
+    <result column="CZR" property="czr" jdbcType="VARCHAR" />
+    <result column="CZ_REMARK" property="czRemark" jdbcType="VARCHAR" />
+    <result column="YSR" property="ysr" jdbcType="VARCHAR" />
+    <result column="YS_REMARK" property="ysRemark" jdbcType="VARCHAR" />
+    <result column="YSSJ" property="yssj" jdbcType="TIMESTAMP" />
+    <result column="TOTAL" property="total" jdbcType="INTEGER" />
+    <result column="FINISH_COUNT" property="finishCount" jdbcType="INTEGER" />
+    <result column="FINISH" property="finish" jdbcType="INTEGER" />
+    <association property="czrmc" column="{userid=CZR,appid=APP_ID}"  
+		javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+	</association>
+	<association property="ysrmc" column="{userid=YSR,appid=APP_ID}"  
+		javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, APP_ID, LX, KSSJ, JSSJ, CZR, CZ_REMARK, YSR, YS_REMARK, YSSJ, TOTAL, FINISH_COUNT, 
+    FINISH
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from j_rw
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.JRW">
+  	select 
+    <include refid="Base_Column_List" />
+    from j_rw
+    <where>
+    	<if test="id != null" >
+        and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+        and app_id=#{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null" >
+        and lx=#{lx,jdbcType=INTEGER}
+      </if>
+      <if test="kssj != null" >
+        and kssj=#{kssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jssj != null" >
+       and jssj=#{jssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="czr != null" >
+       and czr=#{czr,jdbcType=VARCHAR}
+      </if>
+      <if test="czRemark != null" >
+       and cz_remark=#{czRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="ysr != null" >
+       and ysr=#{ysr,jdbcType=VARCHAR}
+      </if>
+      <if test="ysRemark != null" >
+       and  ys_remark=#{ysRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="yssj != null" >
+       and yssj=#{yssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="total != null" >
+       and total=#{total,jdbcType=INTEGER}
+      </if>
+      <if test="finishCount != null" >
+        and finish_count=#{finishCount,jdbcType=INTEGER}
+      </if>
+      <if test="finish != null" >
+       and finish=#{finish,jdbcType=INTEGER}
+      </if>
+    </where>
+    <if test="start != null and offset != null">
+  	limit	#{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+  	</if>
+  </select>
+   <select id="selectCurRWList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.JRW">
+  	select 
+    <include refid="Base_Column_List" />
+    from j_rw
+    <where>
+    	<if test="id != null" >
+        and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+        and app_id=#{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null" >
+        and lx=#{lx,jdbcType=INTEGER}
+      </if>
+      <if test="kssj != null" >
+        and kssj=#{kssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jssj != null" >
+       and jssj=#{jssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="czr != null" >
+       and czr=#{czr,jdbcType=VARCHAR}
+      </if>
+      <if test="czRemark != null" >
+       and cz_remark=#{czRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="ysr != null" >
+       and ysr=#{ysr,jdbcType=VARCHAR}
+      </if>
+      <if test="ysRemark != null" >
+       and  ys_remark=#{ysRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="yssj != null" >
+       and yssj=#{yssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="total != null" >
+       and total=#{total,jdbcType=INTEGER}
+      </if>
+      <if test="finishCount != null" >
+        and finish_count=#{finishCount,jdbcType=INTEGER}
+      </if>
+      <if test="finish != null" >
+       and finish=#{finish,jdbcType=INTEGER}
+      </if>
+      <!--不解析以下被<![CDATA[]]>括起的语句 -->
+      <![CDATA[ and CURDATE() <= jssj ]]>
+    </where>
+    <if test="start != null and offset != null">
+  	limit	#{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+  	</if>
+  </select>
+  <select id="countCurRWList" resultType="int" parameterType="org.lf.admin.db.pojo.JRW">
+  	select count(*) from j_rw
+    <where>
+    	<if test="id != null" >
+        and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+        and app_id=#{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null" >
+        and lx=#{lx,jdbcType=INTEGER}
+      </if>
+      <if test="kssj != null" >
+        and kssj=#{kssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jssj != null" >
+       and jssj=#{jssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="czr != null" >
+       and czr=#{czr,jdbcType=VARCHAR}
+      </if>
+      <if test="czRemark != null" >
+       and cz_remark=#{czRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="ysr != null" >
+       and ysr=#{ysr,jdbcType=VARCHAR}
+      </if>
+      <if test="ysRemark != null" >
+       and  ys_remark=#{ysRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="yssj != null" >
+       and yssj=#{yssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="total != null" >
+       and total=#{total,jdbcType=INTEGER}
+      </if>
+      <if test="finishCount != null" >
+        and finish_count=#{finishCount,jdbcType=INTEGER}
+      </if>
+      <if test="finish != null" >
+       and finish=#{finish,jdbcType=INTEGER}
+      </if>
+      <!--不解析以下被<![CDATA[]]>括起的语句 -->
+      <![CDATA[ and CURDATE() <= jssj ]]>
+    </where>
+    <if test="start != null and offset != null">
+  	limit	#{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+  	</if>
+  </select>
+  <select id="countRWList" parameterType="org.lf.admin.db.pojo.JRW" resultType="int">
+  	select count(*) from j_rw
+  	<where>
+    	<if test="id != null" >
+        and id=#{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+        and app_id=#{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null" >
+        and lx=#{lx,jdbcType=INTEGER}
+      </if>
+      <if test="kssj != null" >
+        and kssj=#{kssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jssj != null" >
+       and jssj=#{jssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="czr != null" >
+       and czr=#{czr,jdbcType=VARCHAR}
+      </if>
+      <if test="czRemark != null" >
+       and cz_remark=#{czRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="ysr != null" >
+       and ysr=#{ysr,jdbcType=VARCHAR}
+      </if>
+      <if test="ysRemark != null" >
+       and  ys_remark=#{ysRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="yssj != null" >
+       and yssj=#{yssj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="total != null" >
+       and total=#{total,jdbcType=INTEGER}
+      </if>
+      <if test="finishCount != null" >
+        and finish_count=#{finishCount,jdbcType=INTEGER}
+      </if>
+      <if test="finish != null" >
+       and finish=#{finish,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from j_rw
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.JRW" useGeneratedKeys="true" keyProperty="id">
+    insert into j_rw (ID, APP_ID, LX, 
+      KSSJ, JSSJ, CZR, CZ_REMARK, 
+      YSR, YS_REMARK, YSSJ, TOTAL, 
+      FINISH_COUNT, FINISH)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{lx,jdbcType=INTEGER}, 
+      #{kssj,jdbcType=TIMESTAMP}, #{jssj,jdbcType=TIMESTAMP}, #{czr,jdbcType=VARCHAR}, #{czRemark,jdbcType=VARCHAR}, 
+      #{ysr,jdbcType=VARCHAR}, #{ysRemark,jdbcType=VARCHAR}, #{yssj,jdbcType=TIMESTAMP}, #{total,jdbcType=INTEGER}, 
+      #{finishCount,jdbcType=INTEGER}, #{finish,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.JRW" useGeneratedKeys="true" keyProperty="id">
+    insert into j_rw
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="lx != null" >
+        LX,
+      </if>
+      <if test="kssj != null" >
+        KSSJ,
+      </if>
+      <if test="jssj != null" >
+        JSSJ,
+      </if>
+      <if test="czr != null" >
+        CZR,
+      </if>
+      <if test="czRemark != null" >
+        CZ_REMARK,
+      </if>
+      <if test="ysr != null" >
+        YSR,
+      </if>
+      <if test="ysRemark != null" >
+        YS_REMARK,
+      </if>
+      <if test="yssj != null" >
+        YSSJ,
+      </if>
+      <if test="total != null" >
+        TOTAL,
+      </if>
+      <if test="finishCount != null" >
+        FINISH_COUNT,
+      </if>
+      <if test="finish != null" >
+        FINISH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lx != null" >
+        #{lx,jdbcType=INTEGER},
+      </if>
+      <if test="kssj != null" >
+        #{kssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jssj != null" >
+        #{jssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="czr != null" >
+        #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="czRemark != null" >
+        #{czRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="ysr != null" >
+        #{ysr,jdbcType=VARCHAR},
+      </if>
+      <if test="ysRemark != null" >
+        #{ysRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="yssj != null" >
+        #{yssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="finishCount != null" >
+        #{finishCount,jdbcType=INTEGER},
+      </if>
+      <if test="finish != null" >
+        #{finish,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.JRW" >
+    update j_rw
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lx != null" >
+        LX = #{lx,jdbcType=INTEGER},
+      </if>
+      <if test="kssj != null" >
+        KSSJ = #{kssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jssj != null" >
+        JSSJ = #{jssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="czr != null" >
+        CZR = #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="czRemark != null" >
+        CZ_REMARK = #{czRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="ysr != null" >
+        YSR = #{ysr,jdbcType=VARCHAR},
+      </if>
+      <if test="ysRemark != null" >
+        YS_REMARK = #{ysRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="yssj != null" >
+        YSSJ = #{yssj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        TOTAL = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="finishCount != null" >
+        FINISH_COUNT = #{finishCount,jdbcType=INTEGER},
+      </if>
+      <if test="finish != null" >
+        FINISH = #{finish,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.JRW" >
+    update j_rw
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      LX = #{lx,jdbcType=INTEGER},
+      KSSJ = #{kssj,jdbcType=TIMESTAMP},
+      JSSJ = #{jssj,jdbcType=TIMESTAMP},
+      CZR = #{czr,jdbcType=VARCHAR},
+      CZ_REMARK = #{czRemark,jdbcType=VARCHAR},
+      YSR = #{ysr,jdbcType=VARCHAR},
+      YS_REMARK = #{ysRemark,jdbcType=VARCHAR},
+      YSSJ = #{yssj,jdbcType=TIMESTAMP},
+      TOTAL = #{total,jdbcType=INTEGER},
+      FINISH_COUNT = #{finishCount,jdbcType=INTEGER},
+      FINISH = #{finish,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

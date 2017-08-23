@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.admin.db.dao.CJZLXMapper">
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CJZLX">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="MC" jdbcType="VARCHAR" property="mc" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, MC, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from c_jzlx
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from c_jzlx
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.CJZLX" useGeneratedKeys="true" keyProperty="id">
+    insert into c_jzlx (ID, MC, REMARK
+      )
+    values (#{id,jdbcType=INTEGER}, #{mc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CJZLX" useGeneratedKeys="true" keyProperty="id">
+    insert into c_jzlx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="mc != null">
+        MC,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mc != null">
+        #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CJZLX">
+    update c_jzlx
+    <set>
+      <if test="mc != null">
+        MC = #{mc,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CJZLX">
+    update c_jzlx
+    set MC = #{mc,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countJZLXList" resultType="int" parameterType="org.lf.admin.db.pojo.CJZLX">
+		select count(*) from c_jzlx
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mc!= null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR}
+			</if>
+			
+		</where>
+	</select>
+	
+	 <select id="getJZLXList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CJZLX">
+		select * from c_jzlx
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mc!= null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR}
+			</if>
+		</where>
+		<if test="start != null and offset != null">
+				limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>	
+	</select>
+	 <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CJZLX">
+		select * from c_jzlx
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mc!= null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CJZLX">
+		select * from c_jzlx
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="mc!= null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+</mapper>

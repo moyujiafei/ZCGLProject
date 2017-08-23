@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.CZCGLMapper">
+	<sql id="query_ZCGL_where">
+		<if test="appId != null">
+			and APP_ID = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="deptNo != null">
+			and DEPT_NO = #{deptNo,jdbcType=INTEGER}
+		</if>
+		<if test="deptName != null">
+			and DEPT_NAME = #{deptName,jdbcType=VARCHAR}
+		</if>
+		<if test="fzr != null">
+			and FZR = #{fzr,jdbcType=VARCHAR}
+		</if>
+		<if test="glr != null">
+			and GLR = #{glr,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CZCGL">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="APP_ID" property="appId" jdbcType="INTEGER" />
+		<result column="DEPT_NO" property="deptNo" jdbcType="INTEGER" />
+		<result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+		<result column="FZR" property="fzr" jdbcType="VARCHAR" />
+		<result column="GLR" property="glr" jdbcType="VARCHAR" />
+		<association property="glrmc" column="{userid=glr,appid=app_id}" javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid"></association>
+	    <association property="fzrmc" column="{userid=fzr,appid=app_id}" javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, APP_ID, DEPT_NO, DEPT_NAME, FZR, GLR
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from c_zcgl
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="select" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.CZCGL">
+		select
+		<include refid="Base_Column_List" />
+		from c_zcgl
+		<where>
+			<include refid="query_ZCGL_where"/>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from c_zcgl
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.CZCGL" useGeneratedKeys="true" keyProperty="id">
+		insert into c_zcgl (ID,
+		APP_ID, DEPT_NO, DEPT_NAME,
+		FZR, GLR)
+		values (#{id,jdbcType=INTEGER},
+		#{appId,jdbcType=INTEGER},
+		#{deptNo,jdbcType=INTEGER},
+		#{deptName,jdbcType=VARCHAR},
+		#{fzr,jdbcType=VARCHAR}, #{glr,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CZCGL" useGeneratedKeys="true" keyProperty="id">
+		insert into c_zcgl
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="appId != null">
+				APP_ID,
+			</if>
+			<if test="deptNo != null">
+				DEPT_NO,
+			</if>
+			<if test="deptName != null">
+				DEPT_NAME,
+			</if>
+			<if test="fzr != null">
+				FZR,
+			</if>
+			<if test="glr != null">
+				GLR,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="appId != null">
+				#{appId,jdbcType=INTEGER},
+			</if>
+			<if test="deptNo != null">
+				#{deptNo,jdbcType=INTEGER},
+			</if>
+			<if test="deptName != null">
+				#{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="fzr != null">
+				#{fzr,jdbcType=VARCHAR},
+			</if>
+			<if test="glr != null">
+				#{glr,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CZCGL">
+		update c_zcgl
+		<set>
+			<if test="appId != null">
+				APP_ID = #{appId,jdbcType=INTEGER},
+			</if>
+			<if test="deptNo != null">
+				DEPT_NO = #{deptNo,jdbcType=INTEGER},
+			</if>
+			<if test="deptName != null">
+				DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="fzr != null">
+				FZR = #{fzr,jdbcType=VARCHAR},
+			</if>
+			<if test="glr != null">
+				GLR = #{glr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CZCGL">
+		update c_zcgl
+		set
+		APP_ID = #{appId,jdbcType=INTEGER},
+		DEPT_NO=#{deptNo,jdbcType=INTEGER},
+		DEPT_NAME =
+		#{deptName,jdbcType=VARCHAR},
+		FZR = #{fzr,jdbcType=VARCHAR},
+		GLR =
+		#{glr,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="countZcglList" resultType="int">
+		SELECT count(*) FROM c_zcgl
+		<where>
+			<include refid="query_ZCGL_where"/>
+		</where>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CZCGL">
+		select * from c_zcgl
+		<where>
+			<include refid="query_ZCGL_where"/>
+		</where>
+	</select>
+	<select id="selectZCGLList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.CZCGL">
+		select * from c_zcgl
+		<where>
+			<include refid="query_ZCGL_where"/>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},
+			#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+</mapper>

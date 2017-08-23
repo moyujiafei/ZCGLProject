@@ -1,0 +1,3 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,user-scalable=0"><meta name=apple-mobile-web-app-capable content=yes><title>资产管理微助手v1.2</title><link href=/zcgl/client/static/css/app.b8d250105b07a61bf7f1ac104cc0695f.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/zcgl/client/static/js/manifest.4a9f31f6ea6e0464d930.js></script><script type=text/javascript src=/zcgl/client/static/js/vendor.2dc38195c1eb94595753.js></script><script type=text/javascript src=/zcgl/client/static/js/app.de68f9b688974a165e37.js></script></body></html>
