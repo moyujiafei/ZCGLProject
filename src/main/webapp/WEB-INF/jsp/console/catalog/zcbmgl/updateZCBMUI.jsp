@@ -11,8 +11,8 @@
 	<form id="zcbmInfoForm" method="post">
 		<table class="mytable" style="margin-top:30px">
 			<tr><td align="right">部&nbsp;&nbsp;&nbsp;门&nbsp;&nbsp;&nbsp;名：</td><td><input id="deptName" name="deptName" /></tr>
-			<tr><td align="right">部门负责人：</td><td><input type="text"  id="fzr" name="fzrmc" userid="${zcgl.fzr}" /></td></tr>
-			<tr><td align="right">资产管理员：</td><td><input type="text"  id="glr" name="glrmc" userid="${zcgl.glr}" /></td></tr>
+			<tr><td align="right">&nbsp;易耗品负责人：</td><td><input type="text"  id="fzr" name="fzrmc" userid="${zcgl.fzr}" /></td></tr>
+			<tr><td align="right">固定资产管理员：</td><td><input type="text"  id="glr" name="glrmc" userid="${zcgl.glr}" /></td></tr>
 		</table>
       <table style="margin-top:40px">
 			<tr>

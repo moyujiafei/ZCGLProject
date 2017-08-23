@@ -604,8 +604,16 @@ public class ZCDJService {
 		StringBuilder resultSb = new StringBuilder();
 		resultSb.append(zc.getMc()).append("（").append(zc.getDm()).append("）");
 		resultSb.append("于").append(DateUtils.getLongDate(new Date()));
-		resultSb.append("由").append(old_zcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(old_cfdd))).append("；");
-		resultSb.append("变更为").append(new_zcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(new_cfdd)));
+		if (StringUtils.isEmpty(old_cfdd)) {
+			resultSb.append("由").append(old_zcgl.getDeptName()).append("使用，存放地点为").append("未知").append("；");
+		} else {
+			resultSb.append("由").append(old_zcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(old_cfdd))).append("；");
+		}
+		if (StringUtils.isEmpty(new_cfdd)) {
+			resultSb.append("变更为").append(new_zcgl.getDeptName()).append("使用，存放地点为").append("未知");
+		} else {
+			resultSb.append("变更为").append(new_zcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(new_cfdd)));
+		}
 		resultSb.append("。点击").append(msgTemplateService.getZCXQ(zc));
 		
 		msgService.sendUserMsg(zc.getAppId(), MsgLX.系统通知, old_zcgl.getGlr(), resultSb.toString());
@@ -663,10 +671,17 @@ public class ZCDJService {
 		resultSb.append("资产于").append(DateUtils.getLongDate(new Date()));
 		resultSb.append("由").append(oldZcgl.getDeptName()).append("使用，存放地点为");
 		if (StringUtils.isEmpty(oldZc.getCfdd())) {
-			oldZc.setCfdd("未知");
+			oldZc.setCfdd("");
+			resultSb.append("未知");
+		} else {
+			resultSb.append(fjService.getCFDD(Integer.parseInt(oldZc.getCfdd())));
 		}
-		resultSb.append(fjService.getCFDD(Integer.parseInt(oldZc.getCfdd())));
-		resultSb.append("；变更为").append(newZcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(new_cfdd)));
+		if (StringUtils.isEmpty(new_cfdd)) {
+			resultSb.append("；变更为").append(newZcgl.getDeptName()).append("使用，存放地点为").append("未知");
+		} else {
+			resultSb.append("；变更为").append(newZcgl.getDeptName()).append("使用，存放地点为").append(fjService.getCFDD(Integer.parseInt(new_cfdd)));
+		}
+		
 		zt.setRemark(resultSb.toString());
 		ztService.insertZT(zt);
 		

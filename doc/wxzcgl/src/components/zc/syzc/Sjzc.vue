@@ -48,6 +48,7 @@
             type: 'warn',
             text: '请输入申请原因'
           })
+          return
         }
         api.post('/wx/zczt/sendbackZC.do', {
           remark: this.remark,
@@ -56,7 +57,7 @@
           this.$router.go(-1)
           if (response === 'success') {
             this.$vux.toast.show({
-              text: '以提交申请'
+              text: '已提交申请'
             })
           } else {
             this.$vux.toast.show({

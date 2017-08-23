@@ -54,6 +54,8 @@ public class ZCGLService {
 	public static final OperErrCode 资产管理记录不存在 = new OperErrCode("10201", "资产管理记录不存在");
 	public static final OperErrCode 无法删除有资产的部门 = new OperErrCode("10201", "无法删除有资产的部门");
 	public static final OperErrCode 文件导出异常 = new OperErrCode("10201", "文件导出异常");
+	public static final OperErrCode 不允许同一个用户同时做两个以上部门的易耗品负责人 = new OperErrCode("10201", "不允许同一个用户同时做两个以上部门的易耗品负责人");
+	public static final OperErrCode 不允许同一个用户同时做两个以上部门的固定资产管理人 = new OperErrCode("10201", "不允许同一个用户同时做两个以上部门的固定资产管理人");
 
 	/**
 	 * 这是一个公共方法，用于检查要插入的资产格式是否正确。 如果line为空，则不显示“XXXX行”信息。
@@ -197,6 +199,25 @@ public class ZCGLService {
 	@Transactional(rollbackFor = Exception.class)
 	public void updateZCGL(CZCGL zcgl) throws OperException {
 		czcglDao.updateByPrimaryKeySelective(zcgl);
+	}
+	
+	/**
+	 * 在执行更新操作之前做检查
+	 * 1、同一个appId下，不允许同一个用户同时做两个以上部门的易耗品负责人。
+   * 2、  同一个appId下，不允许同一个用户同时做两个以上部门的固定资产管理人。
+	 */
+	public void checkFzrAndGlr(Integer appId, Integer id, String fzr, String glr) throws OperException{
+		CZCGL param = new CZCGL();
+		param.setAppId(appId);
+		param.setFzr(fzr);
+		if(countZCGLList(param) > 0 && !getZCGL(id).getFzr().equals(fzr)){
+			throw new OperException(不允许同一个用户同时做两个以上部门的易耗品负责人);
+		}
+		param.setFzr(null);
+		param.setGlr(glr);
+		if(countZCGLList(param) > 0 && !getZCGL(id).getGlr().equals(glr)){
+			throw new OperException(不允许同一个用户同时做两个以上部门的固定资产管理人);
+		}
 	}
 	
 	/**

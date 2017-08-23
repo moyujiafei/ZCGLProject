@@ -75,14 +75,14 @@
 			      },
 			      {
 			    	  field: "fzrmc",
-			    	  title: "部门负责人",
+			    	  title: "易耗品负责人",
 			    	  width: "16%",
 			    	  align: "center",
 			    	  resizable: false
 			      },
 			      {
 			      	  field: "glrmc",
-			    	  title: "部门资产管理员",
+			    	  title: "固定资产管理员",
 			    	  width: "15%",
 			    	  align: "center",
 			    	  resizable: false

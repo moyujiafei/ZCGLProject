@@ -4,7 +4,7 @@
       <x-header :left-options="{showBack: true}">同意报废资产</x-header>
     </div>
 
-    <group title="拒绝原因：">
+    <group title="申请原因原因：">
       <XTextarea :max="100" v-model="remark"></XTextarea>
     </group>
 
@@ -46,8 +46,9 @@
         if (this.remark.length === 0 || this.remark === null) {
           this.$vux.toast.show({
             type: 'warn',
-            text: '请输入拒绝原因'
+            text: '请输入申请原因'
           })
+          return
         }
         api.post('/wx/zczt/agreeBFZC.do', {
           refuseRemark: this.remark,
@@ -56,7 +57,7 @@
           this.$router.go(-1)
           if (response === 'success') {
             this.$vux.toast.show({
-              text: '以同意报废资产'
+              text: '已同意报废资产'
             })
           } else {
             this.$vux.toast.show({

@@ -10,7 +10,7 @@
     </group>
 
     <group>
-      <popup-picker :title="title3" :data="glbmList" v-model="glbmValue" show-name placeholder="请选择管理部门"></popup-picker>
+      <popup-picker :title="title3" :data="glbmList" :columns="3" v-model="glbmValue" show-name placeholder="请选择管理部门"></popup-picker>
       <popup-picker :title="title4" :data="cfddLidt" :columns="3" v-model="cfddValue" placeholder="请选择存放地点"  @on-change="onChange"></popup-picker>
     </group>
 
@@ -46,11 +46,15 @@
       },
       onChange () {
         let _this = this
-        _this.cfddCopy = _this.cfddValue
+        var n = parseInt(_this.cfddValue[2])
         if (_this.cfddValue[2].indexOf('null') >= 0) {
+          _this.cfddCopy = _this.cfddValue
           var temp = ['', '', '']
           _this.cfddValue = temp
+        } else if (isNaN(n)) {
+          return
         } else {
+          _this.cfddCopy = _this.cfddValue
           api.post('/wx/zczt/getCFDDByFjid.do', {
             fjId: _this.cfddCopy[2]
           }).then((response) => {
@@ -73,20 +77,31 @@
         }
       },
       allocateZC () {
-        console.log(this.glbmValue)
-        if (this.glbmValue.length === 0) {
-          this.$vux.toast.show({
+        let _this = this
+        if (_this.glbmValue.length === 0) {
+          _this.$vux.toast.show({
             type: 'warn',
             text: '请选择资产管理部门'
           })
           return
         }
-        if (this.cfddValue.length === 0) {
-          this.cfddValue = ['null1', 'null2', 'null3']
+        if (_this.cfddValue.length === 0) {
+          _this.cfddCopy = ['null1', 'null2', 'null3']
+        }
+        var temp = _this.glbmValue
+        var postData = ''
+        if (temp[0].indexOf('null') !== -1) {
+          postData = ''
+        } else if (temp[1].indexOf('null') !== -1) {
+          postData = temp[0]
+        } else if (temp[2].indexOf('null') !== -1) {
+          postData = temp[1]
+        } else {
+          postData = temp[2]
         }
         api.post('/wx/zczt/reallocateZC.do', {
           zcId: this.$route.query.zcId,
-          zcglId: this.glbmValue[0],
+          deptNo: postData,
           cfdd: this.cfddCopy[2]
         }).then((response) => {
           if (response === 'success') {
@@ -125,8 +140,8 @@
       }
     },
     mounted: function () {
-      api.get('/wx/zczt/getZCGLPicker.do').then((response) => {
-        this.glbmList = response
+      api.get('/wx/wxchudept/getWXDeptPick.do').then((response) => {
+        this.glbmList = response.res
       })
         .catch((response) => {
           console.log(response)

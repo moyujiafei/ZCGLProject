@@ -48,6 +48,7 @@
             type: 'warn',
             text: '请输入拒绝原因'
           })
+          return
         }
         api.post('/wx/zczt/refuseLeadingZC.do', {
           refuseRemark: this.remark,
@@ -56,7 +57,7 @@
           this.$router.go(-1)
           if (response === 'success') {
             this.$vux.toast.show({
-              text: '以拒绝领用资产资产'
+              text: '已拒绝领用资产资产'
             })
           } else {
             this.$vux.toast.show({

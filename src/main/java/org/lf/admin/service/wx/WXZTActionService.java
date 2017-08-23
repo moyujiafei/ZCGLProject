@@ -3,14 +3,12 @@ package org.lf.admin.service.wx;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lf.admin.db.dao.CZCGLMapper;
 import org.lf.admin.db.pojo.CJZW;
 import org.lf.admin.db.pojo.CXQ;
 import org.lf.admin.db.pojo.CZCGL;
-import org.lf.admin.db.pojo.ChuWXDept;
-import org.lf.admin.db.pojo.ChuWXUser;
 import org.lf.admin.db.pojo.VFJ;
 import org.lf.admin.db.pojo.VZC;
-import org.lf.admin.db.pojo.WXUser;
 import org.lf.admin.service.OperException;
 import org.lf.admin.service.WXResultCode;
 import org.lf.admin.service.catalog.FJService;
@@ -19,7 +17,6 @@ import org.lf.admin.service.catalog.XQService;
 import org.lf.admin.service.catalog.ZCGLService;
 import org.lf.admin.service.sys.WXDeptService;
 import org.lf.admin.service.sys.WXUserService;
-import org.lf.admin.service.wx.vue.picker.PickerData;
 import org.lf.admin.service.wx.vue.picker.PickerDataElement;
 import org.lf.admin.service.zcgl.GZWXService;
 import org.lf.admin.service.zcgl.RCXJService;
@@ -84,68 +81,30 @@ public class WXZTActionService {
 	@Autowired
 	private ZCYWService zcywService;
 
-	/**
-	 * 返回前台poppicker需要的资产管理部门数据
-	 * 资产存放地点
-	 * 
-	 * 前台格式为
-	 * name和value
-	 * [[{
-	 *   name: '计算机学院',
-	 *   value: '1'
-	 * }, {   
-	 *   name: '文学院',  
-	 *   value: '2'  
-	 * }]]  
-	 * 具体看官网api
-	 * 
-	 * @return
-	 */
-	public AjaxResultModel getZCGLPicker(Integer appId) {
-
-		AjaxResultModel result = new AjaxResultModel();
-		try {
-			CZCGL param = new CZCGL();
-			param.setAppId(appId);
-			List<CZCGL> zcglList = zcglService.getZCGLList(param);
-			List<PickerDataElement> glbmList = new ArrayList<PickerDataElement>();
-			for (CZCGL zcgl : zcglList) {
-				PickerDataElement element = new PickerDataElement();
-				element.setName(zcgl.getDeptName());
-				element.setValue(zcgl.getId() + "");
-				glbmList.add(element);
-			}
-			PickerData data = new PickerData();
-			data.setElementList(glbmList);
-
-			result.setData(data.getUnlinkNameAndValue());
-			result.setCode(WXResultCode.SUCCESS.getCode());
-			result.setMsg(WXResultCode.SUCCESS.getMsg());
-		} catch (Exception e) {
-			result.setCode(WXResultCode.ERROR.getCode());
-			result.setMsg(e.getMessage());
-		}
-
-		return result;
-	}
+	@Autowired
+	private CZCGLMapper czcglDao;
+	
 
 	/**
 	 * 完成资产调拨
 	 * 
 	 * @param request
 	 * @param zcid
-	 * @param zcglId
+	 * @param deptNo
 	 * @param cfdd
 	 * @return
 	 */
-	public AjaxResultModel allocateZC(String djr, Integer zcid, Integer zcglId, String cfdd) {
+	public AjaxResultModel allocateZC(Integer appId, String djr, Integer zcid, Integer deptNo, String cfdd) {
 		AjaxResultModel result = new AjaxResultModel();
 		if (cfdd.contains("null")) {
 			cfdd = "";
 		}
-
 		try {
-			zcdjService.allocateZC(zcid, zcglId, cfdd, djr);
+			CZCGL param = new CZCGL();
+			param.setDeptNo(deptNo);
+			param.setAppId(appId);
+			param = czcglDao.select(param);
+			zcdjService.allocateZC(zcid, param.getId(), cfdd, djr);
 
 			result.setData("success");
 			result.setCode(WXResultCode.SUCCESS.getCode());
@@ -337,14 +296,17 @@ public class WXZTActionService {
 	 * @param cfdd
 	 * @return
 	 */
-	public AjaxResultModel reallocateZC(String djr, Integer zcid, Integer zcglId, String cfdd) {
+	public AjaxResultModel reallocateZC(Integer appId, String djr, Integer zcid, Integer deptNo, String cfdd) {
 		AjaxResultModel result = new AjaxResultModel();
 		if (cfdd.contains("null")) {
 			cfdd = "";
 		}
 		try {
-			zcdjService.reallocateZC(zcid, zcglId, cfdd, djr);
-
+			CZCGL param = new CZCGL();
+			param.setDeptNo(deptNo);
+			param.setAppId(appId);
+			param = czcglDao.select(param);
+			zcdjService.reallocateZC(zcid, param.getId(), cfdd, djr);
 			result.setData("success");
 			result.setCode(WXResultCode.SUCCESS.getCode());
 			result.setMsg(WXResultCode.SUCCESS.getMsg());
@@ -400,59 +362,6 @@ public class WXZTActionService {
 			result.setCode(WXResultCode.ERROR.getCode());
 			result.setMsg(e.getMessage());
 		}
-		return result;
-	}
-
-	/**
-	 * 返回前台需要的二级poppicker控件数据
-	 * 一级:部门名
-	 * 二级:用户名
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public AjaxResultModel getUserPicker(Integer appId) {
-		AjaxResultModel result = new AjaxResultModel();
-		List<PickerDataElement> pickerList = new ArrayList<PickerDataElement>();
-		PickerDataElement deptPicker = null;
-		PickerDataElement userPicker = null;
-		List<ChuWXDept> deptList = wxDeptService.getWXDeptList(null);
-		if (deptList.size() == 0 || deptList == null) {
-			result.setCode(WXResultCode.ERROR.getCode());
-			result.setMsg("没有数据");
-			return result;
-		}
-		for (ChuWXDept wxDept : deptList) {
-			deptPicker = new PickerDataElement();
-			deptPicker.setName(wxDept.getDeptName());
-			deptPicker.setParent("0");
-			deptPicker.setValue(wxDept.getDeptNo().toString());
-
-			List<ChuWXUser> userList = wxUserService.fuzzyChuWXUsers(appId, wxDept.getDeptNo().toString());
-			if (userList.size() == 0 || userList == null) {
-				result.setCode(WXResultCode.ERROR.getCode());
-				result.setMsg("没有数据");
-				return result;
-			}
-
-			pickerList.add(deptPicker);
-			for (ChuWXUser chuWXUser : userList) {
-				userPicker = new PickerDataElement();
-				try {
-					WXUser wxUser = wxUserService.getWXUser(chuWXUser);
-					userPicker.setName(wxUser.getName());
-					userPicker.setParent(deptPicker.getValue());
-					userPicker.setValue(wxUser.getUserid());
-					pickerList.add(userPicker);
-				} catch (OperException e) {
-					result.setMsg(e.getMessage());
-					return result;
-				}
-			}
-		}
-		result.setData(pickerList);
-		result.setCode(WXResultCode.SUCCESS.getCode());
-		result.setMsg(WXResultCode.SUCCESS.getMsg());
 		return result;
 	}
 

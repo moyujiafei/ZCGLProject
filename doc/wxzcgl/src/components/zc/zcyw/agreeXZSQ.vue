@@ -39,31 +39,43 @@
         this.$router.go(-1)
       },
       agreeXZSQ () {
-        if (this.cfdd === null || this.cfdd.length === 0) {
-          this.$vux.toast.show({
+        let _this = this
+        if (_this.cfdd === null || _this.cfdd.length === 0) {
+          _this.$vux.toast.show({
             type: 'warn',
             text: '请选择一个存放地点'
           })
           return
         }
+        var temp = _this.cfdd
+        var postData = ''
+        if (temp[0].indexOf('null') !== -1) {
+          postData = ''
+        } else if (temp[1].indexOf('null') !== -1) {
+          postData = temp[0]
+        } else if (temp[2].indexOf('null') !== -1) {
+          postData = temp[1]
+        } else {
+          postData = temp[2]
+        }
         api.post('/wx/zczt/agreeXZSQ.do', {
-          zcId: this.$route.query.zcId,
-          cfdd: this.cfdd[2]
+          zcId: _this.$route.query.zcId,
+          cfdd: postData
         }).then((response) => {
-          this.$router.go(-1)
+          _this.$router.go(-1)
           if (response === 'success') {
-            this.$vux.toast.show({
+            _this.$vux.toast.show({
               text: '同意资产闲置申请成功'
             })
           } else {
-            this.$vux.toast.show({
+            _this.$vux.toast.show({
               type: 'warn',
               text: '请求失败'
             })
           }
         })
         .catch((response) => {
-          this.$vux.toast.show({
+          _this.$vux.toast.show({
             type: 'warn',
             text: '失败'
           })

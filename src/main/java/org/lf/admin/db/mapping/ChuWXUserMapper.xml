@@ -84,7 +84,7 @@
 				and NAME = #{name,jdbcType=VARCHAR}
 			</if>
 			<if test="department != null">
-				and DEPARTMENT = #{department,jdbcType=VARCHAR}
+				and DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]')
 			</if>
 			<if test="position != null">
 				and POSITION = #{position,jdbcType=VARCHAR}

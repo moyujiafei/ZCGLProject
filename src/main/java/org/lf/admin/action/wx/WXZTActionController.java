@@ -3,10 +3,8 @@ package org.lf.admin.action.wx;
 import javax.servlet.http.HttpServletRequest;
 
 import org.lf.admin.service.OperException;
-import org.lf.admin.service.utils.WXMediaService;
 import org.lf.admin.service.wx.WXZCService;
 import org.lf.admin.service.wx.WXZTActionService;
-import org.lf.admin.service.zcgl.ZCDJService;
 import org.lf.utils.AjaxResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,34 +21,8 @@ public class WXZTActionController extends WXBaseController {
 	private WXZTActionService ztService;
 	
 	@Autowired
-	private WXMediaService wxMediaService;
-
-	@Autowired
 	private WXZCService wxzcService;
 	
-	@Autowired
-	private ZCDJService zcdjService;
-	
-
-	/**
-	 * 返回前台poppicker需要的资产管理部门数据
-	 * 资产存放地点
-	 * 
-	 * @return
-	 */
-	@RequestMapping("getZCGLPicker.do")
-	@ResponseBody
-	public AjaxResultModel getZCGLPicker(HttpServletRequest request) {
-
-		try {
-			Integer appId = getAppId(request);
-			return ztService.getZCGLPicker(appId);
-		} catch (OperException e) {
-			return INVALID_TOKEN;
-		}
-
-	}
-
 	/**
 	 * 提交资产调拨请求
 	 * 
@@ -58,11 +30,12 @@ public class WXZTActionController extends WXBaseController {
 	 */
 	@RequestMapping("allocateZC.do")
 	@ResponseBody
-	public AjaxResultModel allocateZC(HttpServletRequest request, Integer zcId, Integer zcglId, String cfdd) {
+	public AjaxResultModel allocateZC(HttpServletRequest request, Integer zcId, Integer deptNo, String cfdd) {
 
 		try {
 			String djr = getUserId(request);
-			return ztService.allocateZC(djr, zcId, zcglId, cfdd);
+			Integer appId = getAppId(request);
+			return ztService.allocateZC(appId, djr, zcId, deptNo, cfdd);
 		} catch (OperException e) {
 			return INVALID_TOKEN;
 		}
@@ -147,16 +120,17 @@ public class WXZTActionController extends WXBaseController {
 	 * 
 	 * @param request
 	 * @param zcid
-	 * @param zcglId
+	 * @param deptNo
 	 * @param cfdd
 	 * @return
 	 */
 	@RequestMapping("reallocateZC.do")
 	@ResponseBody
-	public AjaxResultModel reallocateZC(HttpServletRequest request, Integer zcId, Integer zcglId, String cfdd) {
+	public AjaxResultModel reallocateZC(HttpServletRequest request, Integer zcId, Integer deptNo, String cfdd) {
 		try {
 			String djr = getUserId(request);
-			return ztService.reallocateZC(djr, zcId, zcglId, cfdd);
+			Integer appId = getAppId(request);
+			return ztService.reallocateZC(appId, djr, zcId, deptNo, cfdd);
 		} catch (OperException e) {
 			return INVALID_TOKEN;
 		}
@@ -181,25 +155,6 @@ public class WXZTActionController extends WXBaseController {
 		}
 	}
 	
-	/**
-	 * 获取资产使用人：二级Popup-picker控件
-	 * 第一级：部门名
-	 * 第二级：用户名
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping("getUserPicker.do")
-	@ResponseBody
-	public AjaxResultModel getUserPicker(HttpServletRequest request){
-		Integer appId;
-		try {
-			appId = getAppId(request);
-			return ztService.getUserPicker(appId);
-		} catch (OperException e) {
-			return INVALID_TOKEN;
-		}
-	}
 	/**
 	 * 资产分配
 	 * 

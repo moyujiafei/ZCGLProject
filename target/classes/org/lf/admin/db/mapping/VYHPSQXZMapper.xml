@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VYHPSQXZMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VYHPSQXZ" >
+    <result column="xzid" property="xzid" jdbcType="INTEGER" />
+    <result column="sq_dm" property="sqDm" jdbcType="CHAR" />
+    <result column="sq_num" property="sqNum" jdbcType="INTEGER" />
+    <result column="sp_num" property="spNum" jdbcType="INTEGER" />
+    <result column="yhp_id" property="yhpId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="lx" property="lx" jdbcType="VARCHAR" />
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="ccbh" property="ccbh" jdbcType="VARCHAR" />
+    <result column="dept_no" property="deptNo" jdbcType="INTEGER" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="fzr" property="fzr" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="cfdd" property="cfdd" jdbcType="VARCHAR" />
+    <result column="left_limit" property="leftLimit" jdbcType="INTEGER" />
+    <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+    <result column="IMG_VERSION" property="imgVersion" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.VYHPSQXZ" >
+    insert into v_yhp_sqxz (xzid, sq_dm, sq_num, 
+      sp_num, yhp_id, app_id, 
+      lx, xh, ccbh, dept_no, 
+      dept_name, fzr, num, 
+      cfdd, left_limit, PIC_URL, 
+      IMG_VERSION)
+    values (#{xzid,jdbcType=INTEGER}, #{sqDm,jdbcType=CHAR}, #{sqNum,jdbcType=INTEGER}, 
+      #{spNum,jdbcType=INTEGER}, #{yhpId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, 
+      #{lx,jdbcType=VARCHAR}, #{xh,jdbcType=VARCHAR}, #{ccbh,jdbcType=VARCHAR}, #{deptNo,jdbcType=INTEGER}, 
+      #{deptName,jdbcType=VARCHAR}, #{fzr,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, 
+      #{cfdd,jdbcType=VARCHAR}, #{leftLimit,jdbcType=INTEGER}, #{picUrl,jdbcType=VARCHAR}, 
+      #{imgVersion,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.VYHPSQXZ" >
+    insert into v_yhp_sqxz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xzid != null" >
+        xzid,
+      </if>
+      <if test="sqDm != null" >
+        sq_dm,
+      </if>
+      <if test="sqNum != null" >
+        sq_num,
+      </if>
+      <if test="spNum != null" >
+        sp_num,
+      </if>
+      <if test="yhpId != null" >
+        yhp_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="lx != null" >
+        lx,
+      </if>
+      <if test="xh != null" >
+        xh,
+      </if>
+      <if test="ccbh != null" >
+        ccbh,
+      </if>
+      <if test="deptNo != null" >
+        dept_no,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="fzr != null" >
+        fzr,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="cfdd != null" >
+        cfdd,
+      </if>
+      <if test="leftLimit != null" >
+        left_limit,
+      </if>
+      <if test="picUrl != null" >
+        PIC_URL,
+      </if>
+      <if test="imgVersion != null" >
+        IMG_VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xzid != null" >
+        #{xzid,jdbcType=INTEGER},
+      </if>
+      <if test="sqDm != null" >
+        #{sqDm,jdbcType=CHAR},
+      </if>
+      <if test="sqNum != null" >
+        #{sqNum,jdbcType=INTEGER},
+      </if>
+      <if test="spNum != null" >
+        #{spNum,jdbcType=INTEGER},
+      </if>
+      <if test="yhpId != null" >
+        #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lx != null" >
+        #{lx,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null" >
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="ccbh != null" >
+        #{ccbh,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        #{deptNo,jdbcType=INTEGER},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="fzr != null" >
+        #{fzr,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="cfdd != null" >
+        #{cfdd,jdbcType=VARCHAR},
+      </if>
+      <if test="leftLimit != null" >
+        #{leftLimit,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgVersion != null" >
+        #{imgVersion,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+</mapper>

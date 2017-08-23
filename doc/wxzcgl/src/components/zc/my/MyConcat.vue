@@ -70,7 +70,7 @@
           postData = temp[2]
         }
         _this.deptId = postData
-        api.post('/wx/myconcat/getChuWXUserListByDept.do', {
+        api.post('/wx/wxchuuser/getChuWXUserListByDept.do', {
           deptId: postData,
           rows: _this.rows,
           page: _this.page
@@ -81,7 +81,7 @@
       },
       jiazai () {
         let _this = this
-        api.post('/wx/myconcat/getChuWXUserListByDept.do', {
+        api.post('/wx/wxchuuser/getChuWXUserListByDept.do', {
           deptId: _this.deptId,
           rows: _this.rows,
           page: _this.page
@@ -104,7 +104,7 @@
     },
     mounted: function () {
       let _this = this
-      api.post('/wx/myconcat/getChuWXUserListByDept.do', {
+      api.post('/wx/wxchuuser/getChuWXUserListByDept.do', {
         deptId: _this.deptId,
         rows: _this.rows,
         page: _this.page
@@ -112,7 +112,7 @@
         _this.page++
         _this.contactsList = response
       })
-      api.post('/wx/myconcat/getWXDeptPickWithAll.do', {}).then((response) => {
+      api.post('/wx/wxchudept/getWXDeptPickWithAll.do', {}).then((response) => {
         _this.bmList = response.res
         // _this.bmValue = [response.res[0][0].value]
       })

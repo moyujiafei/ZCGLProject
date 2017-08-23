@@ -38,6 +38,7 @@
     },
     methods: {
       cancel () {
+        alert(this.$route.query.zcId)
         this.$router.go(-1)
       },
       refuseRevertZC () {

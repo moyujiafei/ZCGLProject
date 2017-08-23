@@ -43,12 +43,6 @@
         this.$router.go(-1)
       },
       refuseSendbackZC () {
-        if (this.remark.length === 0 || this.remark === null) {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: '请输入拒绝原因'
-          })
-        }
         api.post('/wx/zczt/refuseSendbackZC.do', {
           refuseRemark: this.remark,
           zcId: this.$route.query.zcId
@@ -56,7 +50,7 @@
           this.$router.go(-1)
           if (response === 'success') {
             this.$vux.toast.show({
-              text: '以拒绝资产上交'
+              text: '已拒绝资产上交'
             })
           } else {
             this.$vux.toast.show({

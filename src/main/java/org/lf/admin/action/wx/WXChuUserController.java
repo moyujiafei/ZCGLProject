@@ -1,10 +1,9 @@
-package org.lf.admin.action.wx.my;
+package org.lf.admin.action.wx;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.lf.admin.action.wx.WXBaseController;
 import org.lf.admin.service.OperException;
-import org.lf.admin.service.wx.my.WXMyConcatService;
+import org.lf.admin.service.wx.WXChuUserService;
 import org.lf.utils.AjaxResultModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/wx/myconcat/")
-public class WXMyConcatController extends WXBaseController {
-	
+@RequestMapping("/wx/wxchuuser/")
+public class WXChuUserController extends WXBaseController {
 	@Autowired
-	private WXMyConcatService concatService;
-
+	private WXChuUserService wxChuUserService;
+	
 	/**
 	 * 根据部门id返回微信用户列表
 	 * 
@@ -34,28 +32,29 @@ public class WXMyConcatController extends WXBaseController {
 	public AjaxResultModel getChuWXUserListByDept(HttpServletRequest request, String deptId, Integer rows, Integer page) {
 		try {
 			Integer appId = getAppId(request);
-			return concatService.getWXUserListByDeptId(deptId, appId, rows, page);
+			return wxChuUserService.getWXUserListByDeptId(deptId, appId, rows, page);
 		} catch (OperException e) {
 			return INVALID_TOKEN;
 		}
 	}
 	
 	/**
-	 * 获取微信部门列表(包含全部)
-	 *
+	 * 获取资产使用人：二级Popup-picker控件
+	 * 第一级：部门名
+	 * 第二级：用户名
+	 * 
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping("getWXDeptPickWithAll.do")
+	@RequestMapping("getUserPicker.do")
 	@ResponseBody
-	public AjaxResultModel getWXDeptPickWithAll(HttpServletRequest request) {
-
+	public AjaxResultModel getUserPicker(HttpServletRequest request){
+		Integer appId;
 		try {
-			Integer appId = getAppId(request);
-			return concatService.getWXDeptPickWithAll(appId);
+			appId = getAppId(request);
+			return wxChuUserService.getUserPicker(appId);
 		} catch (OperException e) {
 			return INVALID_TOKEN;
 		}
 	}
-	
 }

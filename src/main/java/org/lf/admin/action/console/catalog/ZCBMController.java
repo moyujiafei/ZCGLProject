@@ -55,8 +55,10 @@ public class ZCBMController extends BaseController {
 	
 	@RequestMapping("updateZCBM.do")
 	@ResponseBody
-	public String updateZCBM(Integer id, String fzr, String glr) {
+	public String updateZCBM(HttpSession session, Integer id, String fzr, String glr) {
 		try {
+			Integer appId = getAppId(session);
+			zcbmService.checkFzrAndGlr(appId, id, fzr, glr);
 			zcbmService.updateZCGL(id, fzr, glr);
 			return SUCCESS;
 		} catch (OperException e) {
