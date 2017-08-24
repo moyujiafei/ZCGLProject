@@ -4,7 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.lf.admin.action.console.BaseController;
 import org.lf.admin.db.pojo.VYHP;
+import org.lf.admin.service.yhpgl.YHPService;
 import org.lf.utils.EasyuiDatagrid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/console/yhpgl/yhpdj/")
 public class RegistYHPController extends BaseController {
 	private static final String ROOT = "/console/yhpgl/yhpdj";
+	
+	@Autowired
+	private YHPService yhpService;
 
 	/**
 	 * 企业易耗品登记入库
@@ -43,8 +48,9 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("getYHPList.do")
 	@ResponseBody
-	public EasyuiDatagrid<VYHP> getYHPList(HttpSession session, String fzr, String lx) {
-		return null;
+	public EasyuiDatagrid<VYHP> getYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
+		fzr=getCurrUser(session).getWxUsername();
+		return yhpService.getPagedYHPList(getAppId(session), lx, fzr, rows, page);
 	}
 	
 	/**

@@ -18,7 +18,7 @@
 		<div id="registYHPList"></div>		
 	</div>
 	<script type="text/javascript">
-		registZCList = {
+		registYHPList = {
 			
 		regist: function () {
 			var registYHPDialog = $("<div id='registYHPDialog'></div>");
@@ -39,7 +39,7 @@
 		},
 		query: function () {
 			$("#registYHPList").datagrid("load",{
-				yhplx:$("#searchbYhpLx").attr("lxid"),
+				lx:	$("#searchbYhpLx").val()
 			});
 		},
 		allocate: function (index) {
@@ -74,8 +74,8 @@
 				inline: true,
 				onClose: function(){
 					if(cyhplx!=null){
-						$("#yhplxSearchBox").searchbox("setValue",cyhplx.mc);
-						$("#yhplxSearchBox").attr("lxid",cyhplx.lxid);
+						$("#searchbYhpLx").searchbox("setValue",cyhplx.mc);
+						$("#searchbYhpLx").attr("lxid",cyhplx.lxid);
 					}
 					dialogObj.remove();// 关闭时remove对话框
 				}
@@ -98,7 +98,7 @@
 	$("#searchbYhpLx").searchbox({
 		editable: false,
 		searcher: function(value,name){
-			registZCList.queryYhplx();
+			registYHPList.queryYhplx();
 		}
 	});
 	
@@ -122,7 +122,10 @@
                       width: '15%',
                       resizable: true,
                       formatter:function(value,row){  
-                          var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
+                          if(value==null){
+                        	  value="无";
+                          }
+                    	  var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
                           return content;  
                       } 
                   }, {
@@ -132,7 +135,10 @@
                       width: '15%',
                       resizable: true,
                       formatter:function(value,row){
-                          var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
+                    	  if(value==null){
+                        	  value="无";
+                          }
+                    	  var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
                           return content;  
                           } 
                   }, {
@@ -142,19 +148,22 @@
                       width: '15%',
                       resizable: true,
                       formatter:function(value,row){ 
-                          var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
+                    	  if(value==null){
+                        	  value="无";
+                          }
+                    	  var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
                           return content;  
                       } 
                   }, {
                       field: 'num',
                       title: '持有数量',
                       align: 'center',
-                      width: '12%',
+                      width: '11%',
                       resizable: true,
                       formatter:function(value,row){  
-                    	  if (value == null) {
-                    		  value = "";
-                    	  }
+                    	  if(value==null){
+                        	  value="无";
+                          }
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
                           return content;  
                           } 
@@ -166,7 +175,10 @@
                       width: '20%',
                       resizable: true,
                       formatter:function(value,row){  
-                          var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
+                    	  if(value==null){
+                        	  value="无";
+                          }
+                    	  var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
                           return content;  
                       } 
 
@@ -174,12 +186,12 @@
                       field: 'leftLimit',
                       title: '库存下限',
                       align: 'center',
-                      width: '12%',
+                      width: '10%',
                       resizable: true,
                       formatter:function(value,row){  
-                    	  if (value == null) {
-                    		  value="";
-                    	  }
+                    	  if(value==null){
+                        	  value="无";
+                          }
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
                           return content;  
                       } 
@@ -187,12 +199,12 @@
 
                   },{
                       field: 'opt',
-                      title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作',
-                      align: 'left',
-                      width: '10%',
+                      title: '操作',
+                      align: 'center',
+                      width: '15%',
                       resizable: false,
                       formatter:function (value,row,index) {
-	                    	  return "&nbsp;&nbsp;<a class='editYHPBtn' onclick='registZCList.editYHP("+index+")' href='#'></a>&nbsp;&nbsp;<a class='AddYHPBtn' onclick='registZCList.AddYHP("+index+")' href='#'></a>&nbsp;&nbsp;<a class='allocateYHPBtn' onclick='allocateYHP("+index+")' href='#'></a>";
+	                    	  return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;<a class='allocateYHPBtn' onclick='registYHPList.allocateYHP("+index+")' href='#'></a>";
                       }
                   }]
               ],
@@ -217,7 +229,7 @@
             	  
             	  $(".AddYHPBtn").tooltip({
             		  position: 'bottom',    
-            		  content: '删除',
+            		  content: '补货',
             	  });
             	  
             	  $(".allocateYHPBtn").linkbutton ({
