@@ -1,6 +1,6 @@
 package org.lf.admin.db.pojo;
 
-public class VYHP {
+public class VYHP extends PagedPojo{
     private Integer yhpId;
 
     private Integer appId;

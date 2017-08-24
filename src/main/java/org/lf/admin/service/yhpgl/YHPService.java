@@ -1,11 +1,15 @@
 package org.lf.admin.service.yhpgl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.lf.admin.db.dao.VYHPMapper;
 import org.lf.admin.db.pojo.JYHP;
 import org.lf.admin.db.pojo.VYHP;
 import org.lf.admin.service.OperException;
 import org.lf.utils.EasyuiDatagrid;
+import org.lf.utils.PageNavigator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("yhpService")
 public class YHPService {
+	@Autowired
+	private VYHPMapper vyhpDao;
+	
 	public int countYHPList(Integer appId, String lx, String fzr) {
-		return -1;
+		VYHP param=new VYHP();
+		param.setAppId(appId);
+		param.setLx(lx);
+		param.setFzr(fzr);
+		return vyhpDao.countYhpList(param);
 	}
 	
 	public List<VYHP> getYHPList(Integer appId, String lx, String fzr, int rows, int page) {
@@ -24,7 +35,22 @@ public class YHPService {
 	}
 	
 	public EasyuiDatagrid<VYHP> getPagedYHPList(Integer appId, String lx, String fzr, int rows, int page) {
-		return null;
+		int total=countYHPList(appId, lx, fzr);
+		EasyuiDatagrid<VYHP> result=new EasyuiDatagrid<>();
+		if(total>0){
+			VYHP param=new VYHP();
+			param.setAppId(appId);
+			param.setLx(lx);
+			param.setFzr(fzr);
+			PageNavigator pageNav=new PageNavigator(rows, page);
+			param.setStart(pageNav.getStart());
+			param.setOffset(pageNav.getOffset());
+			result.setRows(vyhpDao.selectYhpList(param));
+		}else{
+			result.setRows(new ArrayList<VYHP>());
+		}
+		result.setTotal(total);
+		return result;
 	}
 	
 	/**

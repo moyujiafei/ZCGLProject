@@ -38,7 +38,6 @@
 			
 		},
 		query: function () {
-			
 			$("#registYHPList").datagrid("load",{
 				yhplx:$("#searchbYhpLx").attr("lxid"),
 			});
@@ -104,7 +103,7 @@
 	});
 	
 	$("#registYHPList").datagrid({
-		url: getContextPath() + "/console/zcgl/regist/zcList.do",
+		url: getContextPath() + "/console/yhpgl/yhpdj/getYHPList.do",
 		fit: true,
         singleSelect: true,
         pagination: true,
@@ -114,43 +113,44 @@
         toolbar: "#YHPListToolbar",
         pageSize: 15,
         pageList: [15],
+        fitColumns: true,
         columns: [
                   [{
-                      field: 'zcdm',
-                      title: '资产编号',
+                      field: 'lx',
+                      title: '类型',
                       align: 'center',
-                      width: '10%',
-                      resizable: false,
+                      width: '15%',
+                      resizable: true,
                       formatter:function(value,row){  
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
                           return content;  
                       } 
                   }, {
-                      field: 'zc',
-                      title: '资产名称',
+                      field: 'xh',
+                      title: '规格型号',
                       align: 'center',
                       width: '15%',
-                      resizable: false,
+                      resizable: true,
                       formatter:function(value,row){
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
                           return content;  
                           } 
                   }, {
-                      field: 'zclx',
-                      title: '资产类型',
+                      field: 'ccbh',
+                      title: '出厂编号',
                       align: 'center',
-                      width: '22%',
-                      resizable: false,
+                      width: '15%',
+                      resizable: true,
                       formatter:function(value,row){ 
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";   
                           return content;  
                       } 
                   }, {
-                      field: 'cost',
-                      title: '单价',
+                      field: 'num',
+                      title: '持有数量',
                       align: 'center',
-                      width: '6%',
-                      resizable: false,
+                      width: '12%',
+                      resizable: true,
                       formatter:function(value,row){  
                     	  if (value == null) {
                     		  value = "";
@@ -160,22 +160,22 @@
                           } 
 
                   }, {
-                      field: 'num',
-                      title: '资产数量',
+                      field: 'cfdd',
+                      title: '存放地点',
                       align: 'center',
-                      width: '7%',
-                      resizable: false,
+                      width: '20%',
+                      resizable: true,
                       formatter:function(value,row){  
                           var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
                           return content;  
                       } 
 
                   }, {
-                      field: 'deptName',
-                      title: '所属部门',
+                      field: 'leftLimit',
+                      title: '库存下限',
                       align: 'center',
-                      width: '14%',
-                      resizable: false,
+                      width: '12%',
+                      resizable: true,
                       formatter:function(value,row){  
                     	  if (value == null) {
                     		  value="";
@@ -185,93 +185,50 @@
                       } 
                       
 
-                  }, {
-                      field: 'glrmc',
-                      title: '部门资产管理员',
-                      align: 'center',
-                      width: '13%',
-                      resizable: false,
-                      formatter:function(value,row){  
-                    	  if (value == null) {
-                    		  value = "";
-                    	  }
-                          var content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>";  
-                          return content;  
-                      } 
-
-                  }, {
+                  },{
                       field: 'opt',
                       title: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作',
                       align: 'left',
-                      width: '15%',
+                      width: '10%',
                       resizable: false,
                       formatter:function (value,row,index) {
-                    	  if (row.zczt==9) {
-	                    	  return "&nbsp;&nbsp;<a class='registZC_editZcBtn' onclick='registZCList.edit("+index+")' href='#'></a>&nbsp;&nbsp;<a class='registZC_delZcBtn' onclick='registZCList.del("+index+")' href='#'></a>&nbsp;&nbsp;<a class='registZC_allocateZcBtn' onclick='registZCList.allocate("+index+")' href='#'></a>";
-                    	  }
-                    	  if (row.zczt == 0) {
-                    		  return "&nbsp;&nbsp;<a class='registZC_reallocateZcBtn' onclick='registZCList.reallocate("+index+")' href='#'></a>";
-                    	  }
-                    	  if (row.zczt == 13) {
-                    		  return "&nbsp;&nbsp;<a class='registZC_checkZcBtn' onclick='registZCList.check("+index+")' href='#'></a>&nbsp;&nbsp;<a class='registZC_delZcBtn' onclick='registZCList.del("+index+")' href='#'></a>";
-                    	  }
+	                    	  return "&nbsp;&nbsp;<a class='editYHPBtn' onclick='registZCList.editYHP("+index+")' href='#'></a>&nbsp;&nbsp;<a class='AddYHPBtn' onclick='registZCList.AddYHP("+index+")' href='#'></a>&nbsp;&nbsp;<a class='allocateYHPBtn' onclick='allocateYHP("+index+")' href='#'></a>";
                       }
                   }]
               ],
               onLoadSuccess: function () {
             	  
-            	  $(".registZC_editZcBtn").linkbutton ({
+            	  $(".editYHPBtn").linkbutton ({
             		  height : 22,
             		  iconCls:"icon-edit",
             		  plain : true,
             	  });
             	  
-            	  $(".registZC_editZcBtn").tooltip({
+            	  $(".editYHPBtn").tooltip({
             		  position: 'bottom',    
             		  content: '编辑',
             	  });
             	  
-            	  $(".registZC_delZcBtn").linkbutton ({
+            	  $(".AddYHPBtn").linkbutton ({
             		  height : 22,
-            		  iconCls:"icon-no",
+            		  iconCls:"icon-add",
             		  plain : true,
             	  });
             	  
-            	  $(".registZC_delZcBtn").tooltip({
+            	  $(".AddYHPBtn").tooltip({
             		  position: 'bottom',    
             		  content: '删除',
             	  });
             	  
-            	  $(".registZC_allocateZcBtn").linkbutton ({
+            	  $(".allocateYHPBtn").linkbutton ({
             		  height : 22,
             		  iconCls:"icon-allocate",
             		  plain : true,
             	  });
             	  
-            	  $(".registZC_allocateZcBtn").tooltip({
+            	  $(".allocateYHPBtn").tooltip({
             		  position: 'bottom',    
             		  content: '调拨',
-            	  });
-            	  
-            	  $(".registZC_reallocateZcBtn").linkbutton ({
-            		  height : 22,
-            		  iconCls:"icon-reallocate",
-            		  plain : true,
-            	  });
-            	  
-            	  $(".registZC_reallocateZcBtn").tooltip({
-            		  position: 'bottom',    
-            		  content: '重新调拨',
-            	  });
-            	  $(".registZC_checkZcBtn").linkbutton ({
-            		  height : 22,
-            		  iconCls:"icon-edit",
-            		  plain : true,
-            	  });
-            	  
-            	  $(".registZC_checkZcBtn").tooltip({
-            		  position: 'bottom',    
-            		  content: '审核',
             	  });
             	  
             	  $(".tip").tooltip({ 

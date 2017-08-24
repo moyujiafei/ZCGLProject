@@ -17,13 +17,13 @@
     <result column="IMG_VERSION" property="imgVersion" jdbcType="BIGINT" />
   </resultMap>
   <insert id="insert" parameterType="org.lf.admin.db.pojo.VYHP" >
-    insert into v_yhp (yhp_id, app_id, lx, 
-      xh, ccbh, dept_no, dept_name, 
-      fzr, num, cfdd, left_limit, 
+    insert into v_yhp (yhp_id, app_id, lx,
+      xh, ccbh, dept_no, dept_name,
+      fzr, num, cfdd, left_limit,
       PIC_URL, IMG_VERSION)
-    values (#{yhpId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{lx,jdbcType=VARCHAR}, 
-      #{xh,jdbcType=VARCHAR}, #{ccbh,jdbcType=VARCHAR}, #{deptNo,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, 
-      #{fzr,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{cfdd,jdbcType=VARCHAR}, #{leftLimit,jdbcType=INTEGER}, 
+    values (#{yhpId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{lx,jdbcType=VARCHAR},
+      #{xh,jdbcType=VARCHAR}, #{ccbh,jdbcType=VARCHAR}, #{deptNo,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR},
+      #{fzr,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{cfdd,jdbcType=VARCHAR}, #{leftLimit,jdbcType=INTEGER},
       #{picUrl,jdbcType=VARCHAR}, #{imgVersion,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.VYHP" >
@@ -111,4 +111,60 @@
       </if>
     </trim>
   </insert>
+  <sql id="where_Caluse">
+            <if test="yhpId != null">
+        and yhp_id= #{yhpId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        and app_id= #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null">
+        and lx= #{lx,jdbcType=VARCHAR}
+      </if>
+      <if test="xh != null">
+        and xh = #{xh,jdbcType=VARCHAR}
+      </if>
+      <if test="ccbh != null">
+        and ccbh = #{ccbh,jdbcType=VARCHAR}
+      </if>
+      <if test="deptNo != null">
+        and dept_no = #{deptNo,jdbcType=INTEGER}
+      </if>
+      <if test="deptName != null">
+        and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="fzr != null">
+        and fzr = #{fzr,jdbcType=VARCHAR}
+      </if>
+      <if test="num != null">
+        and num = #{num,jdbcType=INTEGER}
+      </if>
+      <if test="cfdd != null">
+        and cfdd = #{cfdd,jdbcType=VARCHAR}
+      </if>
+      <if test="leftLimit != null">
+        and left_limit = #{leftLimit,jdbcType=INTEGER}
+      </if>
+      <if test="picUrl != null">
+        and PIC_URL = #{picUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="imgVersion != null">
+        and IMG_VERSION = #{imgVersion,jdbcType=BIGINT}
+      </if>
+  </sql>
+  <select id="selectYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultMap="BaseResultMap">
+      select * from v_yhp
+      <where>
+      <include refid="where_Caluse"/>
+    </where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>
+  </select>
+  <select id="countYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultType="int">
+      select count(*) from v_yhp
+      	<where>
+      <include refid="where_Caluse"/>
+    </where>
+  </select>
 </mapper>
