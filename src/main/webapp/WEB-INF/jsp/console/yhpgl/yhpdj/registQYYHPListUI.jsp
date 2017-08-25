@@ -33,6 +33,7 @@
 				inline: true,
 				onClose: function(){
 					registYHPDialog.remove();
+					$("#registYHPList").datagrid("reload");
 				}
 			});
 			
@@ -75,12 +76,14 @@
 				onClose: function(){
 					if(cyhplx!=null){
 						$("#searchbYhpLx").searchbox("setValue",cyhplx.mc);
-						$("#searchbYhpLx").attr("lxid",cyhplx.lxid);
+						$("#searchbYhpLx").attr("id",cyhplx.id);
 					}
 					dialogObj.remove();// 关闭时remove对话框
 				}
 			});
 		},
+		editYHP: function(index){
+		}
 	};
 
 	$("#registYHPListDialog").dialog({

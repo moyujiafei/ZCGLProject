@@ -4,6 +4,8 @@ import javax.servlet.http.HttpSession;
 
 import org.lf.admin.action.console.BaseController;
 import org.lf.admin.db.pojo.VYHP;
+import org.lf.admin.service.OperException;
+import org.lf.admin.service.utils.WXMediaService;
 import org.lf.admin.service.yhpgl.YHPService;
 import org.lf.utils.EasyuiDatagrid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +51,7 @@ public class RegistYHPController extends BaseController {
 	@RequestMapping("getYHPList.do")
 	@ResponseBody
 	public EasyuiDatagrid<VYHP> getYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
-		fzr=getCurrUser(session).getWxUsername();
+		//fzr=getCurrUser(session).getWxUsername();
 		return yhpService.getPagedYHPList(getAppId(session), lx, fzr, rows, page);
 	}
 	
@@ -75,8 +77,11 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("checkNum.do")
 	@ResponseBody
-	public boolean checkNum() {
-		return false;
+	public boolean checkNum(Integer num) {
+		if(num==null || num<=0){
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -85,8 +90,23 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("checkLeftLimit.do")
 	@ResponseBody
-	public boolean checkLeftLimit() {
-		return false;
+	public boolean checkLeftLimit(Integer leftLimit) {
+		if(leftLimit==null || leftLimit<=0){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 易耗品照片（PIC_URL）：上传文件框。可以为空。仅能上传.jpg格式文件，文件大小小于1MB。
+	 * @return
+	 */
+	private boolean checkPIC(MultipartFile file_upload) {
+		if (file_upload == null || file_upload.getSize() > WXMediaService.MAX_IMAGE_SIZE) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
@@ -96,10 +116,29 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("insertQYYHP.do")
 	@ResponseBody
-	public boolean insertQYYHP(HttpSession session, 
-			String lx, String xh, String ccbh, Integer num, String cfdd, Integer leftLimit, 
+	public String insertQYYHP(HttpSession session, 
+			Integer lx, String xh, String ccbh, Integer num, String cfdd, Integer leftLimit, 
 			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload) {
-		return false;
+		if(!checkNum(num)){
+			return "持有数量不是大于0的正整数！";
+		}
+		if(!checkLeftLimit(leftLimit)){
+			return "持有下限不是大于0的正整数！";
+		}
+		if(!checkPIC(file_upload)){
+			return "图片为空或图片文件大小大于1MB！";
+		}
+		String jlr=getCurrUser(session).getWxUsername();
+		Integer appId=getAppId(session);
+		String picUrl;
+		try {
+			picUrl = yhpService.uploadPic(session, file_upload, appId);
+			yhpService.insertYHP(appId, jlr, null, lx, picUrl, xh, ccbh, num, leftLimit, cfdd);
+		} catch (OperException e) {
+			return e.getMessage();
+		}
+		
+		return SUCCESS;
 	}
 	
 	/**

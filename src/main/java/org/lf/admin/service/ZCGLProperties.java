@@ -64,6 +64,10 @@ public class ZCGLProperties {
 	 */
 	public static final String URL_ZC_TARGET_DIR = getProperty("URL_ZC_TARGET_DIR");
 	/**
+	 * 易耗品图片存放位置
+	 */
+	public static final String URL_YHP_TARGET_DIR = getProperty("URL_YHP_TARGET_DIR");
+	/**
 	 * 在微信端查看用户信息
 	 */
 	public static final String URL_USER_INFO = getProperty("URL_USER_INFO");

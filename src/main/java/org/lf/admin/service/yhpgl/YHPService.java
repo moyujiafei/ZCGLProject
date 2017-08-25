@@ -1,17 +1,27 @@
 package org.lf.admin.service.yhpgl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.lf.admin.db.dao.JYHPMapper;
+import org.lf.admin.db.dao.LYHPMapper;
 import org.lf.admin.db.dao.VYHPMapper;
+import org.lf.admin.db.pojo.CZCLX;
 import org.lf.admin.db.pojo.JYHP;
+import org.lf.admin.db.pojo.LYHP;
 import org.lf.admin.db.pojo.VYHP;
 import org.lf.admin.service.OperException;
+import org.lf.admin.service.ZCGLProperties;
+import org.lf.admin.service.utils.WXMediaService;
 import org.lf.utils.EasyuiDatagrid;
 import org.lf.utils.PageNavigator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 易耗品管理
@@ -21,6 +31,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class YHPService {
 	@Autowired
 	private VYHPMapper vyhpDao;
+	
+	@Autowired
+	private JYHPMapper jyhpDao;
+	
+	@Autowired
+	private LYHPMapper l_yhpDao;
+	
+	@Autowired
+	private WXMediaService wxMediaService;
 	
 	public int countYHPList(Integer appId, String lx, String fzr) {
 		VYHP param=new VYHP();
@@ -65,7 +84,26 @@ public class YHPService {
 	@Transactional(rollbackFor = Exception.class)
 	public void insertYHP(Integer appId, String jlr, Integer czbmId, Integer lxId, String picUrl, String xh, String ccbh, Integer num,
 			Integer leftLimit, String cfdd) throws OperException {
-
+			//向J_YHP表中插入一条记录。
+			JYHP record=new JYHP();
+			record.setAppId(appId);
+			record.setZcglId(czbmId);
+			record.setLxId(lxId);
+			record.setPicUrl(picUrl);
+			record.setXh(xh);
+			record.setCcbh(ccbh);
+			record.setNum(num);
+			record.setLeftLimit(leftLimit);
+			record.setCfdd(cfdd);
+			jyhpDao.insertSelective(record);
+			//向L_YHP表中插入一条记录
+			LYHP record1=new LYHP();
+			record1.setJlr(jlr);
+			record1.setJlsj(new Date());
+			record1.setCzbmId(czbmId);
+			record1.setNum(num);
+			record1.setCzlx(0);
+			l_yhpDao.insertSelective(record1);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -90,5 +128,17 @@ public class YHPService {
 
 	public JYHP getYHP(Integer id) {
 		return null;
+	}
+	
+	public String uploadPic(HttpSession session, MultipartFile file_upload, Integer appid) throws OperException {
+		
+		String returnUrl = "";
+		// 根据appid生成文件前缀
+		String prePath = ZCGLProperties.URL_YHP_TARGET_DIR + "/" + appid;
+		MultipartFile[] FileList = new MultipartFile[]{file_upload};
+		String FileName = file_upload.getOriginalFilename();
+		String fileType=FileName.substring(FileName.lastIndexOf('.'),FileName.length());
+		returnUrl = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, fileType, FileList);
+		return returnUrl;
 	}
 }
