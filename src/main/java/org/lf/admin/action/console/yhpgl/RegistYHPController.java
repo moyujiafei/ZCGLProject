@@ -3,6 +3,8 @@ package org.lf.admin.action.console.yhpgl;
 import javax.servlet.http.HttpSession;
 
 import org.lf.admin.action.console.BaseController;
+import org.lf.admin.db.dao.CZCGLMapper;
+import org.lf.admin.db.pojo.CZCGL;
 import org.lf.admin.db.pojo.VYHP;
 import org.lf.admin.service.OperException;
 import org.lf.admin.service.utils.WXMediaService;
@@ -27,6 +29,9 @@ public class RegistYHPController extends BaseController {
 	
 	@Autowired
 	private YHPService yhpService;
+	
+	@Autowired
+	private CZCGLMapper zcglDao;
 
 	/**
 	 * 企业易耗品登记入库
@@ -204,8 +209,11 @@ public class RegistYHPController extends BaseController {
 	
 	@RequestMapping("checkAllocateNum.do")
 	@ResponseBody
-	public boolean checkAllocateNum() {
-		return false;
+	public boolean checkAllocateNum(Integer num,Integer allocateNum) {
+		if(allocateNum>num || allocateNum<1){
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -225,7 +233,21 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("allocateQYYHP.do")
 	@ResponseBody
-	public boolean allocateQYYHP(Integer yhpid, Integer allocateNum, Integer allocateZCGLId, String cfdd) {
-		return false;
+	public String allocateQYYHP(HttpSession session,Integer yhpid, Integer allocateNum, Integer allocatebm_deptno, String cfdd) {
+		String jlr=getCurrUser(session).getWxUsername();
+		int num=yhpService.getYHPByPrimaryKey(yhpid).getNum();
+		if(!checkAllocateNum(num,allocateNum)){
+			return "调拨数量不是1-"+num+"范围内的正整数！";
+		}
+		CZCGL record=new CZCGL();
+		record.setAppId(getAppId(session));
+		record.setDeptNo(allocatebm_deptno);
+		Integer zcgl_id=zcglDao.select(record).getId();
+		try {
+			yhpService.allocateYHP(yhpid, zcgl_id, allocateNum, cfdd,jlr);
+		} catch (OperException e) {
+			return e.getMessage();
+		}
+		return SUCCESS;
 	}
 }

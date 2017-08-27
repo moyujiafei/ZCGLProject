@@ -9,10 +9,10 @@ import javax.servlet.http.HttpSession;
 import org.lf.admin.db.dao.JYHPMapper;
 import org.lf.admin.db.dao.LYHPMapper;
 import org.lf.admin.db.dao.VYHPMapper;
-import org.lf.admin.db.pojo.CZCLX;
 import org.lf.admin.db.pojo.JYHP;
 import org.lf.admin.db.pojo.LYHP;
 import org.lf.admin.db.pojo.VYHP;
+import org.lf.admin.service.OperErrCode;
 import org.lf.admin.service.OperException;
 import org.lf.admin.service.ZCGLProperties;
 import org.lf.admin.service.utils.WXMediaService;
@@ -40,6 +40,9 @@ public class YHPService {
 	
 	@Autowired
 	private WXMediaService wxMediaService;
+	
+	public static final OperErrCode 调拨易耗品失败 = new OperErrCode("11201", "调拨易耗品失败！ ");
+	public static final OperErrCode 登记易耗品失败 = new OperErrCode("11202", "登记易耗品失败！ ");
 	
 	public int countYHPList(Integer appId, String lx, String fzr) {
 		VYHP param=new VYHP();
@@ -72,6 +75,10 @@ public class YHPService {
 		return result;
 	}
 	
+	public JYHP getYHPByPrimaryKey(Integer yhpid){
+		return jyhpDao.selectByPrimaryKey(yhpid);
+	}
+	
 	/**
 	 * 企业易耗品登记，czbmId为空；部门易耗品登记，操作部门为用户所在部门id号。
 	 * select id from c_zcgl where appid=? and fzr=?
@@ -95,15 +102,21 @@ public class YHPService {
 			record.setNum(num);
 			record.setLeftLimit(leftLimit);
 			record.setCfdd(cfdd);
-			jyhpDao.insertSelective(record);
+			int i=jyhpDao.insertSelective(record);
+			if(i<=0){
+				throw new OperException(登记易耗品失败);
+			}
 			//向L_YHP表中插入一条记录
 			LYHP record1=new LYHP();
 			record1.setJlr(jlr);
 			record1.setJlsj(new Date());
 			record1.setCzbmId(czbmId);
 			record1.setNum(num);
-			record1.setCzlx(0);
-			l_yhpDao.insertSelective(record1);
+			record1.setCzlx(0);		//登记（0）、调拨（1）、领用（2）、报损（3）、入库（4）
+			i=l_yhpDao.insertSelective(record1);
+			if(i<=0){
+				throw new OperException(登记易耗品失败);
+			}
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -122,8 +135,30 @@ public class YHPService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public void allocateYHP(Integer yhpId, Integer allocateZCGLId, Integer allocateNum, String cfdd) throws OperException {
-		
+	public void allocateYHP(Integer yhpId, Integer allocateZCGLId, Integer allocateNum, String cfdd,String jlr) throws OperException {
+		//在J_YHP中插入一条新记录。LX_ID，XH，CCBH，LEFT_LIMIT，PIC_URL，IMG_VERSION延用原有记录；
+		//ZCGL_ID，NUM，CFDD为用户新增值。
+		JYHP record=jyhpDao.selectByPrimaryKey(yhpId);
+		record.setId(null);
+		record.setZcglId(allocateZCGLId);
+		record.setNum(allocateNum);
+		record.setCfdd(cfdd);
+		int i=jyhpDao.insertSelective(record);
+		if(i<=0){
+			throw new OperException(调拨易耗品失败);
+		}
+		//在L_YHP中插入一条调拨记录
+		LYHP record1=new LYHP();
+		record1.setJlr(jlr);
+		record1.setJlsj(new Date());
+		record1.setCzbmId(null);
+		record1.setCzr(null);
+		record1.setNum(allocateNum);
+		record1.setCzlx(1);		//登记（0）、调拨（1）、领用（2）、报损（3）、入库（4）
+		i=l_yhpDao.insertSelective(record1);
+		if(i<=0){
+			throw new OperException(调拨易耗品失败);
+		}
 	}
 
 	public JYHP getYHP(Integer id) {

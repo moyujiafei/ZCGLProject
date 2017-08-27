@@ -9,7 +9,7 @@
   <body>
 	<div id="registYHPListDialog">
 		<div id="YHPListToolbar" style="width: 100%;height:30px;padding-top: 10px;">
-			<div style="float:left;"><a class="easyui-linkbutton" href="#" data-options="iconCls: 'icon-add'" onclick="registYHPList.regist()" plain="true">登记</a></div>
+			<div style="float:left;"><a class="easyui-linkbutton" href="#" data-options="iconCls: 'icon-add'" onclick="registYHPList.registYHP()" plain="true">登记</a></div>
 			<div style="float:right;">
 				<div style="float:left;line-height: 25px;">易耗品类型：</div><div style="float:left;padding-right: 10px;"><input style="width:100px" id="searchbYhpLx" name="yhplx"/></div>
 				<div style="float:left;line-height: 25px;padding-right: 10px;"><a class="easyui-linkbutton" data-options="iconCls: 'icon-search'" href="#" onclick="registYHPList.query()" plain="true">筛选</a></div>
@@ -18,9 +18,9 @@
 		<div id="registYHPList"></div>		
 	</div>
 	<script type="text/javascript">
-		registYHPList = {
+	var registYHPList = {
 			
-		regist: function () {
+		registYHP: function () {
 			var registYHPDialog = $("<div id='registYHPDialog'></div>");
 			registYHPDialog.appendTo("body");
 			$("#registYHPDialog").dialog({
@@ -36,15 +36,13 @@
 					$("#registYHPList").datagrid("reload");
 				}
 			});
-			
 		},
 		query: function () {
 			$("#registYHPList").datagrid("load",{
 				lx:	$("#searchbYhpLx").val()
 			});
 		},
-		allocate: function (index) {
-			allocateRow = $("#dgregistZCList").datagrid("getData").rows[index];
+		allocateYHP: function (index) {
 			var allocateYHPDialog = $("<div id='allocateYHPDialog'></div>");
 			allocateYHPDialog.appendTo("body");
 			$("#allocateYHPDialog").dialog({

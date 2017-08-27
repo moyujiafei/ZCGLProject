@@ -24,9 +24,10 @@
 		  <tr><td style="text-align: right;">出厂编号：</td><td><input id="registYHPUI_ccbh" name="ccbh"/></td></tr>
 		  <tr><td style="text-align: right;">持有数量：</td><td><table><tr><td><input id="registYHPUI_num" name="num"/><span style="color:#FF0000;margin-left: 3px;">*</span>
 		  <td style="width:23px"></td><td style="text-align: right;">库存下限：</td><td><input id="registYHPUI_left_limit" name="leftLimit"/><span style="color:#FF0000;margin-left: 3px;">*</span></td><tr></table></td></tr>
-		  <tr><td style="text-align: right;">存放地点：</td><td><input id="registYHPUI_cfdd" name="cfdd"/><span style="color:#FF0000;margin-left: 3px;">*</span></td></tr>
+		  <tr><td style="text-align: right;">存放地点：</td><td><input id="registYHPUI_cfdd" /><span style="color:#FF0000;margin-left: 3px;">*</span></td></tr>
 		</table>
 		<input id="registYHPUI_yhplx_Id" type="hidden" name="lx" style="display: none;"/>
+		<input id="registYHPUI_cfdd_fjId" type="hidden" name="cfdd" style="display: none;"/>
 	</form>
 	  <table>
 	        <tr>
@@ -39,7 +40,7 @@
 <script type="text/javascript">
 	
 	var registYHP = {
-			query_zccfdd : function () {
+			query_yhpcfdd : function () {
 				var queryCFDDUI = $("<div id='queryCFDDUI'></div>");
 				queryCFDDUI.appendTo("body");
 				vfj = null;
@@ -54,6 +55,7 @@
 							 queryCFDDUI.remove();
 							 $('#registYHPUI_cfdd').searchbox("setText",vfj.xqmc + vfj.jzw + vfj.floor+vfj.room);
 							 cfdd = vfj.fjId;
+							 $("#registYHPUI_cfdd_fjId").val(cfdd);
 						 }
 						 queryCFDDUI.remove();
 		             }
@@ -170,7 +172,8 @@
 		width : 110,
 		required:true,
 		editable : true,
-		prompt: "必填项"
+		prompt: "必填项",
+		precision: 0
 	});
 	
 	$("#registYHPUI_left_limit").numberbox({
@@ -179,6 +182,7 @@
 		editable : true,
 		required:true,
 		prompt: "必填项",
+		precision: 0
 	});
 	
 	$("#registYHPUI_cfdd").searchbox({
@@ -187,7 +191,7 @@
 		required: true,
 		prompt: "请点击右侧图标",
 		searcher: function(value,name){
-			registYHP.query_zccfdd();
+			registYHP.query_yhpcfdd();
 		},
 	});
 
