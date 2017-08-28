@@ -16,15 +16,16 @@
   
   <body>
   <div id="editYHPDialog">
-   <form id="editYhpform" method="post">
+   <form id="editYhpform" method="post" enctype="multipart/form-data">
 		<table align="center" cellspacing="5px" style="margin-top:20px">
 		  <tr><td style="text-align: right;">易耗品类型：</td><td><input id="updateYHPUI_yhplx" name="lx"/></td></tr>
-		  <tr><td style="text-align: right;">易耗品照片：</td><td><input id="updateYHPUI_yhpzp" name="img_url"/></td></tr>
+		  <tr><td style="text-align: right;">易耗品照片：</td><td><input id="updateYHPUI_yhpzp" name="file_upload"/></td></tr>
 		  <tr><td style="text-align: right;">规格型号：</td><td><input id="updateYHPUI_xh" name="xh"/></td></tr>
 		  <tr><td style="text-align: right;">出厂编号：</td><td><input id="updateYHPUI_ccbh" name="ccbh"/></td></tr>
-		  <tr><td style="text-align: right;">持有数量：</td><td><table><tr><td><input id="updateYHPUI_num" name="newzcgl"/><td style="width:23px"></td><td style="text-align: right;">库存下限：</td><td><input id="updateYHPUI_left_limit" name="left_limit"/><span style="color:#FF0000;margin-left: 3px;">*</span></td><tr></table></td></tr>
-		  <tr><td style="text-align: right;">存放地点：</td><td><input id="updateYHPUI_cfdd" name="cfdd"/><span style="color:#FF0000;margin-left: 3px;">*</span></td></tr>
+		  <tr><td style="text-align: right;">持有数量：</td><td><table><tr><td><input id="updateYHPUI_num" name="newzcgl"/><td style="width:23px"></td><td style="text-align: right;">库存下限：</td><td><input id="updateYHPUI_left_limit" name="leftLimit"/><span style="color:#FF0000;margin-left: 3px;">*</span></td><tr></table></td></tr>
+		  <tr><td style="text-align: right;">存放地点：</td><td><input id="updateYHPUI_cfdd"/><span style="color:#FF0000;margin-left: 3px;">*</span></td></tr>
 		</table>
+			<input id="updateYHPUI_cfdd_id" name="cfdd" type="hidden"/>		
 	</form>
 	  <table>
 	        <tr>
@@ -35,7 +36,6 @@
 	  </table>
 	</div>
 <script type="text/javascript">
-	
 	var updateYHP = {
 			query_zccfdd : function () {
 				var queryCFDDUI = $("<div id='queryCFDDUI'></div>");
@@ -52,12 +52,12 @@
 							 queryCFDDUI.remove();
 							 $('#updateYHPUI_cfdd').searchbox("setText",vfj.xqmc + vfj.jzw + vfj.floor+vfj.room);
 							 cfdd = vfj.fjId;
+							 $("#updateYHPUI_cfdd_id").val(cfdd);
 						 }
 						 queryCFDDUI.remove();
 		             }
 				});
 			},
-			
 	};
 	
 	$("#confirm_editYHP").linkbutton({
@@ -70,9 +70,35 @@
 		iconCls:'icon-no',
 		plain:true,
 	});
-	
 	$("#confirm_editYHP").bind('click',function(){
 		var limit=$("#updateYHPUI_left_limit").numberbox('getValue');
+		if(!isNaN(limit)&&limit>=0){
+			$.messager.progress();
+			$("#editYhpform").form('submit',{
+				url: getContextPath() + "/console/yhpgl/yhpdj/updateYHP.do",
+				onSubmit: function(param){
+					var valid = $("#editYhpform").form("validate");
+					if (!valid) {
+						$.messager.progress('close');
+						return valid;
+					}
+					param.yhpid=editYHP.yhpId;
+			    },    
+			    success:function(result){    
+			    	$.messager.progress('close');
+					if (result == "success") {
+						$("#editYHPDialog").dialog("close");
+						$("#BMYHPList").datagrid("reload");	
+					} else {
+						$.messager.alert("提示",result,"info");
+					}   
+			    } 
+				
+			});
+		} else{
+			$.messager.alert("库存下限要为大于0的数字,更新失败");
+			$("#editYHPDialog").dialog('close');
+		}
 		
 		
 	});
@@ -120,8 +146,10 @@
 	$("#updateYHPUI_left_limit").numberbox({
 		value : 0,
 		width : 110,
+		precision : 0,
 		editable : true,
 		prompt: "必填项",
+		required : true,
 	});
 	
 	$("#updateYHPUI_cfdd").searchbox({
@@ -129,8 +157,9 @@
 		width : 320,
 		editable : true,
 		prompt: "请点击右侧图标",
+		required : true,
 		searcher: function(value,name){
-			updateYHP.query_cfdd();
+			updateYHP.query_zccfdd();
 		},
 	});
 
@@ -157,6 +186,7 @@
                    		value : result.xqmc+result.jzw+result.floor+result.room,
                    	});
                    	cfdd=result.fjId;
+                    $("#updateYHPUI_cfdd_id").val(cfdd);
                 }else {
                 	$("#updateYHPUI_cfdd").searchbox({
                    		required: true,

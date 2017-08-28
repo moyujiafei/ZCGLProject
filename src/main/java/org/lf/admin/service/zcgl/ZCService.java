@@ -16,6 +16,7 @@ import org.lf.admin.service.OperException;
 import org.lf.admin.service.ZCGLProperties;
 import org.lf.admin.service.sys.WXAppService;
 import org.lf.admin.service.sys.WXDeptService;
+import org.lf.admin.service.utils.WXMediaService;
 import org.lf.utils.EasyuiDatagrid;
 import org.lf.utils.PageNavigator;
 import org.lf.utils.StringUtils;
@@ -613,7 +614,7 @@ public class ZCService {
 		if (StringUtils.isEmpty(picUrl)) {
 			return null;
 		}
-		return ZCGLProperties.URL_SERVER + picUrl + "_m.jpg?imgVersion=" + (imgVersion == null ? 0 : imgVersion);
+		return ZCGLProperties.URL_SERVER + picUrl + WXMediaService.THUMBNAIL_SUFFIX + "?imgVersion=" + (imgVersion == null ? 0 : imgVersion);
 	}
 
 	/**
@@ -627,7 +628,7 @@ public class ZCService {
 		if (StringUtils.isEmpty(picUrl)) {
 			return null;
 		}
-		return ZCGLProperties.URL_SERVER + picUrl + ".jpg?imgVersion=" + (imgVersion == null ? 0 : imgVersion);
+		return ZCGLProperties.URL_SERVER + picUrl + WXMediaService.IMAGE_SUFFIX +"?imgVersion=" + (imgVersion == null ? 0 : imgVersion);
 	}
 
 

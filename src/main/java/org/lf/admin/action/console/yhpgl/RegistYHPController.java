@@ -1,5 +1,7 @@
 package org.lf.admin.action.console.yhpgl;
 
+import java.awt.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.lf.admin.action.console.BaseController;
@@ -10,6 +12,7 @@ import org.lf.admin.service.OperException;
 import org.lf.admin.service.utils.WXMediaService;
 import org.lf.admin.service.yhpgl.YHPService;
 import org.lf.utils.EasyuiDatagrid;
+import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,11 +56,28 @@ public class RegistYHPController extends BaseController {
 	 * 查询v_yhp视图，获得指定appId下的所有易耗品列表。
 	 * 
 	 */
-	@RequestMapping("getYHPList.do")
+	@RequestMapping("getQYYHPList.do")
 	@ResponseBody
-	public EasyuiDatagrid<VYHP> getYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
-		//fzr=getCurrUser(session).getWxUsername();
+	public EasyuiDatagrid<VYHP> getQYYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
+		if(StringUtils.isEmpty(lx)||lx.equals("全部")){
+			lx=null;
+		}
 		return yhpService.getPagedYHPList(getAppId(session), lx, fzr, rows, page);
+	}
+	
+	/**
+	 * 查询v_yhp视图，获得指定appId下的所有易耗品列表。
+	 * 
+	 */
+	@RequestMapping("getBMYHPList.do")
+	@ResponseBody
+	public EasyuiDatagrid<VYHP> getBMYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
+		fzr=getCurrUser(session).getWxUsername();
+		Integer appId=getAppId(session);
+		if(StringUtils.isEmpty(lx)||lx.equals("全部")){
+			lx=null;
+		}
+		return yhpService.getPagedYHPList(appId, lx, fzr, rows, page);
 	}
 	
 	/**
@@ -155,10 +175,30 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("insertBMYHP.do")
 	@ResponseBody
-	public boolean insertBMYHP(HttpSession session, 
-			String lx, String xh, String ccbh, Integer num, String cfdd, Integer leftLimit, 
+	public String insertBMYHP(HttpSession session, 
+			Integer lx, String xh, String ccbh, Integer num, String cfdd, Integer leftLimit, 
 			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload) {
-		return false;
+		if(!checkNum(num)){
+			return "持有数量不是大于0的正整数！";
+		}
+		if(!checkLeftLimit(leftLimit)){
+			return "持有下限不是大于0的正整数！";
+		}
+		if(!checkPIC(file_upload)){
+			return "图片为空或图片文件大小大于1MB！";
+		}
+		String jlr=getCurrUser(session).getWxUsername();
+		Integer appId=getAppId(session);
+		String picUrl;
+		Integer czbmId=yhpService.getCZBM_Id(appId, jlr);
+		try {
+			picUrl = yhpService.uploadPic(session, file_upload, appId);
+			yhpService.insertYHP(appId, jlr, czbmId, lx, picUrl, xh, ccbh, num, leftLimit, cfdd);;
+		} catch (OperException e) {
+			return e.getMessage();
+		}
+		
+		return SUCCESS;
 	}
 	
 	@RequestMapping("updateYHPUI.do")
@@ -168,10 +208,51 @@ public class RegistYHPController extends BaseController {
 	
 	@RequestMapping("updateYHP.do")
 	@ResponseBody
-	public boolean updateQYYHP(Integer yhpid, String xh, String ccbh, String cfdd, Integer leftLimit, 
+	public String updateQYYHP(HttpSession session,Integer yhpid, String xh, String ccbh, String cfdd, Integer leftLimit, 
 			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload) {
-		return false;
+		Integer appId = getAppId(session);
+		if(file_upload==null||file_upload.getSize()==0){
+			String pic_url = null;
+			try {
+				yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
+			} catch (OperException e) {
+				return e.getMessage();
+			}
+			
+		}else{
+				try {
+					String pic_url = yhpService.uploadPic(session, file_upload,appId);
+					yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
+				} catch (OperException e) {
+					return e.getMessage();
+				}
+			}
+			return SUCCESS;
 	}
+	
+	@RequestMapping("updateBMYHP.do")
+	@ResponseBody
+	public String updateBMYHP(HttpSession session,Integer yhpid, String xh, String ccbh, String cfdd, Integer leftLimit, 
+			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload)  {
+		Integer appId = getAppId(session);
+		if(file_upload==null||file_upload.getSize()==0){
+			String pic_url = null;
+			try {
+				yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
+			} catch (OperException e) {
+				return e.getMessage();
+			}
+			
+		}else{
+				try {
+					String pic_url = yhpService.uploadPic(session, file_upload,appId);
+					yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
+				} catch (OperException e) {
+					return e.getMessage();
+				}
+			}
+			return SUCCESS;
+		}
 	
 	/**
 	 * 入库
@@ -194,8 +275,29 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("addYHP.do")
 	@ResponseBody
-	public boolean addYHP(Integer yhpid, Integer addNum) {
-		return false;
+	public String addYHP(HttpSession session,Integer yhpid, Integer addNum) {
+		String jlr=getCurrUser(session).getWxUsername();
+		int appid=getAppId(session);
+		try {
+			yhpService.addYHP(appid,jlr,yhpid, addNum);
+		} catch (OperException e) {
+			return e.getMessage();
+		}
+		return SUCCESS;
+	}
+	
+	@RequestMapping("isAdmin.do")
+	@ResponseBody
+	public String isAdmin(HttpSession session){
+		String fzr=getCurrUser(session).getWxUsername();
+		Integer appId=getAppId(session);
+		try {
+			zcglService.getFZR(appId, fzr);
+			return SUCCESS;
+		} catch (OperException e) {
+			return e.getMessage();
+		}
+		
 	}
 	
 	/**
@@ -249,5 +351,14 @@ public class RegistYHPController extends BaseController {
 			return e.getMessage();
 		}
 		return SUCCESS;
+	}
+	
+	/**
+	 * 如果易耗品没有被调拨，则可以删除易耗品
+	 */
+	@RequestMapping("allocateQYYHP.do")
+	@ResponseBody
+	public String deleteYHP(Integer yhpid){
+		return null;
 	}
 }

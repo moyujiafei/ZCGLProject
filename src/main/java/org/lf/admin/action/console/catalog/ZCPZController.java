@@ -181,7 +181,7 @@ public class ZCPZController extends BaseController {
 			Integer appid = getAppId(session);
 			// 根据appid生成文件前缀
 			String prePath = ZCGLProperties.URL_ZCLX_TARGET_DIR + "/" + appid;
-			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
 			zclxService.insertZCLX(getAppId(session), lxid != null ? lxid : lxpid, lxpid, mc, zjnx, remark, pic_url, 0);
 
 			// 通过mc,重新查询此记录，目的为了获得此记录的ID值
@@ -267,7 +267,7 @@ public class ZCPZController extends BaseController {
 				Integer appid = getAppId(session);
 				// 根据appid生成文件前缀
 				String prePath = ZCGLProperties.URL_ZCLX_TARGET_DIR + "/" + appid;
-				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
 			}
 			if (lxpid != null) {// 更新资产品种
 				// 格式化lxid后更新记录

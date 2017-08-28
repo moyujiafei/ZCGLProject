@@ -110,6 +110,7 @@
 		        if(data=="success"){
 			        $.messager.alert("提示","调拨成功！",'info');
 		        	$("#allocateYHPDialog").dialog('close');
+		        	$("#registYHPList").datagrid("reload");
 		        }else{
 		        	$.messager.alert("提示",data,'info');
 		        }  

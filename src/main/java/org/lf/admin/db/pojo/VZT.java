@@ -3,6 +3,7 @@ package org.lf.admin.db.pojo;
 import java.util.Date;
 
 import org.lf.admin.service.ZCGLProperties;
+import org.lf.admin.service.utils.WXMediaService;
 
 public class VZT extends PagedPojo {
 	private Integer ztid;
@@ -136,7 +137,7 @@ public class VZT extends PagedPojo {
 			this.imageUrl = null;
 		} else {
 			this.imageUrl = imageUrl.trim();
-			this.smallImageUrl = ZCGLProperties.URL_SERVER + ZCGLProperties.URL_MEDIA_TARGET_DIR + imageUrl + "_m.jpg";
+			this.smallImageUrl = ZCGLProperties.URL_SERVER + ZCGLProperties.URL_MEDIA_TARGET_DIR + imageUrl + WXMediaService.THUMBNAIL_SUFFIX;
 		}
 	}
 }

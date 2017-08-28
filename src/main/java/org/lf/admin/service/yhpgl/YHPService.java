@@ -6,9 +6,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.lf.admin.db.dao.CZCGLMapper;
 import org.lf.admin.db.dao.JYHPMapper;
 import org.lf.admin.db.dao.LYHPMapper;
 import org.lf.admin.db.dao.VYHPMapper;
+import org.lf.admin.db.pojo.CZCGL;
 import org.lf.admin.db.pojo.JYHP;
 import org.lf.admin.db.pojo.LYHP;
 import org.lf.admin.db.pojo.VYHP;
@@ -37,6 +39,9 @@ public class YHPService {
 	
 	@Autowired
 	private LYHPMapper l_yhpDao;
+	
+	@Autowired
+	private CZCGLMapper zcglDao;
 	
 	@Autowired
 	private WXMediaService wxMediaService;
@@ -102,6 +107,7 @@ public class YHPService {
 			record.setNum(num);
 			record.setLeftLimit(leftLimit);
 			record.setCfdd(cfdd);
+			record.setImgVersion(1);
 			int i=jyhpDao.insertSelective(record);
 			if(i<=0){
 				throw new OperException(登记易耗品失败);
@@ -136,9 +142,15 @@ public class YHPService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public void allocateYHP(Integer yhpId, Integer allocateZCGLId, Integer allocateNum, String cfdd,String jlr) throws OperException {
+		//向J_YHP表中更新指定记录的NUM（NUM-ALLOCATE_NUM），如果小于LEFT_LIMIT，发送预警消息
+		JYHP record=jyhpDao.selectByPrimaryKey(yhpId);
+		int num=record.getNum()-allocateNum;	//现在的持有数量
+		record.setNum(num);
+		jyhpDao.updateByPrimaryKeySelective(record);
+		//NUM如果小于LEFT_LIMIT，发送预警消息
+		//....do something
 		//在J_YHP中插入一条新记录。LX_ID，XH，CCBH，LEFT_LIMIT，PIC_URL，IMG_VERSION延用原有记录；
 		//ZCGL_ID，NUM，CFDD为用户新增值。
-		JYHP record=jyhpDao.selectByPrimaryKey(yhpId);
 		record.setId(null);
 		record.setZcglId(allocateZCGLId);
 		record.setNum(allocateNum);
@@ -175,5 +187,13 @@ public class YHPService {
 		String fileType=FileName.substring(FileName.lastIndexOf('.'),FileName.length());
 		returnUrl = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, fileType, FileList);
 		return returnUrl;
+	}
+	
+	public Integer getCZBM_Id(Integer appId,String fzr){
+		CZCGL c=new CZCGL();
+		c.setAppId(appId);
+		c.setFzr(fzr);
+		c=zcglDao.select(c);
+		return c.getId();
 	}
 }

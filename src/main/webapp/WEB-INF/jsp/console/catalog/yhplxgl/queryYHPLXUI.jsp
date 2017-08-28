@@ -72,7 +72,7 @@
     	 		$.messager.alert('提示','请选择一个易耗品类型！','info');
     	 	}else if(node.text=="全部"){
     	 		if(${isEdit}==false){
-    	 			cyhplx={lxId: null,mc: "全部"};
+    	 			cyhplx={id: null,mc: "全部"};
                 	$("#"+dialogId).dialog("close");
                 }else{
                 	$.messager.alert('提示','请选择一个易耗品类型！','info');

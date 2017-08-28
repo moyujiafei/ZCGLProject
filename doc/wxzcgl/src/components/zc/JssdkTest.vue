@@ -136,5 +136,5 @@
 
 <style scoped>
   .foot{position:fixed;left:0;height:42px;line-height:42px;width:100%;}
-  .foot{bottom:10px;}
+  .foot{bottom:0px;}
 </style>

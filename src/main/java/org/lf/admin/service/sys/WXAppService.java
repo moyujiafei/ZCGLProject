@@ -172,7 +172,7 @@ public class WXAppService {
 		// 保存文件路径前缀
 		String prePath = ZCGLProperties.URL_MEDIA_TARGET_DIR + "/logo";
 		// 保存文件类型
-		String fileType = ".jpg";
+		String fileType = WXMediaService.IMAGE_SUFFIX;
 		String iconPath = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_LOGO_SIZE, fileType, FileList);
 		if (iconPath!=null) {
 			param.setCorpIcon(iconPath);
@@ -334,7 +334,7 @@ public class WXAppService {
 		// 保存文件路径前缀
 		String prePath = ZCGLProperties.URL_MEDIA_TARGET_DIR + "/logo";
 		// 保存文件类型
-		String fileType = ".jpg";
+		String fileType = WXMediaService.IMAGE_SUFFIX;
 		String iconPath = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_LOGO_SIZE, fileType, FileList);
 		if (iconPath != null) {
 			param.setCorpIcon(iconPath);

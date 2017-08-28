@@ -153,7 +153,7 @@ public class YHPPZController extends BaseController {
 			Integer appid = getAppId(session);
 			// 根据appid生成文件前缀
 			String prePath = ZCGLProperties.URL_YHPLX_TARGET_DIR + "/" + appid;
-			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
 			yhplxService.insertYHPLX(getAppId(session), lxid != null ? lxid : lxpid, lxpid, mc, remark, pic_url, 0);
 
 			// 通过mc,重新查询此记录，目的为了获得此记录的ID值
@@ -228,7 +228,7 @@ public class YHPPZController extends BaseController {
 				Integer appid = getAppId(session);
 				// 根据appid生成文件前缀
 				String prePath = ZCGLProperties.URL_YHPLX_TARGET_DIR + "/" + appid;
-				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
 				imgVersion++;// 只要更新了图片，就增加版本号
 			}
 			yhplxService.updateYHPLX(id, lxid, lxpid, mc, remark, pic_url, imgVersion);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header :left-options="{showBack: showBack}">我的信息</x-header>
+    <x-header :left-options="{showBack: showBack}">我的</x-header>
     <my></my>
   </div>
 </template>

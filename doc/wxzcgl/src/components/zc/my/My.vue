@@ -8,6 +8,8 @@
     <cell title="软件功能更新说明" :link="{name:'MyUpdate'}" is-link></cell>
     <!-- <cell title="test" :link="{name:'gzwxTest'}" is-link></cell>
     <cell title="payTest" :link="{name:'payTest'}" is-link></cell> -->
+    <!--<cell title="tttt" :link="{name:'JssdkTest'}" is-link></cell>-->
+    <!--<cell title="zc" :link="{name:'ZcfpTest'}" is-link></cell>-->
   </group>
 </template>
 

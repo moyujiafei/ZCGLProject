@@ -11,13 +11,14 @@
 		<div id="YHPListToolbar" style="width: 100%;height:30px;padding-top: 10px;">
 			<div style="float:left;"><a class="easyui-linkbutton" href="#" data-options="iconCls: 'icon-add'" onclick="registYHPList.registYHP()" plain="true">登记</a></div>
 			<div style="float:right;">
-				<div style="float:left;line-height: 25px;">易耗品类型：</div><div style="float:left;padding-right: 10px;"><input style="width:100px" id="searchbYhpLx" name="yhplx"/></div>
+				<div style="float:left;line-height: 25px;">易耗品类型：</div><div style="float:left;padding-right: 10px;"><input style="width:100px" id="QY_YhpLx" name="yhplx"/></div>
 				<div style="float:left;line-height: 25px;padding-right: 10px;"><a class="easyui-linkbutton" data-options="iconCls: 'icon-search'" href="#" onclick="registYHPList.query()" plain="true">筛选</a></div>
 			</div>
 		</div>
 		<div id="registYHPList"></div>		
 	</div>
 	<script type="text/javascript">
+	cyhplx=null;
 	var registYHPList = {
 			
 		registYHP: function () {
@@ -38,11 +39,20 @@
 			});
 		},
 		query: function () {
-			$("#registYHPList").datagrid("load",{
-				lx:	$("#searchbYhpLx").val()
-			});
+			if(cyhplx!=null){
+				var lx=cyhplx.mc;
+				if(lx=="全部"){
+					$("#registYHPList").datagrid("load",{});
+				}else{
+					$("#registYHPList").datagrid("load",{
+						lx: lx	
+					});
+				}
+			}
 		},
-		allocateYHP: function (index) {
+		editYHP: function(index){
+		},
+		allocateYHP: function () {
 			var allocateYHPDialog = $("<div id='allocateYHPDialog'></div>");
 			allocateYHPDialog.appendTo("body");
 			$("#allocateYHPDialog").dialog({
@@ -58,30 +68,46 @@
 				}
 			});
 		},
-		queryYhplx: function(){
-			dialogObj=$("<div id='YhpLxDialogDiv'></div>");
-			dialogObj.appendTo("body");
-			cyhplx=null;
-			$("#YhpLxDialogDiv").dialog({
-				title: "查找易耗品类型",
-				href: getContextPath()+"/console/catalog/yhplxgl/queryYhplxUI.do",
-				width: 512,
-                height: 300,
-                cache: false,
-				queryParams: {isEdit: true},
-				modal: true,
-				inline: true,
-				onClose: function(){
-					if(cyhplx!=null){
-						$("#searchbYhpLx").searchbox("setValue",cyhplx.mc);
-						$("#searchbYhpLx").attr("id",cyhplx.id);
-					}
-					dialogObj.remove();// 关闭时remove对话框
-				}
+		delYHP: function(index){
+			var row=$("#registYHPList").datagrid("getSelected");
+			$.ajax({
+			    url:"http://www.microsoft.com",    //请求的url地址
+			    dataType:"text",   //返回格式为json
+			    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+			    data:{"yhpid":row.yhpId},    //参数值
+			    type:"get",   //请求方式
+			    success:function(req){
+			        //请求成功时处理
+			    },
+			    error:function(){
+			        $.messager.alert("错误","Ajax Error！","error");
+			        //请求出错处理
+			    }
 			});
 		},
-		editYHP: function(index){
-		}
+		queryYhplx: function(dialogId,url,title,param,searchboxId){
+       		dialogObj = $('<div id="' + dialogId + '"></div>');
+				dialogObj.appendTo("body");
+				cyhplx=null;
+				$("#" + dialogId).dialog({
+                   href: getContextPath() + url,
+                   title: title,
+                   queryParams: param,
+                   width: 512,
+                   height: 300,
+                   cache: false,
+                   modal: true,
+                   draggable: true,
+                   inline: true,
+                   onClose: function() {
+                       if(cyhplx!=null){
+                       	$("#"+searchboxId).searchbox("setValue",cyhplx.mc);
+                       	$("#"+searchboxId).attr("lx_id",cyhplx.id);
+                       }
+                       dialogObj.remove();// 关闭时remove对话框
+                   }
+               });
+       	}
 	};
 
 	$("#registYHPListDialog").dialog({
@@ -96,10 +122,10 @@
 	});
 	
 	
-	$("#searchbYhpLx").searchbox({
+	$("#QY_YhpLx").searchbox({
 		editable: false,
 		searcher: function(value,name){
-			registYHPList.queryYhplx();
+			registYHPList.queryYhplx("queryYHPLxDialog","/console/catalog/yhplxgl/queryYhplxUI.do","易耗品类型查找",{isEdit: false},"QY_YhpLx");
 		}
 	});
 	
@@ -205,7 +231,12 @@
                       width: '15%',
                       resizable: false,
                       formatter:function (value,row,index) {
-	                    	  return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;<a class='allocateYHPBtn' onclick='registYHPList.allocateYHP("+index+")' href='#'></a>";
+                    	  if(row.deptNo!=null){
+                    	  	return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;";
+                    	  }
+                    	  return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;"
+                    	  +"<a class='allocateYHPBtn' onclick='registYHPList.allocateYHP()' href='#'></a>&nbsp;"
+                    	  +"<a class='delYHPBtn' onclick='registYHPList.delYHP("+index+")' href='#'></a>";
                       }
                   }]
               ],
@@ -244,6 +275,17 @@
             		  content: '调拨',
             	  });
             	  
+            	  $(".delYHPBtn").linkbutton ({
+            		  height : 22,
+            		  iconCls:"icon-del",
+            		  plain : true,
+            	  });
+            	  
+            	  $(".delYHPBtn").tooltip({
+            		  position: 'bottom',    
+            		  content: '删除',
+            	  });
+            	  
             	  $(".tip").tooltip({ 
             		  trackMouse: true,
                       onShow: function(){ 
@@ -255,7 +297,7 @@
                       }  
                   });
             	  
-              },
+              }
 	});
 		
 	</script>

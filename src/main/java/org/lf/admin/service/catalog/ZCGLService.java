@@ -56,6 +56,8 @@ public class ZCGLService {
 	public static final OperErrCode 文件导出异常 = new OperErrCode("10201", "文件导出异常");
 	public static final OperErrCode 不允许同一个用户同时做两个以上部门的易耗品负责人 = new OperErrCode("10201", "不允许同一个用户同时做两个以上部门的易耗品负责人");
 	public static final OperErrCode 不允许同一个用户同时做两个以上部门的固定资产管理人 = new OperErrCode("10201", "不允许同一个用户同时做两个以上部门的固定资产管理人");
+	public static final OperErrCode 当前用户不是固定资产管理人 = new OperErrCode("10201", "当前用户不是固定资产管理人");
+	public static final OperErrCode 当前用户不是易耗品负责人 = new OperErrCode("10201", "当前用户不是易耗品负责人");
 
 	/**
 	 * 这是一个公共方法，用于检查要插入的资产格式是否正确。 如果line为空，则不显示“XXXX行”信息。
@@ -350,6 +352,36 @@ public class ZCGLService {
 		if (zcgl == null) {
 			throw new OperException(资产管理记录不存在);
 		}
+		return zcgl;
+	}
+	
+	/**
+	 * 查看当前用户是否为部门资产管理人
+	 */
+	public CZCGL getGLR(Integer appId, String glr) throws OperException {
+		CZCGL param = new CZCGL();
+		param.setAppId(appId);
+		param.setGlr(glr);
+		CZCGL zcgl = getZCGL(param);
+		if (zcgl == null) {
+			throw new OperException(当前用户不是固定资产管理人);
+		}
+
+		return zcgl;
+	}
+	
+	/**
+	 * 查看当前用户是否为部门资产管理人
+	 */
+	public CZCGL getFZR(Integer appId, String fzr) throws OperException {
+		CZCGL param = new CZCGL();
+		param.setAppId(appId);
+		param.setGlr(fzr);
+		CZCGL zcgl = getZCGL(param);
+		if (zcgl == null) {
+			throw new OperException(当前用户不是易耗品负责人);
+		}
+
 		return zcgl;
 	}
 	
