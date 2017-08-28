@@ -48,6 +48,8 @@ public class YHPService {
 	
 	public static final OperErrCode 调拨易耗品失败 = new OperErrCode("11201", "调拨易耗品失败！ ");
 	public static final OperErrCode 登记易耗品失败 = new OperErrCode("11202", "登记易耗品失败！ ");
+	public static final OperErrCode 补货易耗品失败 = new OperErrCode("11203", "补货易耗品失败！ ");
+	public static final OperErrCode 编辑易耗品失败 = new OperErrCode("11204", "编辑易耗品失败！ ");
 	
 	public int countYHPList(Integer appId, String lx, String fzr) {
 		VYHP param=new VYHP();
@@ -58,7 +60,14 @@ public class YHPService {
 	}
 	
 	public List<VYHP> getYHPList(Integer appId, String lx, String fzr, int rows, int page) {
-		return null;
+		PageNavigator pn = new PageNavigator(rows, page);
+		VYHP param=new VYHP();
+		param.setStart(pn.getStart());
+		param.setOffset(pn.getOffset());
+		param.setAppId(appId);
+		param.setLx(lx);
+		param.setFzr(fzr);
+		return vyhpDao.selectYhpList(param);
 	}
 	
 	public EasyuiDatagrid<VYHP> getPagedYHPList(Integer appId, String lx, String fzr, int rows, int page) {
@@ -117,6 +126,11 @@ public class YHPService {
 			record1.setJlr(jlr);
 			record1.setJlsj(new Date());
 			record1.setCzbmId(czbmId);
+			if(czbmId==null){
+				record1.setCzr(null);
+			}else{
+				record1.setCzr(jlr);
+			}
 			record1.setNum(num);
 			record1.setCzlx(0);		//登记（0）、调拨（1）、领用（2）、报损（3）、入库（4）
 			i=l_yhpDao.insertSelective(record1);
@@ -127,7 +141,19 @@ public class YHPService {
 	
 	@Transactional(rollbackFor = Exception.class)
 	public void updateYHP(Integer yhpId, String picUrl, String xh, String ccbh, Integer leftLimit, String cfdd) throws OperException {
-		
+		JYHP param=jyhpDao.selectByPrimaryKey(yhpId);
+		if(param.getImgVersion()==null){
+			param.setImgVersion(1);
+		}else{
+			param.setImgVersion(param.getImgVersion()+1);
+		}
+		param.setId(yhpId);
+		param.setCfdd(cfdd);
+		param.setPicUrl(picUrl);
+		param.setXh(xh);
+		param.setCcbh(ccbh);
+		param.setLeftLimit(leftLimit);
+		jyhpDao.updateByPrimaryKeySelective(param);
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
@@ -136,8 +162,30 @@ public class YHPService {
 	}
 	
 	@Transactional(rollbackFor = Exception.class)
-	public void addYHP(Integer yhpId, Integer addNum) throws OperException {
-		
+	public void addYHP(Integer appId,String jlr,Integer yhpId, Integer addNum) throws OperException {
+		JYHP param=jyhpDao.selectByPrimaryKey(yhpId);
+		param.setNum(param.getNum()+addNum);
+		int i=jyhpDao.updateByPrimaryKey(param);
+		if(i<=0){
+			throw new OperException(补货易耗品失败);
+		}
+		LYHP record=new LYHP();
+		record.setJlr(jlr);
+		record.setNum(addNum);
+		record.setCzlx(5);             //登记（0）、调拨（1）、领用（2）、报损（3）、入库（4）、补货（5）
+		Integer czbmId=getCZBM_Id(appId, jlr);
+		record.setCzbmId(czbmId);
+		if(czbmId==null){
+			record.setCzr(null);
+		}else{
+			record.setCzr(jlr);
+		}
+		record.setJlsj(new Date());
+		record.setYhpId(yhpId);
+		int m=l_yhpDao.insertSelective(record);
+		if(m<=0){
+			throw new OperException(补货易耗品失败);
+		}
 	}
 	
 	@Transactional(rollbackFor = Exception.class)

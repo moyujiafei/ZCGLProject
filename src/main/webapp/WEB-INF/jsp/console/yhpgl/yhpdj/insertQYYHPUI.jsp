@@ -126,9 +126,11 @@
 		    },    
 		    success:function(data){    
 		        $.messager.progress('close');
-		        alert(data);  
 		        if(data=="success"){
-			        $("#registYHPDialog").dialog('close');
+			        $.messager.alert("提示","登记成功！",'info');
+		        	$("#registYHPDialog").dialog('close');
+		        }else{
+		        	$.messager.alert("提示",data,'info');
 		        }  
 		    }    
 		});  

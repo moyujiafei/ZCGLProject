@@ -376,7 +376,7 @@ public class ZCGLService {
 	public CZCGL getFZR(Integer appId, String fzr) throws OperException {
 		CZCGL param = new CZCGL();
 		param.setAppId(appId);
-		param.setGlr(fzr);
+		param.setFzr(fzr);
 		CZCGL zcgl = getZCGL(param);
 		if (zcgl == null) {
 			throw new OperException(当前用户不是易耗品负责人);

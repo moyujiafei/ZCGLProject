@@ -19,7 +19,7 @@
 	</div>
 	<script type="text/javascript">
 	cyhplx=null;
-	var registYHPList = {
+	var registQYYHPList = {
 			
 		registYHP: function () {
 			var registYHPDialog = $("<div id='registYHPDialog'></div>");
@@ -38,6 +38,27 @@
 				}
 			});
 		},
+		newDialog: function(dialogId,url,title,param){
+			// 弹出新的对话框
+			var dialogObj = $('<div id="' + dialogId + '"></div>');
+			dialogObj.appendTo("body");
+			$("#" + dialogId).dialog({
+                href: getContextPath() + url,
+                title: title,
+                top: 220,
+                queryParams: param,
+                width: 512,
+                height: 300,
+                shadow : true, //显示阴影
+        		resizable : false, //不允许改变大小
+                modal: true,
+                draggable: true,
+                inline: true,
+                onClose: function() {
+                    dialogObj.remove();// 关闭时remove对话框
+                }
+            });
+		},
 		query: function () {
 			if(cyhplx!=null){
 				var lx=cyhplx.mc;
@@ -51,6 +72,13 @@
 			}
 		},
 		editYHP: function(index){
+			editYHP = $("#registYHPList").datagrid('getData').rows[index];
+			registQYYHPList.newDialog("editYHPDialog", "/console/yhpgl/yhpdj/updateYHPUI.do", "编辑低值易耗品",{});
+		},
+		addYHP : function(index){
+			bhYHP = $("#registYHPList").datagrid('getData').rows[index];
+			registQYYHPList.newDialog("bhYHPDialog", "/console/yhpgl/yhpdj/addYHPUI.do", "补货低值易耗品",{});
+			
 		},
 		allocateYHP: function () {
 			var allocateYHPDialog = $("<div id='allocateYHPDialog'></div>");
@@ -125,12 +153,12 @@
 	$("#QY_YhpLx").searchbox({
 		editable: false,
 		searcher: function(value,name){
-			registYHPList.queryYhplx("queryYHPLxDialog","/console/catalog/yhplxgl/queryYhplxUI.do","易耗品类型查找",{isEdit: false},"QY_YhpLx");
+			registQYYHPList.queryYhplx("queryYHPLxDialog","/console/catalog/yhplxgl/queryYhplxUI.do","易耗品类型查找",{isEdit: false},"QY_YhpLx");
 		}
 	});
 	
 	$("#registYHPList").datagrid({
-		url: getContextPath() + "/console/yhpgl/yhpdj/getYHPList.do",
+		url: getContextPath() + "/console/yhpgl/yhpdj/getQYYHPList.do",
 		fit: true,
         singleSelect: true,
         pagination: true,
@@ -232,11 +260,11 @@
                       resizable: false,
                       formatter:function (value,row,index) {
                     	  if(row.deptNo!=null){
-                    	  	return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;";
+                    	  	return "<a class='editYHPBtn' onclick='registQYYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registQYYHPList.addYHP("+index+")' href='#'></a>&nbsp;";
                     	  }
-                    	  return "<a class='editYHPBtn' onclick='registYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registYHPList.AddYHP("+index+")' href='#'></a>&nbsp;"
-                    	  +"<a class='allocateYHPBtn' onclick='registYHPList.allocateYHP()' href='#'></a>&nbsp;"
-                    	  +"<a class='delYHPBtn' onclick='registYHPList.delYHP("+index+")' href='#'></a>";
+                    	  return "<a class='editYHPBtn' onclick='registQYYHPList.editYHP("+index+")' href='#'></a>&nbsp;<a class='AddYHPBtn' onclick='registQYYHPList.addYHP("+index+")' href='#'></a>&nbsp;"
+                    	  +"<a class='allocateYHPBtn' onclick='registQYYHPList.allocateYHP()' href='#'></a>&nbsp;"
+                    	  +"<a class='delYHPBtn' onclick='registQYYHPList.delYHP("+index+")' href='#'></a>";
                       }
                   }]
               ],
@@ -255,7 +283,7 @@
             	  
             	  $(".AddYHPBtn").linkbutton ({
             		  height : 22,
-            		  iconCls:"icon-add",
+            		  iconCls:"icon-buhuo",
             		  plain : true,
             	  });
             	  

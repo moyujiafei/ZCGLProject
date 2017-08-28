@@ -88,7 +88,7 @@
 			    	$.messager.progress('close');
 					if (result == "success") {
 						$("#editYHPDialog").dialog("close");
-						$("#BMYHPList").datagrid("reload");	
+						$("#registYHPList").datagrid("reload");	
 					} else {
 						$.messager.alert("提示",result,"info");
 					}   
@@ -144,7 +144,7 @@
 	});
 	
 	$("#updateYHPUI_left_limit").numberbox({
-		value : 0,
+		value : editYHP.leftLimit,
 		width : 110,
 		precision : 0,
 		editable : true,

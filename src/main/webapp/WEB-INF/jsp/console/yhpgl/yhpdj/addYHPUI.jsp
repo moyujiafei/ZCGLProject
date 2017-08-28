@@ -67,7 +67,7 @@
 		    	$.messager.progress('close');
 				if (result == "success") {
 					$("#bhYHPDialog").dialog("close");
-					$("#BMYHPList").datagrid("reload");	
+					$("#registYHPList").datagrid("reload");	
 				} else {
 					$.messager.alert("提示",result,"info");
 				}   

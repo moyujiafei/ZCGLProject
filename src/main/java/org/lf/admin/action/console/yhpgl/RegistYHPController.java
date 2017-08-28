@@ -1,7 +1,5 @@
 package org.lf.admin.action.console.yhpgl;
 
-import java.awt.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.lf.admin.action.console.BaseController;
@@ -9,6 +7,7 @@ import org.lf.admin.db.dao.CZCGLMapper;
 import org.lf.admin.db.pojo.CZCGL;
 import org.lf.admin.db.pojo.VYHP;
 import org.lf.admin.service.OperException;
+import org.lf.admin.service.catalog.ZCGLService;
 import org.lf.admin.service.utils.WXMediaService;
 import org.lf.admin.service.yhpgl.YHPService;
 import org.lf.utils.EasyuiDatagrid;
@@ -35,6 +34,9 @@ public class RegistYHPController extends BaseController {
 	
 	@Autowired
 	private CZCGLMapper zcglDao;
+	
+	@Autowired
+	private ZCGLService zcglService;
 
 	/**
 	 * 企业易耗品登记入库
@@ -230,29 +232,6 @@ public class RegistYHPController extends BaseController {
 			return SUCCESS;
 	}
 	
-	@RequestMapping("updateBMYHP.do")
-	@ResponseBody
-	public String updateBMYHP(HttpSession session,Integer yhpid, String xh, String ccbh, String cfdd, Integer leftLimit, 
-			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload)  {
-		Integer appId = getAppId(session);
-		if(file_upload==null||file_upload.getSize()==0){
-			String pic_url = null;
-			try {
-				yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
-			} catch (OperException e) {
-				return e.getMessage();
-			}
-			
-		}else{
-				try {
-					String pic_url = yhpService.uploadPic(session, file_upload,appId);
-					yhpService.updateYHP(yhpid, pic_url, xh, ccbh, leftLimit, cfdd);
-				} catch (OperException e) {
-					return e.getMessage();
-				}
-			}
-			return SUCCESS;
-		}
 	
 	/**
 	 * 入库
@@ -356,7 +335,7 @@ public class RegistYHPController extends BaseController {
 	/**
 	 * 如果易耗品没有被调拨，则可以删除易耗品
 	 */
-	@RequestMapping("allocateQYYHP.do")
+	@RequestMapping("delQYYHP.do")
 	@ResponseBody
 	public String deleteYHP(Integer yhpid){
 		return null;
