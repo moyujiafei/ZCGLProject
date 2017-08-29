@@ -14,6 +14,9 @@
 		<if test="fzr != null">
 			and FZR = #{fzr,jdbcType=VARCHAR}
 		</if>
+		<if test="fzr == null">
+			and fzr is NULL
+		</if>
 		<if test="glr != null">
 			and GLR = #{glr,jdbcType=VARCHAR}
 		</if>

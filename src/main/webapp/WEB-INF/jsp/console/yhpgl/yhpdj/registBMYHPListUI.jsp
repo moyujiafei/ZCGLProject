@@ -56,10 +56,10 @@
 	
 	 
 	   function doSearch(){
-			var lx=$("#BMYHP_lx").searchbox('getValue');
+			var lxId=$("#BMYHP_lx").attr("lx_id");
 			var fzr=null;
-			var param ={"fzr":fzr,"lx":lx};
-			$("#BMYHPList").datagrid("reload",param);
+			var param ={"fzr":fzr,"lxId":lxId};
+			$("#registYHPList").datagrid("reload",param);
 		};
 	
    var registBMYHPOpt = {
@@ -80,7 +80,7 @@
                    onClose: function() {
                        if(cyhplx!=null){
                        	$("#"+searchboxId).searchbox("setValue",cyhplx.mc);
-                       	$("#"+searchboxId).attr("lx_id",cyhplx.id);
+                       	$("#"+searchboxId).attr("lx_id",cyhplx.lxId);
                        }
                        dialogObj.remove();// 关闭时remove对话框
                    }
@@ -94,7 +94,6 @@
 			$("#" + dialogId).dialog({
                 href: getContextPath() + url,
                 title: title,
-                top: 220,
                 queryParams: param,
                 width: 512,
                 height: 300,
@@ -275,13 +274,13 @@
 		                     return content;  
 		                }
 					},{
-						field:'cfdd',
-						title:'存放地点',
+						field:'deptName',
+						title:'操作部门',
 						align:'center',
 						width:'21.9%',
 						formatter:function(value,row,index){ 
 							var content=null;
-							if(row.cfdd!=null){
+							if(row.deptName!=null){
 		                     content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>"; 
 							}
 		                     return content;  
@@ -301,7 +300,7 @@
 					},{
 						field:'opt',
 						title:'操作',
-						align:'center',
+						align:'left',
 						width:'15%',
 						formatter:function(value,row,index){
 							return '&nbsp;&nbsp;<a href="#" class="editBtn" onclick="registBMYHPOpt.edit('+index+')"></a>&nbsp;&nbsp;'+

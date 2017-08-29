@@ -61,10 +61,12 @@ public class RegistYHPController extends BaseController {
 	@RequestMapping("getQYYHPList.do")
 	@ResponseBody
 	public EasyuiDatagrid<VYHP> getQYYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
+		Integer appId=getAppId(session);
 		if(StringUtils.isEmpty(lx)||lx.equals("全部")){
 			lx=null;
 		}
-		return yhpService.getPagedYHPList(getAppId(session), lx, fzr, rows, page);
+		Integer deptno=yhpService.getDeptNo(fzr);
+		return yhpService.getYHPListByDeptNoAndYHPLX(appId, lxId, deptno, rows, page);
 	}
 	
 	/**
@@ -73,13 +75,14 @@ public class RegistYHPController extends BaseController {
 	 */
 	@RequestMapping("getBMYHPList.do")
 	@ResponseBody
-	public EasyuiDatagrid<VYHP> getBMYHPList(HttpSession session, String fzr, String lx,int rows,int page) {
+	public EasyuiDatagrid<VYHP> getBMYHPList(HttpSession session, String fzr, String lxId,int rows,int page) {
 		fzr=getCurrUser(session).getWxUsername();
 		Integer appId=getAppId(session);
-		if(StringUtils.isEmpty(lx)||lx.equals("全部")){
-			lx=null;
+		if(StringUtils.isEmpty(lxId)){
+			lxId=null;
 		}
-		return yhpService.getPagedYHPList(appId, lx, fzr, rows, page);
+		Integer deptno=yhpService.getDeptNo(fzr);
+		return yhpService.getYHPListByDeptNoAndYHPLX(appId, lxId, deptno, rows, page);
 	}
 	
 	/**
@@ -118,7 +121,20 @@ public class RegistYHPController extends BaseController {
 	@RequestMapping("checkLeftLimit.do")
 	@ResponseBody
 	public boolean checkLeftLimit(Integer leftLimit) {
-		if(leftLimit==null || leftLimit<=0){
+		if(leftLimit==null || leftLimit<0){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 持有数量不能小于持有下限
+	 */
+	public boolean compareNumAndLeftLimit(Integer num,Integer leftLimit){
+		if(num==null || leftLimit==null){
+			return false;
+		}
+		if(num<leftLimit){
 			return false;
 		}
 		return true;
@@ -151,6 +167,9 @@ public class RegistYHPController extends BaseController {
 		}
 		if(!checkLeftLimit(leftLimit)){
 			return "持有下限不是大于0的正整数！";
+		}
+		if(!compareNumAndLeftLimit(num, leftLimit)){
+			return "持有数量小于持有下限 "+leftLimit;
 		}
 		if(!checkPIC(file_upload)){
 			return "图片为空或图片文件大小大于1MB！";
@@ -208,11 +227,15 @@ public class RegistYHPController extends BaseController {
 		return ROOT +"/updateYHPUI";
 	}
 	
+	
 	@RequestMapping("updateYHP.do")
 	@ResponseBody
 	public String updateQYYHP(HttpSession session,Integer yhpid, String xh, String ccbh, String cfdd, Integer leftLimit, 
 			@RequestParam(value = "file_upload", required = false) MultipartFile file_upload) {
 		Integer appId = getAppId(session);
+//		if(StringUtils.isEmpty(xh) || StringUtils.isEmpty(ccbh)){
+//			return "规格型号和出厂编号不能为空！";
+//		}
 		if(file_upload==null||file_upload.getSize()==0){
 			String pic_url = null;
 			try {

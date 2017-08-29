@@ -6,14 +6,18 @@ public class VYHP extends PagedPojo{
     private Integer appId;
 
     private String lx;
+    
+    private String lxId;
 
-    private String xh;
+	private String xh;
 
     private String ccbh;
 
     private Integer deptNo;
 
     private String deptName;
+    
+    private Integer czbmId;
 
     private String fzr;
 
@@ -50,6 +54,14 @@ public class VYHP extends PagedPojo{
     public void setLx(String lx) {
         this.lx = lx == null ? null : lx.trim();
     }
+    
+    public String getLxId() {
+		return lxId;
+	}
+
+	public void setLxId(String lxId) {
+		this.lxId = lxId;
+	}
 
     public String getXh() {
         return xh;
@@ -82,8 +94,17 @@ public class VYHP extends PagedPojo{
     public void setDeptName(String deptName) {
         this.deptName = deptName == null ? null : deptName.trim();
     }
+    
 
-    public String getFzr() {
+    public Integer getCzbmId() {
+		return czbmId;
+	}
+
+	public void setCzbmId(Integer czbmId) {
+		this.czbmId = czbmId;
+	}
+
+	public String getFzr() {
         return fzr;
     }
 

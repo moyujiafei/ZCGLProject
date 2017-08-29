@@ -134,6 +134,7 @@
 					height : 300,
 					width : 512,
 					closed : false,
+					modal: true,
 					 onClose: function() {
 						 if (vfj != null){
 							 queryCFDDUI.remove();
@@ -155,6 +156,7 @@
 					width: 512,
 					height: 300,
 					queryParams: {isEdit: true},
+					modal: true,
 					onClose: function () {
 						if(wxdept != null) {
 							dialogObj.remove();

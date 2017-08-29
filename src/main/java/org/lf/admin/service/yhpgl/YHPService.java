@@ -2,7 +2,9 @@ package org.lf.admin.service.yhpgl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,9 +19,11 @@ import org.lf.admin.db.pojo.VYHP;
 import org.lf.admin.service.OperErrCode;
 import org.lf.admin.service.OperException;
 import org.lf.admin.service.ZCGLProperties;
+import org.lf.admin.service.sys.WXDeptService;
 import org.lf.admin.service.utils.WXMediaService;
 import org.lf.utils.EasyuiDatagrid;
 import org.lf.utils.PageNavigator;
+import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,48 +50,92 @@ public class YHPService {
 	@Autowired
 	private WXMediaService wxMediaService;
 	
+	@Autowired
+	private WXDeptService wxDeptService;
+	
 	public static final OperErrCode 调拨易耗品失败 = new OperErrCode("11201", "调拨易耗品失败！ ");
 	public static final OperErrCode 登记易耗品失败 = new OperErrCode("11202", "登记易耗品失败！ ");
 	public static final OperErrCode 补货易耗品失败 = new OperErrCode("11203", "补货易耗品失败！ ");
 	public static final OperErrCode 编辑易耗品失败 = new OperErrCode("11204", "编辑易耗品失败！ ");
+	public static final OperErrCode 库存下限不能大于持有数量 = new OperErrCode("11205", "库存下限不能大于持有数量！ ");
 	
-	public int countYHPList(Integer appId, String lx, String fzr) {
+	public int countYHPList(Integer appId, String lxId, String fzr) {
 		VYHP param=new VYHP();
 		param.setAppId(appId);
-		param.setLx(lx);
-		param.setFzr(fzr);
+		param.setLxId(lxId);
+		param.setCzbmId(getCZBM_Id(appId,fzr));	//根据负责人查找czbm_Id，作为查询条件
 		return vyhpDao.countYhpList(param);
 	}
 	
-	public List<VYHP> getYHPList(Integer appId, String lx, String fzr, int rows, int page) {
+	public List<VYHP> getYHPList(Integer appId, String lxId, String fzr, int rows, int page) {
 		PageNavigator pn = new PageNavigator(rows, page);
 		VYHP param=new VYHP();
 		param.setStart(pn.getStart());
 		param.setOffset(pn.getOffset());
 		param.setAppId(appId);
-		param.setLx(lx);
-		param.setFzr(fzr);
+		param.setLxId(lxId);
+		param.setCzbmId(getCZBM_Id(appId,fzr));	//根据负责人查找czbm_Id，作为查询条件
 		return vyhpDao.selectYhpList(param);
 	}
 	
-	public EasyuiDatagrid<VYHP> getPagedYHPList(Integer appId, String lx, String fzr, int rows, int page) {
-		int total=countYHPList(appId, lx, fzr);
+	public EasyuiDatagrid<VYHP> getPagedYHPList(Integer appId, String lxId, String fzr, int rows, int page) {
+		int total=countYHPList(appId, lxId, fzr);
 		EasyuiDatagrid<VYHP> result=new EasyuiDatagrid<>();
 		if(total>0){
 			VYHP param=new VYHP();
 			param.setAppId(appId);
-			param.setLx(lx);
-			param.setFzr(fzr);
+			param.setLxId(lxId);
+			param.setCzbmId(getCZBM_Id(appId,fzr));	//根据负责人查找czbm_Id，作为查询条件
 			PageNavigator pageNav=new PageNavigator(rows, page);
 			param.setStart(pageNav.getStart());
 			param.setOffset(pageNav.getOffset());
-			result.setRows(vyhpDao.selectYhpList(param));
+			List<VYHP> list=getYHPList(appId, lxId, fzr, rows, page);
+			result.setRows(list);
 		}else{
 			result.setRows(new ArrayList<VYHP>());
 		}
 		result.setTotal(total);
 		return result;
 	}
+	
+	public EasyuiDatagrid<VYHP> getYHPListByDeptNoAndYHPLX(Integer appId, String lxId, Integer deptno, int rows, int page){
+		//获取指定部门的所有子部门列表(包括指定部门)
+		List<String> deptNoList=wxDeptService.getSubDeptmentByDeptNo(appId, deptno);
+		//查询指定部门列表对应的资产列表
+		Map<String, Object> param = new HashMap<String, Object>();
+		if(deptNoList.size() > 1 || !StringUtils.isEmpty(deptNoList.get(0)) ){
+			param.put("list", deptNoList);
+		}
+		param.put("appId", appId);
+		param.put("lxId", lxId);
+		PageNavigator pn = new PageNavigator(rows, page);
+		param.put("start", pn.getStart());
+		param.put("offset", pn.getOffset());
+		
+		int total=vyhpDao.countYHPListByDeptNoAndYHPLX(param);
+		List<VYHP> list=vyhpDao.selectYHPListByDeptNoAndYHPLX(param);
+		
+		return new EasyuiDatagrid<VYHP>(list, total);
+	}
+	
+//	public EasyuiDatagrid<VYHP> getPagedYHPList(Integer appId, String lx, String fzr, int rows, int page) {
+//		int total=countYHPList(appId, lx, fzr);
+//		EasyuiDatagrid<VYHP> result=new EasyuiDatagrid<>();
+//		if(total>0){
+//			VYHP param=new VYHP();
+//			param.setAppId(appId);
+//			param.setLx(lx);
+//			param.setFzr(fzr);
+//			PageNavigator pageNav=new PageNavigator(rows, page);
+//			param.setStart(pageNav.getStart());
+//			param.setOffset(pageNav.getOffset());
+//			result.setRows(vyhpDao.selectYhpList(param));
+//		}else{
+//			result.setRows(new ArrayList<VYHP>());
+//		}
+//		result.setTotal(total);
+//		return result;
+//	}
 	
 	public JYHP getYHPByPrimaryKey(Integer yhpid){
 		return jyhpDao.selectByPrimaryKey(yhpid);
@@ -142,6 +190,10 @@ public class YHPService {
 	@Transactional(rollbackFor = Exception.class)
 	public void updateYHP(Integer yhpId, String picUrl, String xh, String ccbh, Integer leftLimit, String cfdd) throws OperException {
 		JYHP param=jyhpDao.selectByPrimaryKey(yhpId);
+		Integer num=param.getNum();
+		if(num<leftLimit){
+			throw new OperException(库存下限不能大于持有数量);
+		}
 		if(param.getImgVersion()==null){
 			param.setImgVersion(1);
 		}else{
@@ -237,11 +289,25 @@ public class YHPService {
 		return returnUrl;
 	}
 	
+	/**
+	 * 根据fzr查询c_zcgl表获取czbmId
+	 * @param appId
+	 * @param fzr
+	 * @return
+	 */
 	public Integer getCZBM_Id(Integer appId,String fzr){
 		CZCGL c=new CZCGL();
 		c.setAppId(appId);
 		c.setFzr(fzr);
 		c=zcglDao.select(c);
 		return c.getId();
+	}
+	
+	public Integer getDeptNo(String fzr){
+		CZCGL record=new CZCGL();
+		record.setFzr(fzr);
+		CZCGL c=new CZCGL();
+		c=zcglDao.select(record);
+		return c.getDeptNo();
 	}
 }

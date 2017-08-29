@@ -118,7 +118,12 @@
 					if(isNaN(limit) || limit<=0 ){
 						$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
 						isValid=false;
-						$.messager.alert("提示","持有下限不是大于0的正整数！",'info');
+						$.messager.alert("提示","持有下限不是大于等于0的正整数！",'info');
+					}
+					if(isValid && num<limit){
+						$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+						isValid=false;
+						$.messager.alert("提示","持有数量【"+num+"】小于库存下限【"+limit+"】！",'info');
 					}
 				}
 				//param.lx=$("#registYHPUI_yhplx").attr("id");

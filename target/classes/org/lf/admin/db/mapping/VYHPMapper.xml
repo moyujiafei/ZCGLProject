@@ -112,7 +112,7 @@
     </trim>
   </insert>
   <sql id="where_Caluse">
-            <if test="yhpId != null">
+       <if test="yhpId != null">
         and yhp_id= #{yhpId,jdbcType=INTEGER}
       </if>
       <if test="appId != null">
@@ -120,6 +120,9 @@
       </if>
       <if test="lx != null">
         and lx= #{lx,jdbcType=VARCHAR}
+      </if>
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
       </if>
       <if test="xh != null">
         and xh = #{xh,jdbcType=VARCHAR}
@@ -152,6 +155,20 @@
         and IMG_VERSION = #{imgVersion,jdbcType=BIGINT}
       </if>
   </sql>
+  <sql id="deptnoAndYHPLX_where_Caluse">
+      <if test="appId != null">
+        and app_id= #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
+      </if>
+      <if test="list !=null and list.size() > 0">
+			dept_no in
+		    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+	       			#{item}
+	  			 </foreach>
+  			</if>
+  </sql>
   <select id="selectYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultMap="BaseResultMap">
       select * from v_yhp
       <where>
@@ -166,5 +183,17 @@
       	<where>
       <include refid="where_Caluse"/>
     </where>
+  </select>
+  <select id="selectYHPListByDeptNoAndYHPLX" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select * from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
+  </select>
+  <select id="countYHPListByDeptNoAndYHPLX" resultType="int" parameterType="java.util.Map">
+  	select count(*) from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
   </select>
 </mapper>

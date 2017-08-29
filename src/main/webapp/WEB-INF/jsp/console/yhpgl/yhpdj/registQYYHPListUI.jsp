@@ -9,10 +9,10 @@
   <body>
 	<div id="registYHPListDialog">
 		<div id="YHPListToolbar" style="width: 100%;height:30px;padding-top: 10px;">
-			<div style="float:left;"><a class="easyui-linkbutton" href="#" data-options="iconCls: 'icon-add'" onclick="registYHPList.registYHP()" plain="true">登记</a></div>
+			<div style="float:left;"><a class="easyui-linkbutton" href="#" data-options="iconCls: 'icon-add'" onclick="registQYYHPList.registYHP()" plain="true">登记</a></div>
 			<div style="float:right;">
 				<div style="float:left;line-height: 25px;">易耗品类型：</div><div style="float:left;padding-right: 10px;"><input style="width:100px" id="QY_YhpLx" name="yhplx"/></div>
-				<div style="float:left;line-height: 25px;padding-right: 10px;"><a class="easyui-linkbutton" data-options="iconCls: 'icon-search'" href="#" onclick="registYHPList.query()" plain="true">筛选</a></div>
+				<div style="float:left;line-height: 25px;padding-right: 10px;"><a class="easyui-linkbutton" data-options="iconCls: 'icon-search'" href="#" onclick="registQYYHPList.query()" plain="true">筛选</a></div>
 			</div>
 		</div>
 		<div id="registYHPList"></div>		
@@ -45,14 +45,12 @@
 			$("#" + dialogId).dialog({
                 href: getContextPath() + url,
                 title: title,
-                top: 220,
                 queryParams: param,
                 width: 512,
                 height: 300,
                 shadow : true, //显示阴影
         		resizable : false, //不允许改变大小
                 modal: true,
-                draggable: true,
                 inline: true,
                 onClose: function() {
                     dialogObj.remove();// 关闭时remove对话框
@@ -61,14 +59,10 @@
 		},
 		query: function () {
 			if(cyhplx!=null){
-				var lx=cyhplx.mc;
-				if(lx=="全部"){
-					$("#registYHPList").datagrid("load",{});
-				}else{
+					var lxId=cyhplx.lxId;
 					$("#registYHPList").datagrid("load",{
-						lx: lx	
+						lxId: lxId	
 					});
-				}
 			}
 		},
 		editYHP: function(index){
@@ -130,7 +124,7 @@
                    onClose: function() {
                        if(cyhplx!=null){
                        	$("#"+searchboxId).searchbox("setValue",cyhplx.mc);
-                       	$("#"+searchboxId).attr("lx_id",cyhplx.id);
+                       	$("#"+searchboxId).attr("lx_id",cyhplx.lxId);
                        }
                        dialogObj.remove();// 关闭时remove对话框
                    }
@@ -224,8 +218,8 @@
                           } 
 
                   }, {
-                      field: 'cfdd',
-                      title: '存放地点',
+                      field: 'deptName',
+                      title: '操作部门',
                       align: 'center',
                       width: '20%',
                       resizable: true,
@@ -255,7 +249,7 @@
                   },{
                       field: 'opt',
                       title: '操作',
-                      align: 'center',
+                      align: 'left',
                       width: '15%',
                       resizable: false,
                       formatter:function (value,row,index) {
