@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.BMZC_ZCFLStatMapper">
+<resultMap id="ZcflResultMap" type="org.lf.admin.db.pojo.BMZC_ZCFLStat">
+     <result column="dept_name" property="deptName" jdbcType="VARCHAR"/>    
+</resultMap>
+
+<select id="getLxidByLxpid" resultType="java.lang.String" parameterType="java.lang.Integer">
+    SELECT lx_id
+    FROM c_zclx 
+    WHERE lx_pid is NULL
+    and app_id=#{appId,jdbcType=INTEGER}
+</select>
+
+<select id="zcflOneByAppidAndDeptNo" parameterType="java.util.Map" resultType="java.util.concurrent.ConcurrentHashMap">
+	select
+      <foreach collection="lxIdList" index="index" item="item" separator=",">
+	     sum(case when IFNULL(lx.lx_pid, lx.lx_id) = #{item} then 1 else 0 end) #{item}	     
+	  </foreach>
+    from c_zclx lx
+    join j_zc zc on (lx.id = zc.lx_id)
+    join c_zcgl zcgl on (zc.ZCGL_ID = zcgl.ID)
+	<where>
+	    zcgl.app_id=#{appId,jdbcType=INTEGER}
+	    <if test="deptNoList != null and deptNoList.size() > 0">
+	    and dept_no in 
+	 	<foreach collection="deptNoList" index="index" item="item" open="(" separator="," close=")">
+	    	 #{item}
+	 	</foreach>
+		</if>
+	</where>
+</select>
+
+<select id="selectZCFLOneList" parameterType="org.lf.admin.db.pojo.CZCGL" resultType="java.util.concurrent.ConcurrentHashMap">
+select zcgl.dept_name,
+	<foreach collection="lxIdList" index="index" item="item" separator=",">
+	     sum(case when IFNULL(lx.lx_pid, lx.lx_id) = #{item} then 1 else 0 end) #{item}
+	 </foreach>
+    from c_zclx lx
+    join j_zc zc on (lx.id = zc.lx_id)
+    join c_zcgl zcgl on (zc.ZCGL_ID = zcgl.ID)
+<where>
+   zcgl.app_id=#{appId,jdbcType=INTEGER}
+</where>       
+    group by dept_name
+</select>
+</mapper>

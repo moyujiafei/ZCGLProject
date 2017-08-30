@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.LYHPMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.LYHP" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="YHP_ID" property="yhpId" jdbcType="INTEGER" />
+    <result column="JLR" property="jlr" jdbcType="VARCHAR" />
+    <result column="JLSJ" property="jlsj" jdbcType="TIMESTAMP" />
+    <result column="POI" property="poi" jdbcType="VARCHAR" />
+    <result column="CZR" property="czr" jdbcType="VARCHAR" />
+    <result column="CZBM_ID" property="czbmId" jdbcType="INTEGER" />
+    <result column="CZLX" property="czlx" jdbcType="INTEGER" />
+    <result column="NUM" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, YHP_ID, JLR, JLSJ, POI, CZR, CZBM_ID, CZLX, NUM
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_yhp
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_yhp
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.LYHP" >
+    insert into l_yhp (ID, YHP_ID, JLR, 
+      JLSJ, POI, CZR, CZBM_ID, 
+      CZLX, NUM)
+    values (#{id,jdbcType=INTEGER}, #{yhpId,jdbcType=INTEGER}, #{jlr,jdbcType=VARCHAR}, 
+      #{jlsj,jdbcType=TIMESTAMP}, #{poi,jdbcType=VARCHAR}, #{czr,jdbcType=VARCHAR}, #{czbmId,jdbcType=INTEGER}, 
+      #{czlx,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.LYHP" >
+    insert into l_yhp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="yhpId != null" >
+        YHP_ID,
+      </if>
+      <if test="jlr != null" >
+        JLR,
+      </if>
+      <if test="jlsj != null" >
+        JLSJ,
+      </if>
+      <if test="poi != null" >
+        POI,
+      </if>
+      <if test="czr != null" >
+        CZR,
+      </if>
+      <if test="czbmId != null" >
+        CZBM_ID,
+      </if>
+      <if test="czlx != null" >
+        CZLX,
+      </if>
+      <if test="num != null" >
+        NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="yhpId != null" >
+        #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="jlr != null" >
+        #{jlr,jdbcType=VARCHAR},
+      </if>
+      <if test="jlsj != null" >
+        #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="poi != null" >
+        #{poi,jdbcType=VARCHAR},
+      </if>
+      <if test="czr != null" >
+        #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="czbmId != null" >
+        #{czbmId,jdbcType=INTEGER},
+      </if>
+      <if test="czlx != null" >
+        #{czlx,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.LYHP" >
+    update l_yhp
+    <set >
+      <if test="yhpId != null" >
+        YHP_ID = #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="jlr != null" >
+        JLR = #{jlr,jdbcType=VARCHAR},
+      </if>
+      <if test="jlsj != null" >
+        JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="poi != null" >
+        POI = #{poi,jdbcType=VARCHAR},
+      </if>
+      <if test="czr != null" >
+        CZR = #{czr,jdbcType=VARCHAR},
+      </if>
+      <if test="czbmId != null" >
+        CZBM_ID = #{czbmId,jdbcType=INTEGER},
+      </if>
+      <if test="czlx != null" >
+        CZLX = #{czlx,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        NUM = #{num,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.LYHP" >
+    update l_yhp
+    set YHP_ID = #{yhpId,jdbcType=INTEGER},
+      JLR = #{jlr,jdbcType=VARCHAR},
+      JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      POI = #{poi,jdbcType=VARCHAR},
+      CZR = #{czr,jdbcType=VARCHAR},
+      CZBM_ID = #{czbmId,jdbcType=INTEGER},
+      CZLX = #{czlx,jdbcType=INTEGER},
+      NUM = #{num,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.LZTXZMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.LZTXZ" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="JL_ID" property="jlId" jdbcType="INTEGER" />
+    <result column="MEDIA_TYPE" property="mediaType" jdbcType="VARCHAR" />
+    <result column="WX_MEDIA_ID" property="wxMediaId" jdbcType="VARCHAR" />
+    <result column="JLSJ" property="jlsj" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, APP_ID, JL_ID, MEDIA_TYPE, WX_MEDIA_ID
+  </sql>
+  <sql id="query_ztxz_where">
+      <if test="id != null" >
+        AND ID = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+        AND APP_ID = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="jlId != null" >
+        AND JL_ID = #{jlId,jdbcType=INTEGER}
+      </if>
+      <if test="mediaType != null" >
+        AND MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR}
+      </if>
+      <if test="wxMediaId != null" >
+        AND WX_MEDIA_ID = #{wxMediaId,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_ztxz
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_ztxz
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.LZTXZ" useGeneratedKeys="true" keyProperty="id">
+    insert into l_ztxz (ID, APP_ID, JL_ID, 
+      MEDIA_TYPE, WX_MEDIA_ID)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{jlId,jdbcType=INTEGER}, 
+      #{mediaType,jdbcType=VARCHAR}, #{wxMediaId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.LZTXZ" useGeneratedKeys="true" keyProperty="id">
+    insert into l_ztxz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="jlId != null" >
+        JL_ID,
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE,
+      </if>
+      <if test="wxMediaId != null" >
+        WX_MEDIA_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="jlId != null" >
+        #{jlId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="wxMediaId != null" >
+        #{wxMediaId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.LZTXZ" >
+    update l_ztxz
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="jlId != null" >
+        JL_ID = #{jlId,jdbcType=INTEGER},
+      </if>
+      <if test="mediaType != null" >
+        MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="wxMediaId != null" >
+        WX_MEDIA_ID = #{wxMediaId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.LZTXZ" >
+    update l_ztxz
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      JL_ID = #{jlId,jdbcType=INTEGER},
+      MEDIA_TYPE = #{mediaType,jdbcType=VARCHAR},
+      WX_MEDIA_ID = #{wxMediaId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="select" parameterType="org.lf.admin.db.pojo.LZTXZ" resultMap="BaseResultMap">
+      SELECT * FROM l_ztxz
+      <where>
+          <include refid="query_ztxz_where" />
+      </where>
+      <if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+	  </if>
+  </select>
+  <select id="selectList" parameterType="org.lf.admin.db.pojo.LZTXZ" resultMap="BaseResultMap">
+      SELECT * FROM l_ztxz
+      <where>
+          <include refid="query_ztxz_where" />
+      </where>
+      <if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+	  </if>
+  </select>
+</mapper>

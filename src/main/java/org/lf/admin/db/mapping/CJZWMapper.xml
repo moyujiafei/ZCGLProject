@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lf.admin.db.dao.CJZWMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CJZW">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="APP_ID" jdbcType="INTEGER" property="appId" />
+		<result column="XQ_ID" jdbcType="INTEGER" property="xqId" />
+		<result column="LX_ID" jdbcType="INTEGER" property="lxId" />
+		<result column="MC" jdbcType="VARCHAR" property="mc" />
+		<result column="DZ" jdbcType="VARCHAR" property="dz" />
+		<result column="POI" jdbcType="VARCHAR" property="poi" />
+		<result column="TYBZ" jdbcType="INTEGER" property="tybz" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, APP_ID, XQ_ID, LX_ID, MC, DZ, POI, TYBZ
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from c_jzw
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CJZW">
+		select * from C_jzw
+		<where>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqId != null">
+				and XQ_ID = #{xqId,jdbcType=INTEGER}
+			</if>
+			<if test="lxId != null">
+				and LX_ID = #{lxId,jdbcType=INTEGER}
+			</if>
+			<if test="mc != null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},
+			#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CJZW">
+		select * from C_jzw
+		<where>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqId != null">
+				and XQ_ID = #{xqId,jdbcType=INTEGER}
+			</if>
+			<if test="lxId != null">
+				and LX_ID = #{lxId,jdbcType=INTEGER}
+			</if>
+			<if test="mc != null">
+				and MC = #{mc,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},
+			#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from c_jzw
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.CJZW" useGeneratedKeys="true" keyProperty="id">
+		insert into c_jzw (ID, APP_ID, XQ_ID,
+		LX_ID, MC, DZ, POI,
+		TYBZ)
+		values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER},
+		#{xqId,jdbcType=INTEGER},
+		#{lxId,jdbcType=INTEGER}, #{mc,jdbcType=VARCHAR}, #{dz,jdbcType=VARCHAR},
+		#{poi,jdbcType=VARCHAR},
+		#{tybz,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CJZW" useGeneratedKeys="true" keyProperty="id">
+		insert into c_jzw
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="appId != null">
+				APP_ID,
+			</if>
+			<if test="xqId != null">
+				XQ_ID,
+			</if>
+			<if test="lxId != null">
+				LX_ID,
+			</if>
+			<if test="mc != null">
+				MC,
+			</if>
+			<if test="dz != null">
+				DZ,
+			</if>
+			<if test="poi != null">
+				POI,
+			</if>
+			<if test="tybz != null">
+				TYBZ,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="appId != null">
+				#{appId,jdbcType=INTEGER},
+			</if>
+			<if test="xqId != null">
+				#{xqId,jdbcType=INTEGER},
+			</if>
+			<if test="lxId != null">
+				#{lxId,jdbcType=INTEGER},
+			</if>
+			<if test="mc != null">
+				#{mc,jdbcType=VARCHAR},
+			</if>
+			<if test="dz != null">
+				#{dz,jdbcType=VARCHAR},
+			</if>
+			<if test="poi != null">
+				#{poi,jdbcType=VARCHAR},
+			</if>
+			<if test="tybz != null">
+				#{tybz,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CJZW">
+		update c_jzw
+		<set>
+			<if test="appId != null">
+				APP_ID = #{appId,jdbcType=INTEGER},
+			</if>
+			<if test="xqId != null">
+				XQ_ID = #{xqId,jdbcType=INTEGER},
+			</if>
+			<if test="lxId != null">
+				LX_ID = #{lxId,jdbcType=INTEGER},
+			</if>
+			<if test="mc != null">
+				MC = #{mc,jdbcType=VARCHAR},
+			</if>
+			<if test="dz != null">
+				DZ = #{dz,jdbcType=VARCHAR},
+			</if>
+			<if test="poi != null">
+				POI = #{poi,jdbcType=VARCHAR},
+			</if>
+			<if test="tybz != null">
+				TYBZ = #{tybz,jdbcType=INTEGER},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CJZW">
+		update c_jzw
+		set APP_ID = #{appId,jdbcType=INTEGER},
+		XQ_ID = #{xqId,jdbcType=INTEGER},
+		LX_ID = #{lxId,jdbcType=INTEGER},
+		MC = #{mc,jdbcType=VARCHAR},
+		DZ = #{dz,jdbcType=VARCHAR},
+		POI = #{poi,jdbcType=VARCHAR},
+		TYBZ = #{tybz,jdbcType=INTEGER}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

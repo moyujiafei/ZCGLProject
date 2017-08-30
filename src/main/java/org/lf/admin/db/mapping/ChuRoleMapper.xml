@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuRoleMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuRole" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYBZ" property="tybz" jdbcType="INTEGER" />
+    <result column="PRIV_LIST" property="privList" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="org.lf.admin.db.pojo.ChuRoleMenu" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="iconCls" property="iconCls" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="checked" property="checked" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, NAME, TYBZ
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from chu_role
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuRole" >
+    select * from chu_role 
+    <where >
+      <if test="name != null" >
+        and NAME = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="tybz != null" >
+        and TYBZ = #{tybz,jdbcType=INTEGER}
+      </if>      
+    </where>
+  </select>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuRole" >
+    select * from chu_role 
+    <where >
+      <if test="name != null" >
+        and NAME = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="tybz != null" >
+        and TYBZ = #{tybz,jdbcType=INTEGER}
+      </if>      
+    </where>
+  </select>
+  <select id="countRoleList" resultType="int" parameterType="org.lf.admin.db.pojo.ChuRole">
+      select count(*) from chu_role
+      <where>
+	      <if test="name != null" >
+	        and NAME = #{name,jdbcType=VARCHAR}
+	      </if>
+	      <if test="tybz != null" >
+	        and TYBZ = #{tybz,jdbcType=INTEGER}
+	      </if>      
+     </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from chu_role
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.ChuRole" >
+    insert into chu_role (ID, NAME,
+      TYBZ)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{tybz,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuRole" useGeneratedKeys="true" keyProperty="id">
+    insert into chu_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="tybz != null" >
+        TYBZ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tybz != null" >
+        #{tybz,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuRole" >
+    update chu_role
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tybz != null" >
+        TYBZ = #{tybz,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuRole" >
+    update chu_role
+    set NAME = #{name,jdbcType=VARCHAR},
+      TYBZ = #{tybz,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

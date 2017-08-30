@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuZTActionMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuZTAction">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="APP_ID" property="appId" jdbcType="INTEGER" />
+		<result column="TAG_NAME" property="tagName" jdbcType="VARCHAR" />
+		<result column="ZT" property="zt" jdbcType="INTEGER" />
+		<result column="IMG_URL" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="ACTION_TITLE" property="actionTitle" jdbcType="VARCHAR" />
+		<result column="ACTION_NAME" property="actionName" jdbcType="VARCHAR" />
+		<result column="QUERY_PARAM" property="queryParam" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, APP_ID, TAG_NAME, ZT, IMG_URL, ACTION_TITLE, ACTION_NAME, QUERY_PARAM
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from chu_zt_action
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from chu_zt_action
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByAppID" parameterType="java.lang.Integer">
+		delete from chu_zt_action
+		where APP_ID = #{appId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.ChuZTAction">
+		insert into chu_zt_action (ID, APP_ID, TAG_NAME,
+		ZT, IMG_URL, ACTION_TITLE,
+		ACTION_NAME, QUERY_PARAM)
+		values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR},
+		#{zt,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{actionTitle,jdbcType=VARCHAR},
+		#{actionName,jdbcType=VARCHAR}, #{queryParam,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuZTAction">
+		insert into chu_zt_action
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="appId != null">
+				APP_ID,
+			</if>
+			<if test="tagName != null">
+				TAG_NAME,
+			</if>
+			<if test="zt != null">
+				ZT,
+			</if>
+			<if test="imgUrl != null">
+				IMG_URL,
+			</if>
+			<if test="actionTitle != null">
+				ACTION_TITLE,
+			</if>
+			<if test="actionName != null">
+				ACTION_NAME,
+			</if>
+			<if test="queryParam != null">
+				QUERY_PARAM,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="appId != null">
+				#{appId,jdbcType=INTEGER},
+			</if>
+			<if test="tagName != null">
+				#{tagName,jdbcType=VARCHAR},
+			</if>
+			<if test="zt != null">
+				#{zt,jdbcType=INTEGER},
+			</if>
+			<if test="imgUrl != null">
+				#{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="actionTitle != null">
+				#{actionTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="actionName != null">
+				#{actionName,jdbcType=VARCHAR},
+			</if>
+			<if test="queryParam != null">
+				#{queryParam,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuZTAction">
+		update chu_zt_action
+		<set>
+			<if test="appId != null">
+				APP_ID = #{appId,jdbcType=INTEGER},
+			</if>
+			<if test="tagName != null">
+				TAG_NAME = #{tagName,jdbcType=VARCHAR},
+			</if>
+			<if test="zt != null">
+				ZT = #{zt,jdbcType=INTEGER},
+			</if>
+			<if test="imgUrl != null">
+				IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="actionTitle != null">
+				ACTION_TITLE = #{actionTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="actionName != null">
+				ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+			</if>
+			<if test="queryParam != null">
+				QUERY_PARAM = #{queryParam,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuZTAction">
+		update chu_zt_action
+		set APP_ID = #{appId,jdbcType=INTEGER},
+		TAG_NAME = #{tagName,jdbcType=VARCHAR},
+		ZT = #{zt,jdbcType=INTEGER},
+		IMG_URL = #{imgUrl,jdbcType=VARCHAR},
+		ACTION_TITLE = #{actionTitle,jdbcType=VARCHAR},
+		ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+		QUERY_PARAM = #{queryParam,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<sql id="query_where">
+		<if test="appId != null">
+			and APP_ID = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="tagName != null">
+			and TAG_NAME = #{tagName,jdbcType=VARCHAR}
+		</if>
+		<if test="zt != null">
+			and ZT = #{zt,jdbcType=INTEGER}
+		</if>
+		<if test="imgUrl != null">
+			and IMG_URL = #{imgUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="actionTitle != null">
+			and ACTION_TITLE = #{actionTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="actionName != null">
+			and ACTION_NAME = #{actionName,jdbcType=VARCHAR}
+		</if>
+		<if test="queryParam != null">
+			and QUERY_PARAM = #{queryParam,jdbcType=VARCHAR}
+		</if>
+	</sql>
+
+	<select id="select" parameterType="org.lf.admin.db.pojo.ChuZTAction" resultMap="BaseResultMap">
+		SELECT * FROM chu_zt_action
+		<where>
+			<include refid="query_where" />
+		</where>
+	</select>
+
+	<select id="selectList" parameterType="org.lf.admin.db.pojo.ChuZTAction" resultMap="BaseResultMap">
+		SELECT * FROM chu_zt_action
+		<where>
+			<include refid="query_where" />
+		</where>
+	</select>
+	
+	<select id="countChuZTActionList" resultType="java.lang.Integer" parameterType="org.lf.admin.db.pojo.ChuZTAction">
+	  	SELECT count(*) from chu_zt_action 
+	  	<where>
+	  	    <include refid="query_where"></include>
+	  	</where>
+  	</select>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.JYHPSQMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.JYHPSQ" >
+    <id column="DM" property="dm" jdbcType="CHAR" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="SQR" property="sqr" jdbcType="VARCHAR" />
+    <result column="SQ_TYPE" property="sqType" jdbcType="INTEGER" />
+    <result column="SQSJ" property="sqsj" jdbcType="TIMESTAMP" />
+    <result column="SQBM_ID" property="sqbmId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DM, APP_ID, SQR, SQ_TYPE, SQSJ, SQBM_ID, STATUS, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from j_yhp_sq
+    where DM = #{dm,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from j_yhp_sq
+    where DM = #{dm,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.JYHPSQ" >
+    insert into j_yhp_sq (DM, APP_ID, SQR, 
+      SQ_TYPE, SQSJ, SQBM_ID, 
+      STATUS, REMARK)
+    values (#{dm,jdbcType=CHAR}, #{appId,jdbcType=INTEGER}, #{sqr,jdbcType=VARCHAR}, 
+      #{sqType,jdbcType=INTEGER}, #{sqsj,jdbcType=TIMESTAMP}, #{sqbmId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.JYHPSQ" >
+    insert into j_yhp_sq
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dm != null" >
+        DM,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="sqr != null" >
+        SQR,
+      </if>
+      <if test="sqType != null" >
+        SQ_TYPE,
+      </if>
+      <if test="sqsj != null" >
+        SQSJ,
+      </if>
+      <if test="sqbmId != null" >
+        SQBM_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dm != null" >
+        #{dm,jdbcType=CHAR},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="sqr != null" >
+        #{sqr,jdbcType=VARCHAR},
+      </if>
+      <if test="sqType != null" >
+        #{sqType,jdbcType=INTEGER},
+      </if>
+      <if test="sqsj != null" >
+        #{sqsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sqbmId != null" >
+        #{sqbmId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.JYHPSQ" >
+    update j_yhp_sq
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="sqr != null" >
+        SQR = #{sqr,jdbcType=VARCHAR},
+      </if>
+      <if test="sqType != null" >
+        SQ_TYPE = #{sqType,jdbcType=INTEGER},
+      </if>
+      <if test="sqsj != null" >
+        SQSJ = #{sqsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sqbmId != null" >
+        SQBM_ID = #{sqbmId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DM = #{dm,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.JYHPSQ" >
+    update j_yhp_sq
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      SQR = #{sqr,jdbcType=VARCHAR},
+      SQ_TYPE = #{sqType,jdbcType=INTEGER},
+      SQSJ = #{sqsj,jdbcType=TIMESTAMP},
+      SQBM_ID = #{sqbmId,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where DM = #{dm,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.CXQMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CXQ" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="XQMC" property="xqmc" jdbcType="VARCHAR" />
+    <result column="XQDZ" property="xqdz" jdbcType="VARCHAR" />
+    <result column="YB" property="yb" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="query_XQ_where">
+	<if test="appId != null">
+		and APP_ID = #{appId,jdbcType=INTEGER}
+	</if>
+	<if test="xqmc != null">
+		and XQMC = #{xqmc,jdbcType=VARCHAR}
+	</if>
+	<if test="xqdz != null">
+		and XQDZ = #{xqdz,jdbcType=VARCHAR}
+	</if>
+	<if test="yb != null">
+		and YB = #{yb,jdbcType=VARCHAR}
+	</if>
+</sql>
+ 
+  <sql id="Base_Column_List" >
+    ID, APP_ID, XQMC, XQDZ, YB
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_xq
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from c_xq
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.CXQ" useGeneratedKeys="true" keyProperty="id">
+    insert into c_xq (ID, APP_ID, XQMC, 
+      XQDZ, YB)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{xqmc,jdbcType=VARCHAR}, 
+      #{xqdz,jdbcType=VARCHAR}, #{yb,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CXQ" useGeneratedKeys="true" keyProperty="id">
+    insert into c_xq
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="xqmc != null" >
+        XQMC,
+      </if>
+      <if test="xqdz != null" >
+        XQDZ,
+      </if>
+      <if test="yb != null" >
+        YB,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="xqmc != null" >
+        #{xqmc,jdbcType=VARCHAR},
+      </if>
+      <if test="xqdz != null" >
+        #{xqdz,jdbcType=VARCHAR},
+      </if>
+      <if test="yb != null" >
+        #{yb,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CXQ" >
+    update c_xq
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="xqmc != null" >
+        XQMC = #{xqmc,jdbcType=VARCHAR},
+      </if>
+      <if test="xqdz != null" >
+        XQDZ = #{xqdz,jdbcType=VARCHAR},
+      </if>
+      <if test="yb != null" >
+        YB = #{yb,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CXQ" >
+    update c_xq
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      XQMC = #{xqmc,jdbcType=VARCHAR},
+      XQDZ = #{xqdz,jdbcType=VARCHAR},
+      YB = #{yb,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="select" parameterType="org.lf.admin.db.pojo.CXQ" resultMap="BaseResultMap">
+  	SELECT * FROM c_xq
+	<where>
+		<include refid="query_XQ_where"/>
+	</where>
+  </select>
+  
+  <select id="selectList" parameterType="org.lf.admin.db.pojo.CXQ" resultMap="BaseResultMap">
+  	SELECT * FROM c_xq
+	<where>
+		<include refid="query_XQ_where"/>
+	</where>
+	<if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER},
+		#{offset,jdbcType=INTEGER}
+	</if>
+  </select>
+  
+  <select id="countXQList" parameterType="org.lf.admin.db.pojo.CXQ" resultType="int" >
+  	SELECT count(*) FROM c_xq
+	<where>
+		<include refid="query_XQ_where"/>
+	</where>
+  </select>
+  
+  
+</mapper>

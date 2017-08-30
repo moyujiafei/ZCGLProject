@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.LZTMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.LZT" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="APP_ID" property="appId" jdbcType="INTEGER" />
+    <result column="ZCDM" property="zcdm" jdbcType="CHAR" />
+    <result column="JLSJ" property="jlsj" jdbcType="TIMESTAMP" />
+    <result column="JLR" property="jlr" jdbcType="VARCHAR" />
+    <result column="POI" property="poi" jdbcType="VARCHAR" />
+    <result column="OLD_ZT" property="oldZt" jdbcType="INTEGER" />
+    <result column="NEW_ZT" property="newZt" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <association property="jlrmc" column="{userid=jlr,appid=app_id}"  
+			javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, APP_ID, ZCDM, JLSJ, JLR, POI, OLD_ZT, NEW_ZT, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from l_zt
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from l_zt
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.LZT" useGeneratedKeys="true" keyProperty="id">
+    insert into l_zt (ID, APP_ID, ZCDM, 
+      JLSJ, JLR, POI, OLD_ZT, 
+      NEW_ZT, REMARK)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{zcdm,jdbcType=CHAR}, 
+      #{jlsj,jdbcType=TIMESTAMP}, #{jlr,jdbcType=VARCHAR}, #{poi,jdbcType=VARCHAR}, #{oldZt,jdbcType=INTEGER}, 
+      #{newZt,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.LZT" useGeneratedKeys="true" keyProperty="id">
+    insert into l_zt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="appId != null" >
+        APP_ID,
+      </if>
+      <if test="zcdm != null" >
+        ZCDM,
+      </if>
+      <if test="jlsj != null" >
+        JLSJ,
+      </if>
+      <if test="jlr != null" >
+        JLR,
+      </if>
+      <if test="poi != null" >
+        POI,
+      </if>
+      <if test="oldZt != null" >
+        OLD_ZT,
+      </if>
+      <if test="newZt != null" >
+        NEW_ZT,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="zcdm != null" >
+        #{zcdm,jdbcType=CHAR},
+      </if>
+      <if test="jlsj != null" >
+        #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jlr != null" >
+        #{jlr,jdbcType=VARCHAR},
+      </if>
+      <if test="poi != null" >
+        #{poi,jdbcType=VARCHAR},
+      </if>
+      <if test="oldZt != null" >
+        #{oldZt,jdbcType=INTEGER},
+      </if>
+      <if test="newZt != null" >
+        #{newZt,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.LZT" >
+    update l_zt
+    <set >
+      <if test="appId != null" >
+        APP_ID = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="zcdm != null" >
+        ZCDM = #{zcdm,jdbcType=CHAR},
+      </if>
+      <if test="jlsj != null" >
+        JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jlr != null" >
+        JLR = #{jlr,jdbcType=VARCHAR},
+      </if>
+      <if test="poi != null" >
+        POI = #{poi,jdbcType=VARCHAR},
+      </if>
+      <if test="oldZt != null" >
+        OLD_ZT = #{oldZt,jdbcType=INTEGER},
+      </if>
+      <if test="newZt != null" >
+        NEW_ZT = #{newZt,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.LZT" >
+    update l_zt
+    set APP_ID = #{appId,jdbcType=INTEGER},
+      ZCDM = #{zcdm,jdbcType=CHAR},
+      JLSJ = #{jlsj,jdbcType=TIMESTAMP},
+      JLR = #{jlr,jdbcType=VARCHAR},
+      POI = #{poi,jdbcType=VARCHAR},
+      OLD_ZT = #{oldZt,jdbcType=INTEGER},
+      NEW_ZT = #{newZt,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectList" parameterType="org.lf.admin.db.pojo.LZT"
+  resultMap="BaseResultMap">
+  	select * from l_zt
+  	<where>
+  	  <if test="appId != null" >
+        and APP_ID = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="zcdm != null" >
+        and ZCDM = #{zcdm,jdbcType=CHAR}
+      </if>
+      <if test="jlsj != null" >
+        and JLSJ = #{jlsj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jlr != null" >
+        and JLR = #{jlr,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null" >
+        and POI = #{poi,jdbcType=VARCHAR}
+      </if>
+      <if test="oldZt != null" >
+        and OLD_ZT = #{oldZt,jdbcType=INTEGER}
+      </if>
+      <if test="newZt != null" >
+        and NEW_ZT = #{newZt,jdbcType=INTEGER}
+      </if>
+      <if test="remark != null" >
+        and REMARK = #{remark,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </select>
+</mapper>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VZCMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VZC">
+		<result column="zcid" property="zcid" jdbcType="INTEGER" />
+		<result column="app_id" property="appId" jdbcType="INTEGER" />
+		<result column="zcdm" property="zcdm" jdbcType="VARCHAR" />
+		<result column="zc" property="zc" jdbcType="VARCHAR" />
+		<result column="zclxId" property="zclxId" jdbcType="VARCHAR" />
+		<result column="zclx" property="zclx" jdbcType="VARCHAR" />
+		<result column="xh" property="xh" jdbcType="VARCHAR" />
+		<result column="ccbh" property="ccbh" jdbcType="VARCHAR" />
+		<result column="COST" property="cost" jdbcType="DECIMAL" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+		<result column="cfdd" property="cfdd" jdbcType="VARCHAR" />
+		<result column="syr" property="syr" jdbcType="VARCHAR" />
+		<result column="dept_no" property="deptNo" jdbcType="INTEGER" />
+		<result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+		<result column="fzr" property="fzr" jdbcType="VARCHAR" />
+		<result column="glr" property="glr" jdbcType="VARCHAR" />
+		<result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+		<result column="IMG_VERSION" jdbcType="INTEGER" property="imgVersion" />
+		<result column="gzsj" property="gzsj" jdbcType="DATE" />
+		<result column="zjnx" property="zjnx" jdbcType="DECIMAL" />
+		<result column="zczt" property="zczt" jdbcType="INTEGER" />
+		<association property="syrmc" column="{userid=syr,appid=app_id}"  
+			javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+		</association>
+		<association property="fzrmc" column="{userid=fzr,appid=app_id}"  
+			javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+		</association>
+		<association property="glrmc" column="{userid=glr,appid=app_id}"  
+			javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid">  
+		</association>
+	</resultMap>
+	<sql id="query_zc_where">
+		<if test="zcid != null">
+			and zcid = #{zcid,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			and app_id = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="zcdm != null">
+			and zcdm = #{zcdm,jdbcType=VARCHAR}
+		</if>
+		<if test="zc != null">
+			and zc = #{ zc,jdbcType=VARCHAR}
+		</if>
+		<if test="zclx != null">
+			and zclx = #{zclx,jdbcType=VARCHAR}
+		</if>
+		<if test="xh != null">
+			and xh = #{xh,jdbcType=VARCHAR}
+		</if>
+		<if test="ccbh != null">
+			and ccbh = #{ccbh,jdbcType=VARCHAR}
+		</if>
+		<if test="cost != null">
+			and cost = #{cost,jdbcType=DECIMAL}
+		</if>
+		<if test="num != null">
+			and num = #{num,jdbcType=INTEGER}
+		</if>
+		<if test="cfdd != null">
+			and cfdd = #{cfdd,jdbcType=VARCHAR}
+		</if>
+		<if test="syr != null">
+			and syr = #{syr,jdbcType=VARCHAR}
+		</if>
+		<if test="deptName != null">
+			and dept_name = #{deptName,jdbcType=VARCHAR}
+		</if>
+		<if test="fzr != null">
+			and fzr = #{fzr,jdbcType=VARCHAR}
+		</if>
+		<if test="glr != null">
+			and glr = #{glr,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrl != null">
+			and pic_url = #{picUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="imgVersion != null">
+			and IMG_VERSION = #{imgVersion,jdbcType=INTEGER}
+		</if>
+		<if test="gzsj != null">
+			and gzsj = #{gzsj,jdbcType=DATE}
+		</if>
+		<if test="zjnx != null">
+			and zjnx = #{zjnx,jdbcType= DECIMAL}
+		</if>
+		<if test="zczt != null">
+			and zczt = #{zczt,jdbcType=INTEGER}
+		</if>
+	</sql>
+	<sql id="fuzzyQuery_zcAndzfdd">
+		<if test="zcid != null">
+			and zcid = #{zcid,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			and app_id = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="zcdm != null">
+			and zcdm = #{zcdm,jdbcType=VARCHAR}
+		</if>
+		<if test="zc != null">
+			and zc like CONCAT('%',#{zc,jdbcType=VARCHAR},'%') 
+		</if>
+		<if test="zclx != null">
+			and zclx = #{zclx,jdbcType=VARCHAR}
+		</if>
+		<if test="xh != null">
+			and xh = #{xh,jdbcType=VARCHAR}
+		</if>
+		<if test="ccbh != null">
+			and ccbh = #{ccbh,jdbcType=VARCHAR}
+		</if>
+		<if test="cost != null">
+			and cost = #{ccbh,jdbcType=DECIMAL}
+		</if>
+		<if test="num != null">
+			and num = #{num,jdbcType=INTEGER}
+		</if>
+		<if test="cfdd != null">
+			and cfdd like CONCAT('%',#{cfdd,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="syr != null">
+			and syr = #{syr,jdbcType=VARCHAR}
+		</if>
+		<if test="deptName != null">
+			and dept_name = #{deptName,jdbcType=VARCHAR}
+		</if>
+		<if test="fzr != null">
+			and fzr = #{fzr,jdbcType=VARCHAR}
+		</if>
+		<if test="glr != null">
+			and glr = #{glr,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrl != null">
+			and pic_url = #{picUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="imgVersion != null">
+			and IMG_VERSION = #{imgVersion,jdbcType=INTEGER}
+		</if>
+		<if test="gzsj != null">
+			and gzsj = #{gzsj,jdbcType=DATE}
+		</if>
+		<if test="zjnx != null">
+			and zjnx = #{zjnx,jdbcType= DECIMAL}
+		</if>
+		<if test="zczt != null">
+			and zczt = #{zczt,jdbcType=INTEGER}
+		</if>
+	</sql>
+	<sql id="fuzzyQuery_zcAndzfdd_ztList">
+		<if test="zcid != null">
+			and zcid = #{zcid,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			and app_id = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="zcdm != null">
+			and zcdm = #{zcdm,jdbcType=VARCHAR}
+		</if>
+		<if test="zc != null">
+			and zc like CONCAT('%',#{zc,jdbcType=VARCHAR},'%') 
+		</if>
+		<if test="zclx != null">
+			and zclx = #{zclx,jdbcType=VARCHAR}
+		</if>
+		<if test="xh != null">
+			and xh = #{xh,jdbcType=VARCHAR}
+		</if>
+		<if test="ccbh != null">
+			and ccbh = #{ccbh,jdbcType=VARCHAR}
+		</if>
+		<if test="cost != null">
+			and cost = #{cost,jdbcType=DECIMAL}
+		</if>
+		<if test="num != null">
+			and num = #{num,jdbcType=INTEGER}
+		</if>
+		<if test="cfdd != null">
+			and cfdd like CONCAT('%',#{cfdd,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="syr != null">
+			and syr = #{syr,jdbcType=VARCHAR}
+		</if>
+		<if test="deptName != null">
+			and dept_name = #{deptName,jdbcType=VARCHAR}
+		</if>
+		<if test="fzr != null">
+			and fzr = #{fzr,jdbcType=VARCHAR}
+		</if>
+		<if test="glr != null">
+			and glr = #{glr,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrl != null">
+			and pic_url = #{picUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="imgVersion != null">
+			and IMG_VERSION = #{imgVersion,jdbcType=INTEGER}
+		</if>
+		<if test="gzsj != null">
+			and gzsj = #{gzsj,jdbcType=DATE}
+		</if>
+		<if test="zjnx != null">
+			and zjnx = #{zjnx,jdbcType= DECIMAL}
+		</if>
+		<if test="zcztList != null and zcztList.size() > 0">
+			and zczt in <foreach collection="zcztList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</sql>
+	<sql id="fuzzyQueryByRw">
+	    <if test="finish != null">
+	        AND rwxz.finish = #{finish,jdbcType=INTEGER}
+	    </if>
+	    <if test="rwid != null">
+	        AND rw.id = #{rwid,jdbcType=INTEGER}
+	    </if>
+	    <if test="lx != null">
+	        AND rw.lx = #{lx,jdbcType=INTEGER}
+	    </if>
+	    <if test="czr != null">
+	        AND rw.czr = #{czr,jdbcType=VARCHAR}
+	    </if>
+	    <if test="appId != null">
+	        AND zc.app_id = #{appId,jdbcType=INTEGER}
+	    </if>
+	    <if test="zcdm != null">
+	        AND zc.zcdm = #{zcdm,jdbcType=VARCHAR}
+	    </if>
+	    <if test="zcmc != null">
+	        AND zc.zc LIKE CONCAT('%',#{zcmc,jdbcType=VARCHAR},'%')
+	    </if>
+	    <if test="zclxId != null">
+	    	and zc.zclxId like concat(#{zclxId,jdbcType=VARCHAR},'%')
+	    </if>
+	    <if test="zclx != null">
+	        AND zc.zclx = #{zclx,jdbcType=VARCHAR}
+	    </if>
+	    <if test="cfdd != null">
+	        AND zc.cfdd LIKE CONCAT('%',#{cfdd,jdbcType=VARCHAR},'%')
+	    </if>
+	    <if test="syr != null">
+	        AND zc.syr = #{syr,jdbcType=VARCHAR}
+	    </if>
+	    <if test="zczt != null">
+	        AND zc.zczt = #{zczt,jdbcType=INTEGER}
+	    </if>
+	</sql>
+	<sql id="queryByDeptnoAndZCLXId">
+			<if test="list !=null and list.size() > 0">
+			dept_no in
+		    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+	       			#{item}
+	  			 </foreach>
+  			</if>
+	    	<if test="zcid != null">
+			and zcid = #{zcid,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and app_id = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="zcdm != null">
+				and zcdm = #{zcdm,jdbcType=VARCHAR}
+			</if>
+			<if test="zc != null">
+				and zc like CONCAT('%',#{zc,jdbcType=VARCHAR},'%') 
+			</if>
+			<if test="zclxId != null">
+				and zclxId like concat(#{zclxId,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="xh != null">
+				and xh = #{xh,jdbcType=VARCHAR}
+			</if>
+			<if test="ccbh != null">
+				and ccbh = #{ccbh,jdbcType=VARCHAR}
+			</if>
+			<if test="cost != null">
+				and cost = #{cost,jdbcType=DECIMAL}
+			</if>
+			<if test="num != null">
+				and num = #{num,jdbcType=INTEGER}
+			</if>
+			<if test="cfdd != null">
+				and cfdd like CONCAT('%',#{cfdd,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="syr != null">
+				and syr = #{syr,jdbcType=VARCHAR}
+			</if>
+			<if test="deptName != null">
+				and dept_name = #{deptName,jdbcType=VARCHAR}
+			</if>
+			<if test="fzr != null">
+				and fzr = #{fzr,jdbcType=VARCHAR}
+			</if>
+			<if test="glr != null">
+				and glr = #{glr,jdbcType=VARCHAR}
+			</if>
+			<if test="picUrl != null">
+				and pic_url = #{picUrl,jdbcType=VARCHAR}
+			</if>
+			<if test="imgVersion != null">
+				and IMG_VERSION = #{imgVersion,jdbcType=INTEGER}
+			</if>
+			<if test="gzsj != null">
+				and gzsj = #{gzsj,jdbcType=DATE}
+			</if>
+			<if test="zjnx != null">
+				and zjnx = #{zjnx,jdbcType= DECIMAL}
+			</if>
+			<if test="zcztList != null and zcztList.size() > 0">
+			and zczt in <foreach collection="zcztList" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</sql>
+	<select id="countZCList" parameterType="org.lf.admin.db.pojo.VZC"
+		resultType="int">
+		select count(*) from v_zc
+		<where>
+			<include refid="query_zc_where"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="select" parameterType="org.lf.admin.db.pojo.VZC"
+		resultMap="BaseResultMap">
+		select * from v_zc
+		<where>
+			<include refid="query_zc_where"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="selectList" parameterType="org.lf.admin.db.pojo.VZC"
+		resultMap="BaseResultMap">
+		select * from v_zc
+		<where>
+			<include refid="query_zc_where"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="countZCListFuzzy" parameterType="org.lf.admin.db.pojo.VZC"
+		resultType="int">
+		select count(*) from v_zc
+		<where>
+			<include refid="fuzzyQuery_zcAndzfdd"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getZCListFuzzy" parameterType="org.lf.admin.db.pojo.VZC"
+		resultMap="BaseResultMap">
+		select * from v_zc
+		<where>
+			<include refid="fuzzyQuery_zcAndzfdd"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="countZCListFuzzyByZTList" parameterType="java.util.Map"
+		resultType="int">
+		select count(*) from v_zc
+		<where>
+			<include refid="fuzzyQuery_zcAndzfdd_ztList"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="getZCListFuzzyByZTList" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from v_zc
+		<where>
+			<include refid="fuzzyQuery_zcAndzfdd_ztList"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="countZCListFuzzyByRW" parameterType="java.util.Map" resultType="int">
+	    SELECT count(*) FROM j_rw rw
+			JOIN j_rwxz rwxz ON (rw.id = rwxz.rwid)
+			JOIN v_zc zc ON (rwxz.zcid = zc.zcid)
+		<where>
+			<include refid="fuzzyQueryByRw"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="getZCListFuzzyByRW" parameterType="java.util.Map" resultMap="BaseResultMap">
+	    SELECT zc.* FROM j_rw rw
+			JOIN j_rwxz rwxz ON (rw.id = rwxz.rwid)
+			JOIN v_zc zc ON (rwxz.zcid = zc.zcid)
+		<where>
+			<include refid="fuzzyQueryByRw"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+
+	<select id="getDeprecatingZCList" parameterType="org.lf.admin.db.pojo.VZC" resultMap="BaseResultMap">
+		select *
+		from v_zc
+		where datediff(curdate(), gzsj) > zjnx * 365 - CONVERT((select env_value from chu_env where env_key = 'ZC_EXPIRE_DATE'), SIGNED)
+		and app_id = #{appId,jdbcType=INTEGER} and glr = #{glr,jdbcType=VARCHAR};
+	</select>
+	
+	<select id="selectByZcid" parameterType="int" resultMap="BaseResultMap">
+	    SELECT * FROM v_zc WHERE zcid = #{zcid,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByDeptNoListAndZCLXID"  resultMap="BaseResultMap" parameterType="java.util.Map">
+	    SELECT * FROM v_zc 
+	    <where>
+	    	<include refid="queryByDeptnoAndZCLXId"></include>
+	    </where>
+	    <if test="start != null and offset != null">
+				limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="countZCListByByDeptNoListAndZCLXID"  resultType="java.lang.Integer" parameterType="java.util.Map">
+	    SELECT count(*) FROM v_zc 
+	    <where>
+	    	<include refid="queryByDeptnoAndZCLXId"></include>
+	    </where>
+	</select>
+</mapper>

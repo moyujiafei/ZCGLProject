@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VFJMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VFJ" >
+    <result column="fj_id" property="fjId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="floor" property="floor" jdbcType="VARCHAR" />
+    <result column="room" property="room" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="glr" property="glr" jdbcType="VARCHAR" />
+    <result column="jzw" property="jzw" jdbcType="VARCHAR" />
+    <result column="dz" property="dz" jdbcType="VARCHAR" />
+    <result column="poi" property="poi" jdbcType="VARCHAR" />
+    <result column="tybz" property="tybz" jdbcType="INTEGER" />
+    <result column="jzwId" property="jzwId" jdbcType="INTEGER" />
+    <result column="xqId" property="xqId" jdbcType="INTEGER" />
+    <result column="xqmc" property="xqmc" jdbcType="VARCHAR" />
+    <association property="glrmc" column="{userid=glr,appid=app_id}" javaType="java.lang.String" select="org.lf.admin.db.dao.ChuWXUserMapper.getNameByUseridAndAppid"></association>
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.VFJ" >
+    insert into v_fj (fj_id, app_id, floor, 
+      room, dept_name, glr, 
+      jzw, dz, poi, tybz,jzwId,xqId
+      )
+    values (#{fjId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{floor,jdbcType=VARCHAR}, 
+      #{room,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{glr,jdbcType=VARCHAR}, 
+      #{jzw,jdbcType=VARCHAR}, #{dz,jdbcType=VARCHAR}, #{poi,jdbcType=VARCHAR}, #{tybz,jdbcType=INTEGER}
+      , #{jzwId,jdbcType=INTEGER},#{xqId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.VFJ" >
+    insert into v_fj
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fjId != null" >
+        fj_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="floor != null" >
+        floor,
+      </if>
+      <if test="room != null" >
+        room,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="glr != null" >
+        glr,
+      </if>
+      <if test="jzw != null" >
+        jzw,
+      </if>
+      <if test="dz != null" >
+        dz,
+      </if>
+      <if test="poi != null" >
+        poi,
+      </if>
+      <if test="tybz != null" >
+        tybz,
+      </if>
+      <if test="jzwId != null" >
+        jzwId,
+      </if>
+      <if test="xqId != null" >
+       xqId,
+      </if>   
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fjId != null" >
+        #{fjId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=VARCHAR},
+      </if>
+      <if test="room != null" >
+        #{room,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="glr != null" >
+        #{glr,jdbcType=VARCHAR},
+      </if>
+      <if test="jzw != null" >
+        #{jzw,jdbcType=VARCHAR},
+      </if>
+      <if test="dz != null" >
+        #{dz,jdbcType=VARCHAR},
+      </if>
+      <if test="poi != null" >
+        #{poi,jdbcType=VARCHAR},
+      </if>
+      <if test="tybz != null" >
+        #{tybz,jdbcType=INTEGER},
+      </if>
+      <if test="jzwId != null" >
+        #{jzwId,jdbcType=INTEGER},
+      </if>
+      <if test="xqId != null" >
+       and xqId = #{xqId,jdbcType=INTEGER}
+      </if>   
+    </trim>
+  </insert>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VFJ" >
+    select * from v_fj 
+    <where>
+      <if test="fjId != null" >
+       and fj_id = #{fjId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="jzw != null" >
+       and jzw = #{jzw,jdbcType=VARCHAR}
+      </if>
+      <if test="dz != null" >
+       and dz = #{dz,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null" >
+       and poi = #{poi,jdbcType=VARCHAR}
+      </if> 
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if> 
+      <if test="jzwId != null" >
+       and jzwId = #{jzwId,jdbcType=INTEGER}
+      </if> 
+      <if test="xqId != null" >
+       and xqId = #{xqId,jdbcType=INTEGER}
+      </if>                
+    </where>
+    <if test="start != null and offset != null">
+		limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+	</if>
+  </select>
+  <select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VFJ">
+		select * from v_fj
+	<where>
+      <if test="fjId != null" >
+       and fj_id = #{fjId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="jzw != null" >
+       and jzw = #{jzw,jdbcType=VARCHAR}
+      </if>
+      <if test="dz != null" >
+       and dz = #{dz,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null" >
+       and poi = #{poi,jdbcType=VARCHAR}
+      </if> 
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if>  
+      <if test="jzwId != null" >
+       and jzwId = #{jzwId,jdbcType=INTEGER}
+      </if>
+      <if test="xqId != null" >
+       and xqId = #{xqId,jdbcType=INTEGER}
+      </if> 
+      <if test="xqmc != null" >
+	       and xqcm = #{xqcm,jdbcType=VARCHAR}
+	  </if>               
+      </where>
+      <if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+	  </if>
+	</select>
+	<select id="countVFJList" resultType="int" parameterType="org.lf.admin.db.pojo.VFJ">
+		select count(*) from v_fj
+	<where>
+      <if test="fjId != null" >
+       and fj_id = #{fjId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="jzw != null" >
+       and jzw = #{jzw,jdbcType=VARCHAR}
+      </if>
+      <if test="dz != null" >
+       and dz = #{dz,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null" >
+       and poi = #{poi,jdbcType=VARCHAR}
+      </if> 
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if> 
+      <if test="jzwId != null" >
+       and jzwId = #{jzwId,jdbcType=INTEGER}
+      </if> 
+      <if test="xqId != null" >
+       and xqId = #{xqId,jdbcType=INTEGER}
+      </if>              
+      </where>
+	</select>
+	<sql id="query_fj_where">
+	  <if test="fjId != null" >
+       and fj_id = #{fjId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null" >
+       and app_id = #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="floor != null" >
+       and floor = #{floor,jdbcType=VARCHAR}
+      </if>
+      <if test="room != null" >
+       and room = #{room,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="glr != null" >
+       and glr = #{glr,jdbcType=VARCHAR}
+      </if>
+      <if test="jzw != null" >
+       and jzw like CONCAT('%',#{jzw,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="dz != null" >
+       and dz = #{dz,jdbcType=VARCHAR}
+      </if>
+      <if test="poi != null" >
+       and poi = #{poi,jdbcType=VARCHAR}
+      </if> 
+      <if test="tybz != null" >
+       and tybz = #{tybz,jdbcType=INTEGER}
+      </if> 
+      <if test="jzwId != null" >
+       and jzwId = #{jzwId,jdbcType=INTEGER}
+      </if> 
+      <if test="xqId != null" >
+       and xqId = #{xqId,jdbcType=INTEGER}
+      </if>   
+	</sql>
+	<select id="getFJListFuzzy" parameterType="org.lf.admin.db.pojo.VFJ" resultMap="BaseResultMap">
+		select * from v_fj 
+		<where>
+			<include refid="query_fj_where"></include>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="countVFJListFuzzy" parameterType="org.lf.admin.db.pojo.VFJ" resultType="int">
+		select count(*) from v_fj 
+		<where>
+			<include refid="query_fj_where"></include>
+		</where>
+	</select>
+	<select id="selectFloorList" resultType="String" parameterType="org.lf.admin.db.pojo.VFJ">
+		select distinct floor from v_fj
+		<where>
+	      <if test="fjId != null" >
+	       and fj_id = #{fjId,jdbcType=INTEGER}
+	      </if>
+	      <if test="appId != null" >
+	       and app_id = #{appId,jdbcType=INTEGER}
+	      </if>
+	      <if test="floor != null" >
+	       and floor = #{floor,jdbcType=VARCHAR}
+	      </if>
+	      <if test="room != null" >
+	       and room = #{room,jdbcType=VARCHAR}
+	      </if>
+	      <if test="deptName != null" >
+	       and dept_name = #{deptName,jdbcType=VARCHAR}
+	      </if>
+	      <if test="glr != null" >
+	       and glr = #{glr,jdbcType=VARCHAR}
+	      </if>
+	      <if test="jzw != null" >
+	       and jzw = #{jzw,jdbcType=VARCHAR}
+	      </if>
+	      <if test="dz != null" >
+	       and dz = #{dz,jdbcType=VARCHAR}
+	      </if>
+	      <if test="poi != null" >
+	       and poi = #{poi,jdbcType=VARCHAR}
+	      </if> 
+	      <if test="tybz != null" >
+	       and tybz = #{tybz,jdbcType=INTEGER}
+	      </if> 
+	      <if test="jzwId != null" >
+	       and jzwId = #{jzwId,jdbcType=INTEGER}
+	      </if> 
+	      <if test="xqId != null" >
+	       and xqId = #{xqId,jdbcType=INTEGER}
+	      </if>   
+      	  <if test="xqmc != null" >
+	       and xqcm = #{xqcm,jdbcType=VARCHAR}
+	      </if>               
+      </where>
+	</select>
+</mapper>

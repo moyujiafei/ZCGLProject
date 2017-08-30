@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VJZWMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VJZW">
+		<result column="jzw_id" property="jzwId" jdbcType="INTEGER" />
+		<result column="app_id" property="appId" jdbcType="INTEGER" />
+		<result column="xqmc" property="xqmc" jdbcType="VARCHAR" />
+		<result column="lxmc" property="lxmc" jdbcType="VARCHAR" />
+		<result column="jzw" property="jzw" jdbcType="VARCHAR" />
+		<result column="dz" property="dz" jdbcType="VARCHAR" />
+		<result column="poi" property="poi" jdbcType="VARCHAR" />
+		<result column="tybz" property="tybz" jdbcType="INTEGER" />
+		<result column="xqid" property="xqid" jdbcType="INTEGER" />
+		<result column="lxid" property="lxid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+     ID
+    </sql>
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VJZW">
+		select * from v_jzw
+		<where>
+			<if test="jzwId != null">
+				and JZW_ID= #{jzwId,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and APP_ID= #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqmc != null">
+				and XQMC= #{xqmc,jdbcType=VARCHAR}
+			</if>
+			<if test="lxmc != null">
+				and LXMC = #{lxmc,jdbcType=VARCHAR}
+			</if>
+			<if test="jzw != null">
+				and JZW = #{jzw,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+			<if test="xqid != null">
+				and XQID = #{xqid,jdbcType=INTEGER}
+			</if>
+			<if test="lxid != null">
+				and LXID = #{lxid,jdbcType=INTEGER}
+			</if>
+		</where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VJZW">
+		select * from v_jzw
+		<where>
+			<if test="jzwId != null">
+				and JZW_ID= #{jzwId,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and APP_ID= #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqmc != null">
+				and XQMC= #{xqmc,jdbcType=VARCHAR}
+			</if>
+			<if test="lxmc != null">
+				and LXMC = #{lxmc,jdbcType=VARCHAR}
+			</if>
+			<if test="jzw != null">
+				and JZW = #{jzw,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+			<if test="xqid != null">
+				and XQID = #{xqid,jdbcType=INTEGER}
+			</if>
+			<if test="lxid != null">
+				and LXID = #{lxid,jdbcType=INTEGER}
+			</if>
+		</where>
+		 <if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		 </if>
+	</select>
+	<select id="countJZWList" resultType="int" parameterType="org.lf.admin.db.pojo.VJZW">
+		select count(*) from v_jzw
+		<where>
+			<if test="jzwId != null">
+				and JZW_ID= #{jzwId,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and APP_ID= #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqmc != null">
+				and XQMC= #{xqmc,jdbcType=VARCHAR}
+			</if>
+			<if test="lxmc != null">
+				and LXMC = #{lxmc,jdbcType=VARCHAR}
+			</if>
+			<if test="jzw != null">
+				and JZW = #{jzw,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+			<if test="xqid != null">
+				and XQID = #{xqid,jdbcType=INTEGER}
+			</if>
+			<if test="lxid != null">
+				and LXID = #{lxid,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+		
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from v_jzw
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <sql id="query_jzw_where">
+  <if test="jzwId != null">
+				and JZW_ID= #{jzwId,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and APP_ID= #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="xqmc != null">
+				and XQMC= #{xqmc,jdbcType=VARCHAR}
+			</if>
+			<if test="lxmc != null">
+				and LXMC = #{lxmc,jdbcType=VARCHAR}
+			</if>
+			<if test="dz != null">
+				and DZ = #{dz,jdbcType=VARCHAR}
+			</if>
+			<if test="poi != null">
+				and POI = #{poi,jdbcType=VARCHAR}
+			</if>
+			<if test="tybz != null">
+				and TYBZ = #{tybz,jdbcType=INTEGER}
+			</if>
+			<if test="xqid != null">
+				and XQID = #{xqid,jdbcType=INTEGER}
+			</if>
+			<if test="lxid != null">
+				and LXID = #{lxid,jdbcType=INTEGER}
+			</if>
+			<if test="jzw != null">
+				and jzw like CONCAT('%',#{jzw,jdbcType=VARCHAR},'%') 
+			</if>
+  </sql>
+  <select id="getJZWListFuzzy" parameterType="org.lf.admin.db.pojo.VJZW" resultMap="BaseResultMap">
+		SELECT * FROM v_jzw 
+		<where>
+			<include refid="query_jzw_where"></include>
+		</where>
+		 <if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>
+  </select>
+    <select id="countJZWListFuzzy" parameterType="org.lf.admin.db.pojo.VJZW" resultType="int">
+		SELECT count(*) FROM v_jzw 
+		<where>
+			<include refid="query_jzw_where"></include>
+		</where>
+  </select>
+</mapper>

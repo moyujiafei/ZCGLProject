@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuWXUserMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuWXUser">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="USERID" property="userid" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+		<result column="POSITION" property="position" jdbcType="VARCHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+		<result column="GENDER" property="gender" jdbcType="INTEGER" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="WEIXINID" property="weixinid" jdbcType="VARCHAR" />
+		<result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="EXTATTR" property="extattr" jdbcType="VARCHAR" />
+		<result column="APP_ID" property="appId" jdbcType="INTEGER" />
+		<result column="TAG_NO" property="tagNo" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, USERID, NAME, DEPARTMENT, POSITION, MOBILE, GENDER, EMAIL, WEIXINID,
+		AVATAR,
+		STATUS, EXTATTR, APP_ID, TAG_NO
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from chu_wxuser
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		select * from chu_wxuser
+		<where>
+			<if test="userid != null">
+				and USERID = #{userid,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="department != null">
+				and DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]')
+			</if>
+			<if test="position != null">
+				and POSITION = #{position,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				and MOBILE = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null">
+				and GENDER = #{gender,jdbcType=INTEGER}
+			</if>
+			<if test="email != null">
+				and EMAIL = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="weixinid != null">
+				and WEIXINID = #{weixinid,jdbcType=VARCHAR}
+			</if>
+			<if test="avatar != null">
+				and AVATAR = #{avatar,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="extattr != null">
+				and EXTATTR = #{extattr,jdbcType=VARCHAR}
+			</if>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="tagNo != null">
+				and TAG_NO REGEXP concat('[\[,]"', #{tagNo,jdbcType=VARCHAR},'"[\],]')
+			</if>
+		</where>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		select * from chu_wxuser
+		<where>
+			<if test="userid != null">
+				and USERID = #{userid,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="department != null">
+				and DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]')
+			</if>
+			<if test="position != null">
+				and POSITION = #{position,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				and MOBILE = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null">
+				and GENDER = #{gender,jdbcType=INTEGER}
+			</if>
+			<if test="email != null">
+				and EMAIL = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="weixinid != null">
+				and WEIXINID = #{weixinid,jdbcType=VARCHAR}
+			</if>
+			<if test="avatar != null">
+				and AVATAR = #{avatar,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="extattr != null">
+				and EXTATTR = #{extattr,jdbcType=VARCHAR}
+			</if>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="tagNo != null">
+				and TAG_NO = #{tagNo,jdbcType=VARCHAR}
+			</if>			
+		</where>
+	</select>
+	<select id="selectUserList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		select * from chu_wxuser
+		<where>
+			<if test="userid != null">
+				and USERID = #{userid,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="department != null">
+				and DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]') 
+			</if>
+			<if test="position != null">
+				and POSITION = #{position,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				and MOBILE = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null">
+				and GENDER = #{gender,jdbcType=INTEGER}
+			</if>
+			<if test="email != null">
+				and EMAIL = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="weixinid != null">
+				and WEIXINID = #{weixinid,jdbcType=VARCHAR}
+			</if>
+			<if test="avatar != null">
+				and AVATAR = #{avatar,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="extattr != null">
+				and EXTATTR = #{extattr,jdbcType=VARCHAR}
+			</if>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="tagNo != null">
+				and TAG_NO REGEXP concat('[\[,]"', #{tagNo,jdbcType=VARCHAR},'"[\],]') 
+			</if>			
+		</where>
+			<if test="start != null and offset != null">
+				limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+			</if>	
+	</select>
+	<select id="countWXUserList" resultType="int"
+		parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		select count(*) from chu_wxuser
+		<where>
+			<if test="userid != null">
+				and USERID = #{userid,jdbcType=VARCHAR}
+			</if>
+			<if test="name != null">
+				and NAME = #{name,jdbcType=VARCHAR}
+			</if>
+			<if test="department != null">			
+				and DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]') 
+			</if>
+			<if test="position != null">
+				and POSITION = #{position,jdbcType=VARCHAR}
+			</if>
+			<if test="mobile != null">
+				and MOBILE = #{mobile,jdbcType=VARCHAR}
+			</if>
+			<if test="gender != null">
+				and GENDER = #{gender,jdbcType=INTEGER}
+			</if>
+			<if test="email != null">
+				and EMAIL = #{email,jdbcType=VARCHAR}
+			</if>
+			<if test="weixinid != null">
+				and WEIXINID = #{weixinid,jdbcType=VARCHAR}
+			</if>
+			<if test="avatar != null">
+				and AVATAR = #{avatar,jdbcType=VARCHAR}
+			</if>
+			<if test="status != null">
+				and STATUS = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="extattr != null">
+				and EXTATTR = #{extattr,jdbcType=VARCHAR}
+			</if>
+			<if test="appId != null">
+				and APP_ID = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="tagNo != null">
+				and TAG_NO REGEXP concat('[\[,]"', #{tagNo,jdbcType=VARCHAR},'"[\],]') 
+			</if>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from chu_wxuser
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.ChuWXUser" useGeneratedKeys="true" keyProperty="id">
+		insert into chu_wxuser (ID, USERID, NAME,
+		DEPARTMENT, POSITION, MOBILE,
+		GENDER, EMAIL, WEIXINID,
+		AVATAR, STATUS, EXTATTR,
+		APP_ID, TAG_NO)
+		values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR},
+		#{gender,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR},
+		#{weixinid,jdbcType=VARCHAR},
+		#{avatar,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{extattr,jdbcType=VARCHAR},
+		#{appId,jdbcType=INTEGER}, #{tagNo,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuWXUser" useGeneratedKeys="true" keyProperty="id">
+		insert into chu_wxuser
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="userid != null">
+				USERID,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="department != null">
+				DEPARTMENT,
+			</if>
+			<if test="position != null">
+				POSITION,
+			</if>
+			<if test="mobile != null">
+				MOBILE,
+			</if>
+			<if test="gender != null">
+				GENDER,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="weixinid != null">
+				WEIXINID,
+			</if>
+			<if test="avatar != null">
+				AVATAR,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+			<if test="extattr != null">
+				EXTATTR,
+			</if>
+			<if test="appId != null">
+				APP_ID,
+			</if>
+			<if test="tagNo != null">
+				TAG_NO,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null">
+				#{department,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null">
+				#{position,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="weixinid != null">
+				#{weixinid,jdbcType=VARCHAR},
+			</if>
+			<if test="avatar != null">
+				#{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="extattr != null">
+				#{extattr,jdbcType=VARCHAR},
+			</if>
+			<if test="appId != null">
+				#{appId,jdbcType=INTEGER},
+			</if>
+			<if test="tagNo != null">
+				#{tagNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<insert id="insertAll" parameterType="java.util.List">
+		insert into chu_wxuser (USERID, NAME,
+		DEPARTMENT, POSITION, MOBILE,
+		GENDER, EMAIL, WEIXINID,
+		AVATAR, STATUS, EXTATTR,
+		APP_ID, TAG_NO)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.userid,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR},
+			#{item.department,jdbcType=VARCHAR}, #{item.position,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR},
+			#{item.gender,jdbcType=INTEGER}, #{item.email,jdbcType=VARCHAR},
+			#{item.weixinid,jdbcType=VARCHAR},
+			#{item.avatar,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}, #{item.extattr,jdbcType=VARCHAR},
+			#{item.appId,jdbcType=INTEGER}, #{item.tagNo,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		update chu_wxuser
+		<set>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null">
+				DEPARTMENT REGEXP concat('[\[,]',#{department,jdbcType=VARCHAR},'[\],]'),
+			</if>
+			<if test="position != null">
+				POSITION = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				GENDER = #{gender,jdbcType=INTEGER},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="weixinid != null">
+				WEIXINID = #{weixinid,jdbcType=VARCHAR},
+			</if>
+			<if test="avatar != null">
+				AVATAR = #{avatar,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="extattr != null">
+				EXTATTR = #{extattr,jdbcType=VARCHAR},
+			</if>
+			<if test="appId != null">
+				APP_ID = #{appId,jdbcType=INTEGER},
+			</if>
+			<if test="tagNo != null">
+				TAG_NO REGEXP concat('[\[,]'," #{tagNo,jdbcType=VARCHAR}",'[\],]'),
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuWXUser">
+		update chu_wxuser
+		set USERID = #{userid,jdbcType=VARCHAR},
+		NAME = #{name,jdbcType=VARCHAR},
+		DEPARTMENT = #{department,jdbcType=VARCHAR},
+		POSITION = #{position,jdbcType=VARCHAR},
+		MOBILE = #{mobile,jdbcType=VARCHAR},
+		GENDER = #{gender,jdbcType=INTEGER},
+		EMAIL = #{email,jdbcType=VARCHAR},
+		WEIXINID = #{weixinid,jdbcType=VARCHAR},
+		AVATAR = #{avatar,jdbcType=VARCHAR},
+		STATUS = #{status,jdbcType=INTEGER},
+		EXTATTR = #{extattr,jdbcType=VARCHAR},
+		APP_ID = #{appId,jdbcType=INTEGER},
+		TAG_NO REGEXP concat('[\[,]'," #{tagNo,jdbcType=VARCHAR}",'[\],]')
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

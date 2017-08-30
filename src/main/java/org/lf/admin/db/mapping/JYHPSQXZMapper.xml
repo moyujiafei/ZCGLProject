@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.JYHPSQXZMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.JYHPSQXZ" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SQ_DM" property="sqDm" jdbcType="CHAR" />
+    <result column="YHP_ID" property="yhpId" jdbcType="INTEGER" />
+    <result column="SQ_NUM" property="sqNum" jdbcType="INTEGER" />
+    <result column="SP_NUM" property="spNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SQ_DM, YHP_ID, SQ_NUM, SP_NUM
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from j_yhp_sqxz
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from j_yhp_sqxz
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.JYHPSQXZ" >
+    insert into j_yhp_sqxz (ID, SQ_DM, YHP_ID, 
+      SQ_NUM, SP_NUM)
+    values (#{id,jdbcType=INTEGER}, #{sqDm,jdbcType=CHAR}, #{yhpId,jdbcType=INTEGER}, 
+      #{sqNum,jdbcType=INTEGER}, #{spNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.JYHPSQXZ" >
+    insert into j_yhp_sqxz
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="sqDm != null" >
+        SQ_DM,
+      </if>
+      <if test="yhpId != null" >
+        YHP_ID,
+      </if>
+      <if test="sqNum != null" >
+        SQ_NUM,
+      </if>
+      <if test="spNum != null" >
+        SP_NUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sqDm != null" >
+        #{sqDm,jdbcType=CHAR},
+      </if>
+      <if test="yhpId != null" >
+        #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="sqNum != null" >
+        #{sqNum,jdbcType=INTEGER},
+      </if>
+      <if test="spNum != null" >
+        #{spNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.JYHPSQXZ" >
+    update j_yhp_sqxz
+    <set >
+      <if test="sqDm != null" >
+        SQ_DM = #{sqDm,jdbcType=CHAR},
+      </if>
+      <if test="yhpId != null" >
+        YHP_ID = #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="sqNum != null" >
+        SQ_NUM = #{sqNum,jdbcType=INTEGER},
+      </if>
+      <if test="spNum != null" >
+        SP_NUM = #{spNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.JYHPSQXZ" >
+    update j_yhp_sqxz
+    set SQ_DM = #{sqDm,jdbcType=CHAR},
+      YHP_ID = #{yhpId,jdbcType=INTEGER},
+      SQ_NUM = #{sqNum,jdbcType=INTEGER},
+      SP_NUM = #{spNum,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

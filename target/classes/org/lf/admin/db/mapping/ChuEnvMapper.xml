@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.ChuEnvMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.ChuEnv">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="ENV_KEY" property="envKey" jdbcType="VARCHAR" />
+		<result column="ENV_VALUE" property="envValue" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, ENV_KEY, ENV_VALUE, REMARK
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from chu_env
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		select * from chu_env
+		<where>
+			<if test="envKey != null">
+				and ENV_KEY = #{envKey,jdbcType=VARCHAR} 
+			</if>
+			<if test="envValue != null">
+				and ENV_VALUE = #{envValue,jdbcType=VARCHAR} 
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		select * from chu_env
+		<where>
+			<if test="envKey != null">
+				and ENV_KEY = #{envKey,jdbcType=VARCHAR} 
+			</if>
+			<if test="envValue != null">
+				and ENV_VALUE = #{envValue,jdbcType=VARCHAR} 
+			</if>
+			<if test="remark != null">
+				and REMARK = #{remark,jdbcType=VARCHAR} 
+			</if>
+		</where>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from chu_env
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.ChuEnv" useGeneratedKeys="true" keyProperty="id">
+		insert into chu_env (ID, ENV_KEY, ENV_VALUE,
+		REMARK)
+		values (#{id,jdbcType=INTEGER}, #{envKey,jdbcType=VARCHAR},
+		#{envValue,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.ChuEnv" useGeneratedKeys="true" keyProperty="id">
+		insert into chu_env
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="envKey != null">
+				ENV_KEY,
+			</if>
+			<if test="envValue != null">
+				ENV_VALUE,
+			</if>
+			<if test="remark != null">
+				REMARK,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="envKey != null">
+				#{envKey,jdbcType=VARCHAR},
+			</if>
+			<if test="envValue != null">
+				#{envValue,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		update chu_env
+		<set>
+			<if test="envKey != null">
+				ENV_KEY = #{envKey,jdbcType=VARCHAR},
+			</if>
+			<if test="envValue != null">
+				ENV_VALUE = #{envValue,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		update chu_env
+		set ENV_KEY = #{envKey,jdbcType=VARCHAR},
+		ENV_VALUE = #{envValue,jdbcType=VARCHAR},
+		REMARK = #{remark,jdbcType=VARCHAR}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	 <select id="countEnvList" resultType="int" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		select count(*) from chu_env
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="envKey!= null">
+				and ENV_KEY = #{envKey,jdbcType=VARCHAR}
+			</if>
+			<if test="envValue != null">
+				and ENV_VALUE= #{envValue,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK= #{remark,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	 <select id="getEnvList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.ChuEnv">
+		select * from chu_env
+		<where>
+			<if test="id != null">
+				and ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="envKey!= null">
+				and ENV_KEY = #{envKey,jdbcType=VARCHAR}
+			</if>
+			<if test="envValue != null">
+				and ENV_VALUE= #{envValue,jdbcType=VARCHAR}
+			</if>
+			<if test="remark != null">
+				and REMARK= #{remark,jdbcType=VARCHAR}
+			</if>
+		</where>
+		<if test="start != null and offset != null">
+				limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>	
+	</select>
+</mapper>

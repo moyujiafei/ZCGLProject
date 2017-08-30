@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VZCLXMapper">
+	<sql id="query_ZCLX_where">
+		<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			and app_id = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="lx != null">
+			and lx = #{lx,jdbcType=VARCHAR}
+		</if>
+		<if test="plx != null">
+			and plx = #{plx,jdbcType=VARCHAR}
+		</if>
+		<if test="zjnx != null">
+			and zjnx = #{zjnx,jdbcType=DECIMAL}
+		</if>
+		<if test="remark != null">
+			and remark = #{remark,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	<sql id="Base_Column_List">
+		id,app_id,lx,plx,zjnx,remark
+	</sql>
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VZCLX">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="app_id" property="appId" jdbcType="INTEGER" />
+		<result column="lx" property="lx" jdbcType="VARCHAR" />
+		<result column="plx" property="plx" jdbcType="VARCHAR" />
+		<result column="zjnx" property="zjnx" jdbcType="DECIMAL" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM `v_zclx`
+		<where>
+			<include refid="query_ZCLX_where" />
+		</where>
+	</select>
+	
+	<select id="selectZCLXList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM `v_zclx`
+		<where>
+			<include refid="query_ZCLX_where" />
+		</where>
+		<if test="start != null and offset != null ">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="selectLevel1ZCLXList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM `v_zclx`
+		<where>
+			<include refid="query_ZCLX_where" />
+			and plx is null
+		</where>
+		<if test="start != null and offset != null ">
+			limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+		</if>
+	</select>
+	
+	<select id="selectLevel2ZCLXList" resultMap="BaseResultMap"
+		parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM `v_zclx`
+		<where>
+			plx is not NULL
+			<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and app_id = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="lx != null">
+				and lx like CONCAT('%',#{lx,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="plx != null">
+				and plx = #{plx,jdbcType=VARCHAR}
+			</if>
+			<if test="zjnx != null">
+				and zjnx = #{zjnx,jdbcType=DECIMAL}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark,jdbcType=VARCHAR}
+			</if>
+			<if test="start != null and offset != null ">
+				limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+			</if>
+		</where> 
+	</select>
+	
+	<select id="countLevel1ZCLXList" resultType="int" parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT count(*) FROM `v_zclx`
+		<where>
+			<include refid="query_ZCLX_where" />
+			and plx is null
+		</where>
+	</select>
+	
+	<select id="countLevel2ZCLXList" resultType="int" parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT count(*) FROM `v_zclx`
+		<where>
+			plx is not NULL
+			<if test="id != null">
+			and id = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="appId != null">
+				and app_id = #{appId,jdbcType=INTEGER}
+			</if>
+			<if test="lx != null">
+				and lx like CONCAT('%',#{lx,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="plx != null">
+				and plx = #{plx,jdbcType=VARCHAR}
+			</if>
+			<if test="zjnx != null">
+				and zjnx = #{zjnx,jdbcType=DECIMAL}
+			</if>
+			<if test="remark != null">
+				and remark = #{remark,jdbcType=VARCHAR}
+			</if>
+			<if test="start != null and offset != null ">
+				limit #{start,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+			</if>
+		</where>
+		
+	</select>
+	
+	<select id="countZCLXList" resultType="int" parameterType="org.lf.admin.db.pojo.VZCLX">
+		SELECT count(*) FROM `v_zclx`
+		<where>
+			<include refid="query_ZCLX_where" />
+		</where>
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="int">
+		select
+		<include refid="Base_Column_List" />
+		from v_zclx
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.VZCLX">
+		select
+		<include refid="Base_Column_List" />
+		from v_zclx
+		<where>
+			<include refid="query_ZCLX_where" />
+		</where>
+	</select>
+	
+</mapper>

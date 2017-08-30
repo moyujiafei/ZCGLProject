@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.CZCLXMapper">
+	<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.CZCLX">
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<result column="APP_ID" property="appId" jdbcType="INTEGER" />
+		<result column="LX_ID" property="lxId" jdbcType="VARCHAR" />
+		<result column="LX_PID" property="lxPid" jdbcType="VARCHAR" />
+		<result column="MC" property="mc" jdbcType="VARCHAR" />
+		<result column="ZJNX" property="zjnx" jdbcType="DECIMAL" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<result column="PIC_URL" jdbcType="VARCHAR" property="picUrl" />
+    	<result column="IMG_VERSION" jdbcType="INTEGER" property="imgVersion" />
+	</resultMap>
+	<sql id="query_ZCLX_where">
+		<if test="id != null">
+			and ID = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="appId != null">
+			and APP_ID = #{appId,jdbcType=INTEGER}
+		</if>
+		<if test="lxId != null">
+			and LX_ID = #{lxId,jdbcType=VARCHAR}
+		</if>
+		<if test="lxPid != null">
+			and LX_PID = #{lxPid,jdbcType=VARCHAR}
+		</if>
+		<if test="mc != null">
+			and MC = #{mc,jdbcType=VARCHAR}
+		</if>
+		<if test="zjnx != null">
+			and ZJNX = #{zjnx,jdbcType=DECIMAL}
+		</if>
+		<if test="remark != null">
+			and REMARK = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="picUrl != null">
+	        and #{picUrl,jdbcType=VARCHAR}
+        </if>
+        <if test="imgVersion != null">
+        	and #{imgVersion,jdbcType=INTEGER}
+        </if>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		ID, APP_ID, LX_ID, LX_PID, MC, ZJNX, REMARK, PIC_URL, IMG_VERSION
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from c_zclx
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="select" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CZCLX">
+		select
+		<include refid="Base_Column_List" />
+		from c_zclx
+		<where>
+			<include refid="query_ZCLX_where" />
+		</where>
+	</select>
+	
+	<select id="selectList" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CZCLX">
+		select
+		<include refid="Base_Column_List" />
+		from c_zclx
+		<where>
+			<include refid="query_ZCLX_where"></include>
+		</where>
+	</select>
+	
+	<select id="selectLevel1List" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CZCLX">
+		select
+		<include refid="Base_Column_List" />
+		from c_zclx
+		<where>
+			<include refid="query_ZCLX_where"></include>
+			and lx_pid is null
+		</where>		
+	</select>
+	
+	<select id="selectLevel2List" resultMap="BaseResultMap" parameterType="org.lf.admin.db.pojo.CZCLX">
+		select
+		<include refid="Base_Column_List" />
+		from c_zclx
+		<where>
+			<include refid="query_ZCLX_where"></include>
+			and lx_pid is not null
+		</where>		
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from c_zclx
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="insert" parameterType="org.lf.admin.db.pojo.CZCLX">
+	    insert into c_zclx (ID, APP_ID, LX_ID, 
+	      LX_PID, MC, ZJNX, REMARK, 
+	      PIC_URL, IMG_VERSION)
+	    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{lxId,jdbcType=VARCHAR}, 
+	      #{lxPid,jdbcType=VARCHAR}, #{mc,jdbcType=VARCHAR}, #{zjnx,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+	      #{picUrl,jdbcType=VARCHAR}, #{imgVersion,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="insertSelective" parameterType="org.lf.admin.db.pojo.CZCLX">
+	    insert into c_zclx
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        ID,
+	      </if>
+	      <if test="appId != null">
+	        APP_ID,
+	      </if>
+	      <if test="lxId != null">
+	        LX_ID,
+	      </if>
+	      <if test="lxPid != null">
+	        LX_PID,
+	      </if>
+	      <if test="mc != null">
+	        MC,
+	      </if>
+	      <if test="zjnx != null">
+	        ZJNX,
+	      </if>
+	      <if test="remark != null">
+	        REMARK,
+	      </if>
+	      <if test="picUrl != null">
+	        PIC_URL,
+	      </if>
+	      <if test="imgVersion != null">
+	        IMG_VERSION,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="appId != null">
+	        #{appId,jdbcType=INTEGER},
+	      </if>
+	      <if test="lxId != null">
+	        #{lxId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lxPid != null">
+	        #{lxPid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mc != null">
+	        #{mc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="zjnx != null">
+	        #{zjnx,jdbcType=DECIMAL},
+	      </if>
+	      <if test="remark != null">
+	        #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="picUrl != null">
+	        #{picUrl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="imgVersion != null">
+	        #{imgVersion,jdbcType=INTEGER},
+	      </if>
+	    </trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="org.lf.admin.db.pojo.CZCLX">
+		update c_zclx
+	    <set>
+	      <if test="appId != null">
+	        APP_ID = #{appId,jdbcType=INTEGER},
+	      </if>
+	      <if test="lxId != null">
+	        LX_ID = #{lxId,jdbcType=VARCHAR},
+	      </if>
+	      <if test="lxPid != null">
+	        LX_PID = #{lxPid,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mc != null">
+	        MC = #{mc,jdbcType=VARCHAR},
+	      </if>
+	      <if test="zjnx != null">
+	        ZJNX = #{zjnx,jdbcType=DECIMAL},
+	      </if>
+	      <if test="remark != null">
+	        REMARK = #{remark,jdbcType=VARCHAR},
+	      </if>
+	      <if test="picUrl != null">
+	        PIC_URL = #{picUrl,jdbcType=VARCHAR},
+	      </if>
+	      <if test="imgVersion != null">
+	        IMG_VERSION = #{imgVersion,jdbcType=INTEGER},
+	      </if>
+	    </set>
+	    where ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="org.lf.admin.db.pojo.CZCLX">
+		update c_zclx
+	    set APP_ID = #{appId,jdbcType=INTEGER},
+	      LX_ID = #{lxId,jdbcType=VARCHAR},
+	      LX_PID = #{lxPid,jdbcType=VARCHAR},
+	      MC = #{mc,jdbcType=VARCHAR},
+	      ZJNX = #{zjnx,jdbcType=DECIMAL},
+	      REMARK = #{remark,jdbcType=VARCHAR},
+	      PIC_URL = #{picUrl,jdbcType=VARCHAR},
+	      IMG_VERSION = #{imgVersion,jdbcType=INTEGER}
+	    where ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+</mapper>

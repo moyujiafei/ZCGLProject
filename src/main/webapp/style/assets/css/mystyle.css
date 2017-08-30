@@ -1,0 +1,12 @@
+.mytable{
+	margin: 0 auto;
+	border-spacing: 10px;
+	margin-top:15px;
+}
+
+input{
+	width:310px;
+}
+div>input{
+	width:150px;
+}

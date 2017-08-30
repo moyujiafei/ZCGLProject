@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.BMZCStatMapper">
+<resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.BMZC_ZTStat">
+    <result column="app_id" property="appId" jdbcType="INTEGER"/>
+	<result column="dept_name" property="deptName" jdbcType="VARCHAR"/>
+	<result column="wsy" property="wsy" jdbcType="INTEGER"/>
+	<result column="syz" property="syz" jdbcType="INTEGER"/>
+	<result column="wx" property="wx" jdbcType="INTEGER"/>
+	<result column="xz" property="xz" jdbcType="INTEGER"/>
+	<result column="sqwx" property="sqwx" jdbcType="INTEGER"/>
+	<result column="sqbf" property="sqbf" jdbcType="INTEGER"/>
+	<result column="sqxz" property="sqxz" jdbcType="INTEGER"/>
+	<result column="xjz" property="xjz" jdbcType="INTEGER"/>
+	<result column="bf" property="bf" jdbcType="INTEGER"/>
+	<result column="ydj" property="ydj" jdbcType="INTEGER"/>
+	<result column="lyz" property="lyz" jdbcType="INTEGER"/>
+	<result column="ghz" property="ghz" jdbcType="INTEGER"/>
+	<result column="sjz" property="sjz" jdbcType="INTEGER"/>
+	<result column="wdj" property="wdj" jdbcType="INTEGER"/>
+	<result column="xj" property="xj" jdbcType="INTEGER"/>
+</resultMap>
+<select id="statByAppidAndDeptNo" parameterType="java.util.Map" resultMap="BaseResultMap">
+select 
+    sum(case when zczt = 0 then 1 else 0 end ) wsy, 
+	sum(case when zczt = 1 then 1 else 0 end ) syz, 
+	sum(case when zczt = 2 then 1 else 0 end ) wx, 
+	sum(case when zczt = 3 then 1 else 0 end ) xz, 
+	sum(case when zczt = 4 then 1 else 0 end ) sqwx, 
+	sum(case when zczt = 5 then 1 else 0 end ) sqbf, 
+	sum(case when zczt = 6 then 1 else 0 end ) sqxz, 
+	sum(case when zczt = 7 then 1 else 0 end ) xjz, 
+	sum(case when zczt = 8 then 1 else 0 end ) bf, 
+	sum(case when zczt = 9 then 1 else 0 end ) ydj, 
+	sum(case when zczt = 10 then 1 else 0 end ) lyz, 
+	sum(case when zczt = 11 then 1 else 0 end ) ghz, 
+	sum(case when zczt = 12 then 1 else 0 end ) sjz, 
+	sum(case when zczt = 13 then 1 else 0 end ) wdj, 
+    count(*) xj
+from v_zc
+<where>
+	app_id = #{appId,jdbcType=INTEGER}
+	<if test="deptNoList != null and deptNoList.size() > 0">
+	 and dept_no in 
+	 <foreach collection="deptNoList" index="index" item="item" open="(" separator="," close=")">
+	     #{item}
+	 </foreach>
+	</if>
+</where>	
+</select>
+</mapper>
