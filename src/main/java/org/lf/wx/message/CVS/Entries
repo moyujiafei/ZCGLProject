@@ -23,7 +23,11 @@
 /ScancodeWaitMsgEventMessage.java/1.1/Thu May 18 07:03:11 2017//
 /SendArticle.java/1.1/Thu May 18 07:03:10 2017//
 /SendMessage.java/1.4/Wed May 31 07:52:34 2017//
+<<<<<<< HEAD
 /SendMessageManager.java/1.5/Tue Aug  1 07:28:36 2017//
+=======
+/SendMessageManager.java/1.5/Tue Aug  1 02:47:17 2017//
+>>>>>>> upstream/master
 /ShortVideoMessage.java/1.1/Thu May 18 07:03:10 2017//
 /SubscribeEventMessage.java/1.1/Thu May 18 07:03:11 2017//
 /TextMessage.java/1.2/Tue Jun 20 04:00:25 2017//

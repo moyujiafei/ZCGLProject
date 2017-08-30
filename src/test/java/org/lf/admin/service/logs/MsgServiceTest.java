@@ -55,7 +55,11 @@ public class MsgServiceTest {
 		String url = ZCGLProperties.URL_WX_CLIENT + ZCGLProperties.URL_RW_INFO;
 		url = String.format(url, 2);
 		System.out.println(url);
+<<<<<<< HEAD
 		msgService.sendUserMsg(app.getAppId(), MsgLX.系统通知, user.getUserid(), "赶紧集合啦。点击<a href=\""+ url +"\">查看任务详情</a>");
+=======
+		msgService.sendUserMsg(app.getAppId(), MsgLX.系统通知, user.getUserid(), "赶紧集合测试啦。点击<a href=\""+ url +"\">查看任务详情</a>");
+>>>>>>> upstream/master
 		assertTrue(total + 1 == msgService.countMsgList(null));
 	}
 	
@@ -77,7 +81,11 @@ public class MsgServiceTest {
 		}
 		
 		int total = msgService.countMsgList(null);
+<<<<<<< HEAD
 		msgService.sendUserMsg(app.getAppId(), MsgLX.系统通知, userIdList, "赶紧集合啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+=======
+		msgService.sendUserMsg(app.getAppId(), MsgLX.系统通知, userIdList, "赶紧集合测试啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+>>>>>>> upstream/master
 		assertTrue(total + userIdList.size() == msgService.countMsgList(null));
 	}
 	
@@ -88,7 +96,11 @@ public class MsgServiceTest {
 	@Test
 	public void testSendMsgToDepartment() throws Exception {
 		int appId = app.getAppId();
+<<<<<<< HEAD
 		Integer deptNo = 2;
+=======
+		Integer deptNo = 3;
+>>>>>>> upstream/master
 		
 		ChuWXUser param = new ChuWXUser();
 		param.setAppId(appId);
@@ -102,7 +114,11 @@ public class MsgServiceTest {
 		
 		int total = msgService.countMsgList(null);
 		
+<<<<<<< HEAD
 		msgService.sendDeptMsg(app.getAppId(), MsgLX.系统通知, deptNo, "赶紧集合啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+=======
+		msgService.sendDeptMsg(app.getAppId(), MsgLX.系统通知, deptNo, "赶紧集合测试啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+>>>>>>> upstream/master
 		assertTrue(total + 1 == msgService.countMsgList(null));
 	}
 	
@@ -127,7 +143,11 @@ public class MsgServiceTest {
 		
 		int total = msgService.countMsgList(null);
 		
+<<<<<<< HEAD
 		msgService.sendTagMsg(app.getAppId(), MsgLX.系统通知, tagNo, "赶紧集合啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+=======
+		msgService.sendTagMsg(app.getAppId(), MsgLX.系统通知, tagNo, "赶紧集合测试啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+>>>>>>> upstream/master
 		assertTrue(total + 1 == msgService.countMsgList(null));
 		
 		
@@ -140,6 +160,10 @@ public class MsgServiceTest {
 	@Test
 	public void testSendMsgToAll() throws Exception {
 //		TODO
+<<<<<<< HEAD
+=======
+		msgService.sendAllUserMsg(app.getAppId(), MsgLX.消息通告,"赶紧集合测试测试啦。点击<a href=\"http://www.baidu.com\">查看详情</a>");
+>>>>>>> upstream/master
 	}
 
 }

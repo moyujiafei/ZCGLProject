@@ -67,7 +67,11 @@
 		    	$.messager.progress('close');
 				if (result == "success") {
 					$("#bhYHPDialog").dialog("close");
+<<<<<<< HEAD
 					$("#BMYHPList").datagrid("reload");	
+=======
+					$("#registYHPList").datagrid("reload");	
+>>>>>>> upstream/master
 				} else {
 					$.messager.alert("提示",result,"info");
 				}   

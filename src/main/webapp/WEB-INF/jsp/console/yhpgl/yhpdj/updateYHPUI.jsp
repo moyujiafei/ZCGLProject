@@ -72,7 +72,13 @@
 	});
 	$("#confirm_editYHP").bind('click',function(){
 		var limit=$("#updateYHPUI_left_limit").numberbox('getValue');
+<<<<<<< HEAD
 		if(!isNaN(limit)&&limit>=0){
+=======
+		var num=$("#updateYHPUI_num").val();
+		/* var xh=$("#updateYHPUI_xh").val();
+		var ccbh=$("#updateYHPUI_ccbh").val(); */
+>>>>>>> upstream/master
 			$.messager.progress();
 			$("#editYhpform").form('submit',{
 				url: getContextPath() + "/console/yhpgl/yhpdj/updateYHP.do",
@@ -80,27 +86,56 @@
 					var valid = $("#editYhpform").form("validate");
 					if (!valid) {
 						$.messager.progress('close');
+<<<<<<< HEAD
 						return valid;
 					}
 					param.yhpid=editYHP.yhpId;
+=======
+						$.messager.alert("提示","请按照要求填写表单！","info");
+					}
+					if(valid && !isNaN(limit)&&limit<=0){
+						$.messager.progress('close');
+						valid=false;
+						$.messager.alert("提示","库存下限要为大于0的数字！","info");
+					}
+					if(valid && limit>=num){
+						$.messager.progress('close');
+						valid=false;
+						$.messager.alert("提示","库存下限【"+limit+"】大于持有数量【"+num+"】！","info");
+					}
+					/* if(valid && ($.trim(xh)=='' || $.trim(ccbh)=='' )){
+						$.messager.progress('close');
+						valid=false;
+						$.messager.alert("提示","规格型号和出厂编号不能为空！","info");
+					} */
+					param.yhpid=editYHP.yhpId;
+					return valid;
+>>>>>>> upstream/master
 			    },    
 			    success:function(result){    
 			    	$.messager.progress('close');
 					if (result == "success") {
 						$("#editYHPDialog").dialog("close");
+<<<<<<< HEAD
 						$("#BMYHPList").datagrid("reload");	
+=======
+						$("#registYHPList").datagrid("reload");	
+>>>>>>> upstream/master
 					} else {
 						$.messager.alert("提示",result,"info");
 					}   
 			    } 
 				
 			});
+<<<<<<< HEAD
 		} else{
 			$.messager.alert("库存下限要为大于0的数字,更新失败");
 			$("#editYHPDialog").dialog('close');
 		}
 		
 		
+=======
+>>>>>>> upstream/master
 	});
 	
 	$("#cancel_editYHP").bind('click',function(){
@@ -144,7 +179,11 @@
 	});
 	
 	$("#updateYHPUI_left_limit").numberbox({
+<<<<<<< HEAD
 		value : 0,
+=======
+		value : editYHP.leftLimit,
+>>>>>>> upstream/master
 		width : 110,
 		precision : 0,
 		editable : true,

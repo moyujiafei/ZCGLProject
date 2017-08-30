@@ -23,9 +23,12 @@
         </table>
       </group>
     </div>
+<<<<<<< HEAD
     <div>
       <x-button type="primary" @click.native="jiazai">加载更多</x-button>
     </div>
+=======
+>>>>>>> upstream/master
   </div>
 </template>
 

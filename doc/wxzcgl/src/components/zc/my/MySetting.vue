@@ -4,7 +4,11 @@
       <x-header :left-options="{showBack: true}">我的设置</x-header>
     </div>
     <group>
+<<<<<<< HEAD
       <x-switch title="在WIFI环境下加载图片和音频" v-model="allowImg" @on-change="onClick"></x-switch>
+=======
+      <x-switch title="仅在WIFI环境下加载图片和音频" v-model="allowImg" @on-change="onClick"></x-switch>
+>>>>>>> upstream/master
     </group>
   </div>
 </template>

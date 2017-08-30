@@ -16,7 +16,11 @@
   <body>
    <div id="registBMYHPUIDialog">
   	<table id="registBMYHPToolBar" width="100%">
+<<<<<<< HEAD
   		<tr><td><a id="addBMYHP" href="#" onclick="registBMYHPOpt.add()">登记</a></td>
+=======
+  		<tr><td><a id="addBMYHP" href="#" onclick="registBMYHPOpt.registYHP()">登记</a></td>
+>>>>>>> upstream/master
   			<td align="right">
   			<table>
   			<td>易耗品类型：</td><td><input id="BMYHP_lx" ></td>
@@ -26,9 +30,16 @@
   			</td>
   		</tr>
   	</table>
+<<<<<<< HEAD
 	<table id="BMYHPList" align="center"></table>
 	</div>
    <script type="text/javascript">
+=======
+	<table id="registYHPList" align="center"></table>
+	</div>
+   <script type="text/javascript">
+   
+>>>>>>> upstream/master
 	$("#registBMYHPUIDialog").dialog({
 		title: '部门易耗品管理列表',    
 	    width: 1024,    
@@ -55,10 +66,17 @@
 	
 	 
 	   function doSearch(){
+<<<<<<< HEAD
 			var lx=$("#BMYHP_lx").searchbox('getValue');
 			var fzr=null;
 			var param ={"fzr":fzr,"lx":lx};
 			$("#BMYHPList").datagrid("reload",param);
+=======
+			var lxId=$("#BMYHP_lx").attr("lx_id");
+			var fzr=null;
+			var param ={"fzr":fzr,"lxId":lxId};
+			$("#registYHPList").datagrid("reload",param);
+>>>>>>> upstream/master
 		};
 	
    var registBMYHPOpt = {
@@ -79,7 +97,11 @@
                    onClose: function() {
                        if(cyhplx!=null){
                        	$("#"+searchboxId).searchbox("setValue",cyhplx.mc);
+<<<<<<< HEAD
                        	$("#"+searchboxId).attr("lx_id",cyhplx.id);
+=======
+                       	$("#"+searchboxId).attr("lx_id",cyhplx.lxId);
+>>>>>>> upstream/master
                        }
                        dialogObj.remove();// 关闭时remove对话框
                    }
@@ -93,7 +115,10 @@
 			$("#" + dialogId).dialog({
                 href: getContextPath() + url,
                 title: title,
+<<<<<<< HEAD
                 top: 220,
+=======
+>>>>>>> upstream/master
                 queryParams: param,
                 width: 512,
                 height: 300,
@@ -107,9 +132,13 @@
                 }
             });
 		},
+<<<<<<< HEAD
 		
 		edit : function(index){
 			editYHP = $("#BMYHPList").datagrid('getData').rows[index];
+=======
+		registYHP: function () {
+>>>>>>> upstream/master
 			$.ajax({
 			    url: getContextPath() + "/console/yhpgl/yhpdj/isAdmin.do",
 			    cache: false,
@@ -119,9 +148,35 @@
 			    success: function(data) {
 			    	console.log(data);
 			    	if(data == 'success'){
+<<<<<<< HEAD
 			    		registBMYHPOpt.newDialog("editYHPDialog", "/console/yhpgl/yhpdj/updateYHPUI.do", "编辑低值易耗品",{});
 			    	}else{
 			    		$.messager.alert('失败', '您不是管理员，无法完成编辑操作');
+=======
+						registBMYHPOpt.newDialog("registYHPDialog", "/console/yhpgl/yhpdj/insertBMYHPUI.do", "低值易耗品登记",{});
+			    	}else{
+			    		$.messager.alert('失败', '您不是管理员，无法完成登记操作','info');
+			    	}
+			    },
+			    error: function() {
+			        $.messager.alert('失败', '页面加载失败');
+			    }
+			});
+		},
+		edit : function(index){
+			editYHP = $("#registYHPList").datagrid('getData').rows[index];
+			$.ajax({
+			    url: getContextPath() + "/console/yhpgl/yhpdj/isAdmin.do",
+			    cache: false,
+			    async: true,
+			    type: "post",
+			    dataType: "text",
+			    success: function(data) {
+			    	if(data == 'success'){
+			    		registBMYHPOpt.newDialog("editYHPDialog", "/console/yhpgl/yhpdj/updateYHPUI.do", "编辑低值易耗品",{});
+			    	}else{
+			    		$.messager.alert('失败', '您不是管理员，无法完成编辑操作','info');
+>>>>>>> upstream/master
 			    	}
 			    },
 			    error: function() {
@@ -131,7 +186,11 @@
 		},
 		
 		bh : function(index){
+<<<<<<< HEAD
 			bhYHP = $("#BMYHPList").datagrid('getData').rows[index];
+=======
+			bhYHP = $("#registYHPList").datagrid('getData').rows[index];
+>>>>>>> upstream/master
 			$.ajax({
 			    url: getContextPath() + "/console/yhpgl/yhpdj/isAdmin.do",
 			    cache: false,
@@ -139,11 +198,18 @@
 			    type: "post",
 			    dataType: "text",
 			    success: function(data) {
+<<<<<<< HEAD
 			    	console.log(data);
 			    	if(data == 'success'){
 			    		registBMYHPOpt.newDialog("bhYHPDialog", "/console/yhpgl/yhpdj/addYHPUI.do", "补货低值易耗品",{});
 			    	}else{
 			    		$.messager.alert('失败', '您不是管理员，无法完成编辑操作');
+=======
+			    	if(data == 'success'){
+			    		registBMYHPOpt.newDialog("bhYHPDialog", "/console/yhpgl/yhpdj/addYHPUI.do", "补货低值易耗品",{});
+			    	}else{
+			    		$.messager.alert('失败', '您不是管理员，无法完成补货操作','info');
+>>>>>>> upstream/master
 			    	}
 			    },
 			    error: function() {
@@ -165,8 +231,13 @@
 	});
    
    
+<<<<<<< HEAD
    $("#BMYHPList").datagrid({
 	    url: getContextPath()+"/console/yhpgl/yhpdj/getYHPList.do",
+=======
+   $("#registYHPList").datagrid({
+	    url: getContextPath()+"/console/yhpgl/yhpdj/getBMYHPList.do",
+>>>>>>> upstream/master
 		onLoadSuccess: function(data){
 			
 			$(".editBtn").linkbutton({
@@ -181,11 +252,14 @@
 				plain: true,
 				height: 21
 			});
+<<<<<<< HEAD
 			$(".allocateBtn").linkbutton({
 				iconCls: 'icon-allocate',
 				plain: true,
 				height: 21
 			});
+=======
+>>>>>>> upstream/master
 			
 			$(".bhBtn").tooltip({
 					content : '补货',
@@ -198,11 +272,14 @@
 					position : 'top',
 					trackMouse: true
 				});
+<<<<<<< HEAD
 				$(".allocateBtn").tooltip({
 					content : '调拨',
 					position : 'top',
 					trackMouse: true,
 				});
+=======
+>>>>>>> upstream/master
 				
 				
 				$(".tip").tooltip({ 
@@ -267,13 +344,22 @@
 		                     return content;  
 		                }
 					},{
+<<<<<<< HEAD
 						field:'cfdd',
 						title:'存放地点',
+=======
+						field:'deptName',
+						title:'操作部门',
+>>>>>>> upstream/master
 						align:'center',
 						width:'21.9%',
 						formatter:function(value,row,index){ 
 							var content=null;
+<<<<<<< HEAD
 							if(row.cfdd!=null){
+=======
+							if(row.deptName!=null){
+>>>>>>> upstream/master
 		                     content = "<span title='<div><img src="+getContextPath()+row.picUrl+"_m.jpg /></div>' class='tip'>"+value+"</span>"; 
 							}
 		                     return content;  
@@ -293,12 +379,20 @@
 					},{
 						field:'opt',
 						title:'操作',
+<<<<<<< HEAD
 						align:'center',
 						width:'15%',
 						formatter:function(value,row,index){
 							return '&nbsp;&nbsp;<a href="#" class="editBtn" onclick="registBMYHPOpt.edit('+index+')"></a>&nbsp;&nbsp;'+
 							'<a href="#" class="bhBtn" onclick="registBMYHPOpt.bh('+index+')"></a>&nbsp;&nbsp;'+
 							'<a href="#" class="allocateBtn" onclick=""></a>';
+=======
+						align:'left',
+						width:'15%',
+						formatter:function(value,row,index){
+							return '&nbsp;&nbsp;<a href="#" class="editBtn" onclick="registBMYHPOpt.edit('+index+')"></a>&nbsp;&nbsp;'+
+							'<a href="#" class="bhBtn" onclick="registBMYHPOpt.bh('+index+')"></a>&nbsp;&nbsp;'
+>>>>>>> upstream/master
 						}
 					},
 				]],

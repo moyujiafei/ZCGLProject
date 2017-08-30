@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /BackupController.java/1.3/Wed Aug 23 06:25:12 2017//
 /EWMPrintController.java/1.2/Wed Aug 16 03:06:00 2017//
 /EnvController.java/1.4/Wed Jun 21 03:28:37 2017//
@@ -5,3 +6,12 @@
 /UserController.java/1.6/Tue Aug  8 02:47:30 2017//
 /WXAppController.java/1.4/Wed Aug 23 06:25:11 2017//
 /XTYJSchedule.java/1.5/Wed Aug 23 06:25:12 2017//
+=======
+/BackupController.java/1.3/Tue Aug 22 05:23:53 2017//
+/EWMPrintController.java/1.2/Fri Aug  4 03:45:38 2017//
+/EnvController.java/1.4/Wed Jun 21 03:28:37 2017//
+/RoleController.java/1.4/Mon Jun 19 05:00:28 2017//
+/UserController.java/1.6/Mon Aug 14 05:34:35 2017//
+/WXAppController.java/1.4/Tue Aug 22 05:23:52 2017//
+/XTYJSchedule.java/1.5/Tue Aug 22 05:23:53 2017//
+>>>>>>> upstream/master

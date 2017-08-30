@@ -34,6 +34,12 @@
 .icon-allocate{
 	background:url('icons/allocate.png') no-repeat center center;
 }
+<<<<<<< HEAD
+=======
+.icon-buhuo {
+	background:url('icons/buhuo.png') no-repeat center center;
+}
+>>>>>>> upstream/master
 .icon-cut{
 	background:url('icons/cut.png') no-repeat center center;
 }
@@ -151,9 +157,12 @@
 .icon-submitzc{
 	background:url('icons/submitzc.png') no-repeat center center;
 }
+<<<<<<< HEAD
 .icon-buhuo{
 	background:url('icons/buhuo.png') no-repeat center center;
 }
+=======
+>>>>>>> upstream/master
 .icon-repair{
 	background:url('icons/repair.png') no-repeat center center;
 }

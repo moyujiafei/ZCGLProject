@@ -5,14 +5,22 @@
         <table>
           <tbody>
             <tr>
+<<<<<<< HEAD
               <td class="textTop dateCls">
+=======
+              <td style="width: 68px" class="textTop dateCls">
+>>>>>>> upstream/master
                 <h3 class="inlineStyle">{{item.jlsj | normalTime('DD')}}</h3><h5 class="inlineStyle ml">{{item.jlsj | normalTime('MM月')}}</h5>
               </td>
               <td width="5"> &nbsp;</td>
               <td>
                 <table>
                   <tr>
+<<<<<<< HEAD
                     <td style="width: 81">
+=======
+                    <td style="width: 81px">
+>>>>>>> upstream/master
                       <img :src="item.smallImageUrl" alt="" height="80" width="80" @click="showImg(item)">
                     </td>
                     <td class="textTop">

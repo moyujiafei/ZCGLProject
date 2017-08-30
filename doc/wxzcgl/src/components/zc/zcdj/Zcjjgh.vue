@@ -38,7 +38,10 @@
     },
     methods: {
       cancel () {
+<<<<<<< HEAD
         alert(this.$route.query.zcId)
+=======
+>>>>>>> upstream/master
         this.$router.go(-1)
       },
       refuseRevertZC () {

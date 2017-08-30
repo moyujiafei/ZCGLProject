@@ -15,6 +15,10 @@ import org.lf.admin.db.pojo.WXUser;
 import org.lf.admin.service.sys.WXAppService;
 import org.lf.admin.service.sys.WXUserService;
 import org.lf.utils.DateUtils;
+<<<<<<< HEAD
+=======
+import org.lf.utils.EasyuiDatagrid;
+>>>>>>> upstream/master
 import org.lf.utils.NumberUtils;
 import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,4 +132,15 @@ public class ZCServiceTest {
 	public void addZTZCList() throws Exception {
 		addZCList(appId, 10, ZCZT.使用中);
 	}
+<<<<<<< HEAD
+=======
+	
+	@Test
+	public void TestGetPageVZCListByDeptNo(){
+		EasyuiDatagrid<VZC> result=zcService.getPageVZCListByDeptNoAndZCLX(appId, null, null, null, null, null, 4, null, null, 1, 15);
+		for(VZC zc : result.getRows()){
+			System.out.println(zc.getDeptName()+" "+zc.getZc());
+		}
+	}
+>>>>>>> upstream/master
 }

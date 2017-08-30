@@ -22,6 +22,10 @@ import org.lf.admin.service.OperErrCode;
 import org.lf.admin.service.OperException;
 import org.lf.admin.service.ZCGLProperties;
 import org.lf.admin.service.sys.WXAppService;
+<<<<<<< HEAD
+=======
+import org.lf.admin.service.utils.WXMediaService;
+>>>>>>> upstream/master
 import org.lf.utils.DateUtils;
 import org.lf.utils.EasyuiDatagrid;
 import org.lf.utils.PageNavigator;
@@ -94,7 +98,11 @@ public class ZTService {
 			dir = new File(path);
 			if (!dir.exists())
 				dir.mkdirs();
+<<<<<<< HEAD
 			file = new File(dir, mediaId + ".jpg");
+=======
+			file = new File(dir, mediaId + WXMediaService.IMAGE_SUFFIX);
+>>>>>>> upstream/master
 			break;
 		case voice:
 			path = path + "/" + appId  + "/" + fssjStr + "/" + MediaType.voice.name();
@@ -102,7 +110,11 @@ public class ZTService {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
+<<<<<<< HEAD
 			file = new File(dir, mediaId + ".mp3");
+=======
+			file = new File(dir, mediaId + WXMediaService.VOICE_SUFFIX);
+>>>>>>> upstream/master
 			break;
 		default:
 			throw new OperException(仅支持音频和图片素材下载);
@@ -142,9 +154,15 @@ public class ZTService {
 			String realPath = servletContext.getRealPath("");
 			String filePath = realPath + "/" + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appId;
 			if(type.equals(MediaType.image.name())){
+<<<<<<< HEAD
 				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + ".jpg";
 			}else if(type.equals(MediaType.voice.name())){
 				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + ".mp3";
+=======
+				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + WXMediaService.IMAGE_SUFFIX;
+			}else if(type.equals(MediaType.voice.name())){
+				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + WXMediaService.VOICE_SUFFIX;
+>>>>>>> upstream/master
 			}else{
 				throw new Exception();
 			}
@@ -169,9 +187,15 @@ public class ZTService {
 			String serverPath = ZCGLProperties.URL_SERVER;
 			String filePath = serverPath + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appId;
 			if(type.equals(MediaType.image.name())){
+<<<<<<< HEAD
 				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + ".jpg";
 			}else if(type.equals(MediaType.voice.name())){
 				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + ".mp3";
+=======
+				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + WXMediaService.IMAGE_SUFFIX;
+			}else if(type.equals(MediaType.voice.name())){
+				filePath += "/" + jlsjStr + "/" + type + "/" + mediaId + WXMediaService.VOICE_SUFFIX;
+>>>>>>> upstream/master
 			}else{
 				throw new Exception();
 			}
@@ -238,10 +262,17 @@ public class ZTService {
 			ServletContext servletContext = ContextLoader.getCurrentWebApplicationContext().getServletContext();
 			String realPath = servletContext.getRealPath("");
 			String filePath = realPath + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appId;
+<<<<<<< HEAD
 			filePath += "/" + DateUtils.toString("YYYY-MM-dd", jlsj) + "/" + type + "/" + mediaId + "_m.jpg";
 			
 			File file = new File(filePath);
 			String imgUrl = ZCGLProperties.URL_SERVER + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appId + "/" + DateUtils.toString("YYYY-MM-dd", jlsj) + "/" + type + "/" + mediaId + "_m.jpg";
+=======
+			filePath += "/" + DateUtils.toString("YYYY-MM-dd", jlsj) + "/" + type + "/" + mediaId + WXMediaService.THUMBNAIL_SUFFIX;
+			
+			File file = new File(filePath);
+			String imgUrl = ZCGLProperties.URL_SERVER + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appId + "/" + DateUtils.toString("YYYY-MM-dd", jlsj) + "/" + type + "/" + mediaId + WXMediaService.THUMBNAIL_SUFFIX;
+>>>>>>> upstream/master
 			if (file.exists()) {
 				// 如果图片素材缩略图存在，直接返回。
 				return imgUrl;
@@ -253,7 +284,11 @@ public class ZTService {
 							.of(new File(getWXMedia(appId, jlsj, type, mediaId)))
 							.size(WIDTH, HIGHT)
 							// 缩略图大小
+<<<<<<< HEAD
 							.outputFormat("jpg")
+=======
+							.outputFormat(WXMediaService.IMAGE_FORMAT)
+>>>>>>> upstream/master
 							// 缩略图格式
 							// .outputQuality(0.8f)//缩略图质量
 							.toFile(file);
@@ -267,7 +302,11 @@ public class ZTService {
 			
 		} else {
 			// 音频素材，统一使用缺省的缩略图
+<<<<<<< HEAD
 			return ZCGLProperties.URL_SERVER + "/images/briefimage_voice.jpg";
+=======
+			return ZCGLProperties.URL_SERVER + "/images/briefimage_voice" +WXMediaService.IMAGE_SUFFIX;
+>>>>>>> upstream/master
 		}
 	}
 	

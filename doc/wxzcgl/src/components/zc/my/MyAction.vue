@@ -59,7 +59,11 @@
     computed: {
       wx: function () {
         let wx = this.$wechat
+<<<<<<< HEAD
         this.config['debug'] = true
+=======
+        this.config['debug'] = false
+>>>>>>> upstream/master
         this.config['jsApiList'] = [
           'playVoice',
           'pauseVoice',
@@ -92,7 +96,11 @@
       showMediaDetail (_this, _wx, item) {
         let mediaType = item.mediaType
         let ztid = item.ztid
+<<<<<<< HEAD
         api.post('/wx/xq/zcxq/zcxzInfo.do', {mediaType: mediaType, ztid: ztid}).then(function (res) {
+=======
+        api.post('/wx/wxxq/ztxzInfo.do', {mediaType: mediaType, ztid: ztid}).then(function (res) {
+>>>>>>> upstream/master
           if (res) {
             if (mediaType === 'image') {
               _wx.previewImage({

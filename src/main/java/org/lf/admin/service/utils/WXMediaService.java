@@ -31,16 +31,43 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service("wxMediaService")
 public class WXMediaService {
+<<<<<<< HEAD
+=======
+	/**
+	 * 图片格式
+	 */
+	public static final String IMAGE_FORMAT = "jpg";
+	/**
+	 * 图片后缀
+	 */
+	public static final String IMAGE_SUFFIX = "." + IMAGE_FORMAT;
+	/**
+	 * 缩略图后缀
+	 */
+	public static final String THUMBNAIL_SUFFIX = "_m" + IMAGE_SUFFIX;
+	/**
+	 * 音频文件后缀，企业微信只支持amr格式
+	 */
+	public static final String VOICE_SUFFIX = ".amr";
+
+>>>>>>> upstream/master
 	public static final long MAX_IMAGE_SIZE = 1 * 1024 * 1024; // 1M
 	public static final long MAX_VOICE_SIZE = 2 * 1024 * 1024; // 2M
 	public static final long MAX_LOGO_SIZE = 256 * 1024; // 企业logo大小256k
 
 	public Map<String, MediaType> uploadMediaList(HttpSession session, @RequestParam(value = "image_upload", required = false) MultipartFile[] imageFileList,
 			@RequestParam(value = "voice_upload", required = false) MultipartFile[] voiceFileList) throws OperException {
+<<<<<<< HEAD
 		//通过session获取appid
 		ChuUser user = (ChuUser) session.getAttribute(LoginInterceptor.LOGIN_INFO);
 		Integer appid = user == null ? null : user.getAppId();
 		
+=======
+		// 通过session获取appid
+		ChuUser user = (ChuUser) session.getAttribute(LoginInterceptor.LOGIN_INFO);
+		Integer appid = user == null ? null : user.getAppId();
+
+>>>>>>> upstream/master
 		String mediaPath = session.getServletContext().getRealPath("") + ZCGLProperties.URL_MEDIA_TARGET_DIR + "/" + appid;
 
 		String today = DateUtils.toString("yyyy-MM-dd", new Date());
@@ -66,7 +93,11 @@ public class WXMediaService {
 						throw new OperException("100002", "上传图片文件超过1M");
 					}
 
+<<<<<<< HEAD
 					imageFile.transferTo(new File(imagesDir, mediaId + ".jpg"));
+=======
+					imageFile.transferTo(new File(imagesDir, mediaId + IMAGE_SUFFIX));
+>>>>>>> upstream/master
 				} catch (IllegalStateException | IOException e) {
 					throw new OperException("100001", "上传文件出错");
 				}
@@ -74,12 +105,21 @@ public class WXMediaService {
 
 				// 生成缩略图
 				try {
+<<<<<<< HEAD
 					Thumbnails.of(new File(imagesDir, mediaId + ".jpg")).size(ZTService.WIDTH, ZTService.HIGHT)
 							// 缩略图大小
 							.outputFormat("jpg")
 							// 缩略图格式
 							// .outputQuality(0.8f)//缩略图质量
 							.toFile(new File(imagesDir, mediaId + "_m.jpg"));
+=======
+					Thumbnails.of(new File(imagesDir, mediaId + IMAGE_SUFFIX)).size(ZTService.WIDTH, ZTService.HIGHT)
+					// 缩略图大小
+							.outputFormat(IMAGE_FORMAT)
+							// 缩略图格式
+							// .outputQuality(0.8f)//缩略图质量
+							.toFile(new File(imagesDir, mediaId + THUMBNAIL_SUFFIX));
+>>>>>>> upstream/master
 				} catch (IOException e) {
 					throw new OperException(ZTService.无法生成缩略图);
 				}
@@ -93,7 +133,11 @@ public class WXMediaService {
 						throw new OperException("100003", "上传音频文件超过2M");
 					}
 
+<<<<<<< HEAD
 					voiceFile.transferTo(new File(voicesDir, mediaId + ".mp3"));
+=======
+					voiceFile.transferTo(new File(voicesDir, mediaId + VOICE_SUFFIX));
+>>>>>>> upstream/master
 				} catch (IllegalStateException | IOException e) {
 					throw new OperException("100001", "上传文件出错");
 				}
@@ -136,6 +180,7 @@ public class WXMediaService {
 					// 下载原图
 					file.transferTo(new File(fileDir, fileName + fileType));
 
+<<<<<<< HEAD
 					if (fileType.equals(".jpg")) {
 						// 生成缩略图
 						Thumbnails.of(new File(fileDir, fileName + fileType)).size(ZTService.WIDTH, ZTService.HIGHT)
@@ -144,6 +189,16 @@ public class WXMediaService {
 								// 缩略图格式
 								// .outputQuality(0.8f)//缩略图质量
 								.toFile(new File(fileDir, fileName + "_m.jpg"));
+=======
+					if (fileType.equals(IMAGE_SUFFIX)) {
+						// 生成缩略图
+						Thumbnails.of(new File(fileDir, fileName + fileType)).size(ZTService.WIDTH, ZTService.HIGHT)
+						// 缩略图大小
+								.outputFormat(IMAGE_FORMAT)
+								// 缩略图格式
+								// .outputQuality(0.8f)//缩略图质量
+								.toFile(new File(fileDir, fileName + THUMBNAIL_SUFFIX));
+>>>>>>> upstream/master
 					}
 
 				} catch (IllegalStateException | IOException e) {
@@ -157,7 +212,11 @@ public class WXMediaService {
 			return null;
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> upstream/master
 	/**
 	 * 下载微信素材到本地
 	 * 
@@ -184,6 +243,7 @@ public class WXMediaService {
 			// 下载原图
 			try {
 				TempMediaManager.downloadMedia(accessToken, new File(filePath + "/" + mediaId + fileType), mediaId);
+<<<<<<< HEAD
 				if (fileType.equals(".jpg")) {
 					// 生成缩略图
 					Thumbnails.of(new File(fileDir, fileName + fileType)).size(ZTService.WIDTH, ZTService.HIGHT)
@@ -192,11 +252,25 @@ public class WXMediaService {
 							// 缩略图格式
 							// .outputQuality(0.8f)//缩略图质量
 							.toFile(new File(fileDir, fileName + "_m.jpg"));
+=======
+				if (fileType.equals(IMAGE_SUFFIX)) {
+					// 生成缩略图
+					Thumbnails.of(new File(fileDir, fileName + fileType)).size(ZTService.WIDTH, ZTService.HIGHT)
+					// 缩略图大小
+							.outputFormat(IMAGE_FORMAT)
+							// 缩略图格式
+							// .outputQuality(0.8f)//缩略图质量
+							.toFile(new File(fileDir, fileName + THUMBNAIL_SUFFIX));
+>>>>>>> upstream/master
 				}
 			} catch (WXException | IOException e) {
 				throw new OperException("100002", "下载文件出错");
 			}
+<<<<<<< HEAD
 			
+=======
+
+>>>>>>> upstream/master
 		}
 		if (fileName != null) {
 			return path + "/" + fileName;

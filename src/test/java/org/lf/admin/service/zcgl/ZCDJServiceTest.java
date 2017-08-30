@@ -75,6 +75,7 @@ public class ZCDJServiceTest {
 		
 		
 		// 测试资产登记
+<<<<<<< HEAD
 		JZC zc = zcdjService.registZC(appId, zcdm, zcmc, zclx, xh, ccbh, gzsj, zjnx, djr, null);
 		assertTrue(zc.getZt().equals(ZCZT.已登记.getValue()));
 		
@@ -91,6 +92,24 @@ public class ZCDJServiceTest {
 		zcdjService.reallocateZC(zc.getId(), new_zcglId, new_cfdd, djr);
 		zc = zcService.getZC(zc.getId());
 		assertTrue(zc.getZt().equals(ZCZT.未使用.getValue()));
+=======
+//		JZC zc = zcdjService.registZC(appId, zcdm, zcmc, zclx, xh, ccbh, gzsj, zjnx, djr, null);
+//		assertTrue(zc.getZt().equals(ZCZT.已登记.getValue()));
+//		
+//		// 资产调拨
+//		Integer zcglId = 1;
+//		String cfdd = "老的存放地点";
+//		zcdjService.allocateZC(zc.getId(), zcglId, cfdd, djr);
+//		zc = zcService.getZC(zc.getId());
+//		assertTrue(zc.getZt().equals(ZCZT.未使用.getValue()));
+//		
+//		// 资产的重新调拨
+//		Integer new_zcglId = 2;
+//		String new_cfdd = "新的存放地点";
+//		zcdjService.reallocateZC(zc.getId(), new_zcglId, new_cfdd, djr);
+//		zc = zcService.getZC(zc.getId());
+//		assertTrue(zc.getZt().equals(ZCZT.未使用.getValue()));
+>>>>>>> upstream/master
 	}
 	
 	/**

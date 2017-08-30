@@ -131,7 +131,11 @@ public class YHPLXController extends BaseController {
 			Integer appid = getAppId(session);
 			// 根据appid生成文件前缀
 			String prePath = ZCGLProperties.URL_YHPLX_TARGET_DIR + "/" + appid;
+<<<<<<< HEAD
 			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+=======
+			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
+>>>>>>> upstream/master
 			yhplxService.insertYHPLX(getAppId(session), lxid, null, mc, remark, pic_url, 1);
 			return SUCCESS;
 		} catch (OperException e) {
@@ -217,7 +221,11 @@ public class YHPLXController extends BaseController {
 				Integer appid = getAppId(session);
 				// 根据appid生成文件前缀
 				String prePath = ZCGLProperties.URL_YHPLX_TARGET_DIR + "/" + appid;
+<<<<<<< HEAD
 				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+=======
+				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
+>>>>>>> upstream/master
 				imgVersion++;// 只要更新了图片，就增加版本号
 			}
 			yhplxService.updateYHPLX(id, yhplx.getLxId(), yhplx.getLxPid(), mc, remark, pic_url, imgVersion);

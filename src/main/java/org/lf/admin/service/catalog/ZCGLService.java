@@ -59,7 +59,10 @@ public class ZCGLService {
 	public static final OperErrCode 当前用户不是固定资产管理人 = new OperErrCode("10201", "当前用户不是固定资产管理人");
 	public static final OperErrCode 当前用户不是易耗品负责人 = new OperErrCode("10201", "当前用户不是易耗品负责人");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 	/**
 	 * 这是一个公共方法，用于检查要插入的资产格式是否正确。 如果line为空，则不显示“XXXX行”信息。
 	 * 
@@ -191,6 +194,7 @@ public class ZCGLService {
 		return wb;
 
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -223,6 +227,8 @@ public class ZCGLService {
 
 		return zcgl;
 	}
+=======
+>>>>>>> upstream/master
 
 	/**
 	 * 更新一个资产管理记录。
@@ -389,6 +395,39 @@ public class ZCGLService {
 	}
 	
 	/**
+<<<<<<< HEAD
+=======
+	 * 查看当前用户是否为部门资产管理人
+	 */
+	public CZCGL getGLR(Integer appId, String glr) throws OperException {
+		CZCGL param = new CZCGL();
+		param.setAppId(appId);
+		param.setGlr(glr);
+		CZCGL zcgl = getZCGL(param);
+		if (zcgl == null) {
+			throw new OperException(当前用户不是固定资产管理人);
+		}
+
+		return zcgl;
+	}
+	
+	/**
+	 * 查看当前用户是否为部门资产管理人
+	 */
+	public CZCGL getFZR(Integer appId, String fzr) throws OperException {
+		CZCGL param = new CZCGL();
+		param.setAppId(appId);
+		param.setFzr(fzr);
+		CZCGL zcgl = getZCGL(param);
+		if (zcgl == null) {
+			throw new OperException(当前用户不是易耗品负责人);
+		}
+
+		return zcgl;
+	}
+	
+	/**
+>>>>>>> upstream/master
 	 * 获得资产管理部门下拉框信息，id和text均为部门名
 	 * 
 	 * @return

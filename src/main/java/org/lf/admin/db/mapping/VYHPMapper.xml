@@ -112,8 +112,12 @@
     </trim>
   </insert>
   <sql id="where_Caluse">
+<<<<<<< HEAD
        dept_no = #{deptNo,jdbcType=INTEGER}
             <if test="yhpId != null">
+=======
+       <if test="yhpId != null">
+>>>>>>> upstream/master
         and yhp_id= #{yhpId,jdbcType=INTEGER}
       </if>
       <if test="appId != null">
@@ -122,12 +126,24 @@
       <if test="lx != null">
         and lx= #{lx,jdbcType=VARCHAR}
       </if>
+<<<<<<< HEAD
+=======
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
+      </if>
+>>>>>>> upstream/master
       <if test="xh != null">
         and xh = #{xh,jdbcType=VARCHAR}
       </if>
       <if test="ccbh != null">
         and ccbh = #{ccbh,jdbcType=VARCHAR}
       </if>
+<<<<<<< HEAD
+=======
+      <if test="deptNo != null">
+        and dept_no = #{deptNo,jdbcType=INTEGER}
+      </if>
+>>>>>>> upstream/master
       <if test="deptName != null">
         and dept_name = #{deptName,jdbcType=VARCHAR}
       </if>
@@ -150,6 +166,23 @@
         and IMG_VERSION = #{imgVersion,jdbcType=BIGINT}
       </if>
   </sql>
+<<<<<<< HEAD
+=======
+  <sql id="deptnoAndYHPLX_where_Caluse">
+      <if test="appId != null">
+        and app_id= #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
+      </if>
+      <if test="list !=null and list.size() > 0">
+			dept_no in
+		    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+	       			#{item}
+	  			 </foreach>
+  			</if>
+  </sql>
+>>>>>>> upstream/master
   <select id="selectYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultMap="BaseResultMap">
       select * from v_yhp
       <where>
@@ -161,8 +194,27 @@
   </select>
   <select id="countYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultType="int">
       select count(*) from v_yhp
+<<<<<<< HEAD
       	 <where>
       <include refid="where_Caluse"/>
     </where>
   </select>
+=======
+      	<where>
+      <include refid="where_Caluse"/>
+    </where>
+  </select>
+  <select id="selectYHPListByDeptNoAndYHPLX" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select * from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
+  </select>
+  <select id="countYHPListByDeptNoAndYHPLX" resultType="int" parameterType="java.util.Map">
+  	select count(*) from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
+  </select>
+>>>>>>> upstream/master
 </mapper>

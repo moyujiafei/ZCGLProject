@@ -136,7 +136,15 @@ public class WXSQController extends BaseController {
 			resultString = "时间格式有误。";
 			return resultString;
 		}
+<<<<<<< HEAD
 		
+=======
+		//判断操作人使用人是否为空。
+		if (StringUtils.isEmpty(czr) || StringUtils.isEmpty(ysr)) {
+			resultString = "操作人、验收人不能为空";
+			return resultString;
+		}
+>>>>>>> upstream/master
 		//验收时间要大于结束时间并且结束时间要大于开始时间
 		if (!(ysDate.getTime() > jsDate.getTime() && jsDate.getTime() > ksDate.getTime())) {
 			resultString="验收时间要大于结束时间并且结束时间要大于开始时间。";

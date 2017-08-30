@@ -15,7 +15,11 @@ public interface CZCGLMapper extends BaseMapper<CZCGL> {
     int insertSelective(CZCGL record);
 
     CZCGL selectByPrimaryKey(Integer id);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> upstream/master
     int updateByPrimaryKeySelective(CZCGL record);
 
     int updateByPrimaryKey(CZCGL record);

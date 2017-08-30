@@ -28,8 +28,13 @@ public class WXAppServiceTest {
 	 */
 	@Test
 	public void testSync() throws Exception {
+<<<<<<< HEAD
 //		ChuApp app = dao.getApp("ww342013a5f3df8c7f", 1000002);
 		ChuApp app = dao.getApp("wx2f5f98d168c4b18e", 26);
+=======
+		ChuApp app = dao.getApp("ww342013a5f3df8c7f", 1000002);
+		//ChuApp app = dao.getApp("wx2f5f98d168c4b18e", 26);
+>>>>>>> upstream/master
 
 		dao.syncDepartmentsAndWXUsers(app.getAppId(), dao.syncTag(app.getAppId()));
 	}

@@ -55,10 +55,13 @@ public class ZCGLProperties {
 	 * 资产类型图片存放位置
 	 */
 	public static final String URL_ZCLX_TARGET_DIR = getProperty("URL_ZCLX_TARGET_DIR");
+<<<<<<< HEAD
 	/*
 		易耗品图片存放位置
 	*/
 	public static final String URL_YHP_TARGET_DIR = getProperty("URL_YHP_TARGET_DIR");
+=======
+>>>>>>> upstream/master
 	/**
 	 * 易耗品类型图片存放位置
 	 */
@@ -68,6 +71,13 @@ public class ZCGLProperties {
 	 */
 	public static final String URL_ZC_TARGET_DIR = getProperty("URL_ZC_TARGET_DIR");
 	/**
+<<<<<<< HEAD
+=======
+	 * 易耗品图片存放位置
+	 */
+	public static final String URL_YHP_TARGET_DIR = getProperty("URL_YHP_TARGET_DIR");
+	/**
+>>>>>>> upstream/master
 	 * 在微信端查看用户信息
 	 */
 	public static final String URL_USER_INFO = getProperty("URL_USER_INFO");

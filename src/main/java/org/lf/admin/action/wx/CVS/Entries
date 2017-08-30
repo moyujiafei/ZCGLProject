@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /WXBaseController.java/1.6/Mon Jul 31 07:56:27 2017//
 /WXChuDeptController.java/1.1/Wed Aug 23 03:12:36 2017//
 /WXChuUserController.java/1.1/Wed Aug 23 03:12:36 2017//
@@ -5,6 +6,15 @@
 /WXOAuthController.java/1.4/Wed Aug 23 06:25:12 2017//
 /WXXJWXController.java/1.1/Fri Jul 28 07:17:43 2017//
 /WXZTActionController.java/1.6/Wed Aug 23 06:25:12 2017//
+=======
+/WXBaseController.java/1.6/Mon Jul 31 08:29:16 2017//
+/WXChuDeptController.java/1.1/Wed Aug 23 03:12:36 2017//
+/WXChuUserController.java/1.1/Wed Aug 23 03:12:36 2017//
+/WXCommonController.java/1.4/Tue Aug 22 05:23:51 2017//
+/WXOAuthController.java/1.4/Tue Aug 22 05:23:53 2017//
+/WXXJWXController.java/1.1/Fri Jul 28 07:17:43 2017//
+/WXZTActionController.java/1.6/Wed Aug 23 06:24:52 2017//
+>>>>>>> upstream/master
 D/my////
 D/xq////
 D/zcgl////

@@ -1,6 +1,10 @@
 <template>
   <div>
+<<<<<<< HEAD
     <x-header :left-options="{showBack: showBack}">我的信息</x-header>
+=======
+    <x-header :left-options="{showBack: showBack}">我的</x-header>
+>>>>>>> upstream/master
     <my></my>
   </div>
 </template>

@@ -104,12 +104,20 @@ public class ZCSYService {
 		zc.setId(zcId);
 		zc.setZt(ZCZT.上交中.getValue());
 		jzcDao.updateByPrimaryKeySelective(zc);
+<<<<<<< HEAD
 		
 		//获得用户信息
 		VZC vzc = vzcDao.selectByZcid(zcId);
 		//给zc获取appId;
 		jzcDao.updateByPrimaryKeySelective(zc);
 		zc=jzcDao.selectByPrimaryKey(zcId);
+=======
+		//给zc获取appId;
+		zc=jzcDao.selectByPrimaryKey(zcId);
+		//获得用户信息
+		VZC vzc = vzcDao.selectByZcid(zcId);
+
+>>>>>>> upstream/master
 		//在L_ZT中插入一条记录
 		LZT zt = new LZT();
 		zt.setOldZt(ZCZT.使用中.getValue());

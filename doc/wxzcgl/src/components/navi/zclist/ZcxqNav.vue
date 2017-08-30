@@ -1,13 +1,24 @@
+<<<<<<< HEAD
 ﻿<template>
   <div>
     <div :class="mainContainer">
+=======
+﻿﻿<template>
+  <div>
+    <div :class="mainContainer" id="mainContainerDiv">
+>>>>>>> upstream/master
       <x-header :left-options="{showBack: zcxqBackFlag}">资产详情</x-header>
       <div id="img_container">
         <card>
           <img slot="header" width="100%" height="100%" class="previewer-demo-img" v-for="(item, index) in imgList" :src="item.src" @click="show(index)">
           <div slot="content" class="card-padding">
+<<<<<<< HEAD
             <p style="color:red;font-size:18px;font-weight: bolder;display: inline;">{{zcInfo.zcztmc}}</p>
             <p style="font-size:16px;line-height:1.2;display: inline;">{{zcInfo.zc}}（{{zcInfo.zcdm}}）于{{gzsj}}购买，目前由{{zcInfo.deptName}}的{{zcInfo.syrmc}}保管，存放在{{zcInfo.cfdd}}</p>
+=======
+            <div style="color:red;font-size:18px;font-weight: bolder;">{{zcInfo.zcztmc}} <span style="color:black;font-size:16px;line-height:1.2;font-weight: normal;">{{zcInfo.zc}}（{{zcInfo.zcdm}}）于{{gzsj}}购买，目前由{{zcInfo.deptName}}的{{zcInfo.syrmc}}保管，存放在{{zcInfo.cfdd}}</span>
+            </div>
+>>>>>>> upstream/master
           </div>
         </card>
       </div>
@@ -160,5 +171,13 @@
 .card-padding {
   padding: 15px;
   text-align: left;
+<<<<<<< HEAD
+=======
+
+}
+/*防止纯英文数字溢出*/
+#mainContainerDiv{
+  word-wrap:break-word; word-break:break-all;
+>>>>>>> upstream/master
 }
 </style>

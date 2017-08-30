@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /allocateZCUI.jsp/1.5/Wed Jul 26 02:52:23 2017//
 /checkZCUI.jsp/1.1/Fri Aug 11 06:13:05 2017//
 /importZCExcelUI.jsp/1.2/Fri Jul 21 04:47:28 2017//
@@ -5,3 +6,12 @@
 /reallocateZCUI.jsp/1.5/Wed Jul 26 02:52:23 2017//
 /registZCListUI.jsp/1.8/Wed Aug 16 03:06:00 2017//
 /updateRegistZCUI.jsp/1.5/Wed Aug 16 03:06:00 2017//
+=======
+/allocateZCUI.jsp/1.5/Tue Jul 25 07:20:20 2017//
+/checkZCUI.jsp/1.1/Fri Aug 11 06:13:05 2017//
+/importZCExcelUI.jsp/1.2/Fri Jul 21 04:56:10 2017//
+/insertRegistZCUI.jsp/1.4/Mon Aug 14 05:34:40 2017//
+/reallocateZCUI.jsp/1.5/Tue Jul 25 07:19:14 2017//
+/registZCListUI.jsp/1.8/Mon Aug 14 05:34:40 2017//
+/updateRegistZCUI.jsp/1.5/Mon Aug 14 05:34:40 2017//
+>>>>>>> upstream/master

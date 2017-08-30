@@ -86,7 +86,11 @@
       .catch((response) => {
         console.log(response)
       })
+<<<<<<< HEAD
       api.get('/wx/zczt/getUserPicker.do', { zcId: this.$route.query.zcId }).then((response) => {
+=======
+      api.get('/wx/wxchuuser/getUserPicker.do', { zcId: this.$route.query.zcId }).then((response) => {
+>>>>>>> upstream/master
         this.newZcsyr = response
       })
       .catch((response) => {
@@ -117,5 +121,9 @@
 <style scoped>
   .main{position:fixed;top:0px;bottom:42px;width:100%;}
   .foot{position:fixed;left:0;height:42px;line-height:42px;width:100%;}
+<<<<<<< HEAD
   .foot{bottom:10px;}
+=======
+  .foot{bottom:0px;}
+>>>>>>> upstream/master
 </style>

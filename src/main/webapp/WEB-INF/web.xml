@@ -96,6 +96,13 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.mp4</url-pattern>
   </servlet-mapping>
+<<<<<<< HEAD
+=======
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.amr</url-pattern>
+  </servlet-mapping>
+>>>>>>> upstream/master
   
 	<!-- 字体 -->
   <servlet-mapping>

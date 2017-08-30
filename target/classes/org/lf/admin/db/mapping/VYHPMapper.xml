@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.lf.admin.db.dao.VYHPMapper" >
@@ -166,3 +167,204 @@
     </where>
   </select>
 </mapper>
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lf.admin.db.dao.VYHPMapper" >
+  <resultMap id="BaseResultMap" type="org.lf.admin.db.pojo.VYHP" >
+    <result column="yhp_id" property="yhpId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="lx" property="lx" jdbcType="VARCHAR" />
+    <result column="xh" property="xh" jdbcType="VARCHAR" />
+    <result column="ccbh" property="ccbh" jdbcType="VARCHAR" />
+    <result column="dept_no" property="deptNo" jdbcType="INTEGER" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="fzr" property="fzr" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="cfdd" property="cfdd" jdbcType="VARCHAR" />
+    <result column="left_limit" property="leftLimit" jdbcType="INTEGER" />
+    <result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+    <result column="IMG_VERSION" property="imgVersion" jdbcType="BIGINT" />
+  </resultMap>
+  <insert id="insert" parameterType="org.lf.admin.db.pojo.VYHP" >
+    insert into v_yhp (yhp_id, app_id, lx,
+      xh, ccbh, dept_no, dept_name,
+      fzr, num, cfdd, left_limit,
+      PIC_URL, IMG_VERSION)
+    values (#{yhpId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{lx,jdbcType=VARCHAR},
+      #{xh,jdbcType=VARCHAR}, #{ccbh,jdbcType=VARCHAR}, #{deptNo,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR},
+      #{fzr,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{cfdd,jdbcType=VARCHAR}, #{leftLimit,jdbcType=INTEGER},
+      #{picUrl,jdbcType=VARCHAR}, #{imgVersion,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lf.admin.db.pojo.VYHP" >
+    insert into v_yhp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="yhpId != null" >
+        yhp_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="lx != null" >
+        lx,
+      </if>
+      <if test="xh != null" >
+        xh,
+      </if>
+      <if test="ccbh != null" >
+        ccbh,
+      </if>
+      <if test="deptNo != null" >
+        dept_no,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="fzr != null" >
+        fzr,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="cfdd != null" >
+        cfdd,
+      </if>
+      <if test="leftLimit != null" >
+        left_limit,
+      </if>
+      <if test="picUrl != null" >
+        PIC_URL,
+      </if>
+      <if test="imgVersion != null" >
+        IMG_VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="yhpId != null" >
+        #{yhpId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="lx != null" >
+        #{lx,jdbcType=VARCHAR},
+      </if>
+      <if test="xh != null" >
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="ccbh != null" >
+        #{ccbh,jdbcType=VARCHAR},
+      </if>
+      <if test="deptNo != null" >
+        #{deptNo,jdbcType=INTEGER},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="fzr != null" >
+        #{fzr,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="cfdd != null" >
+        #{cfdd,jdbcType=VARCHAR},
+      </if>
+      <if test="leftLimit != null" >
+        #{leftLimit,jdbcType=INTEGER},
+      </if>
+      <if test="picUrl != null" >
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgVersion != null" >
+        #{imgVersion,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <sql id="where_Caluse">
+       <if test="yhpId != null">
+        and yhp_id= #{yhpId,jdbcType=INTEGER}
+      </if>
+      <if test="appId != null">
+        and app_id= #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lx != null">
+        and lx= #{lx,jdbcType=VARCHAR}
+      </if>
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
+      </if>
+      <if test="xh != null">
+        and xh = #{xh,jdbcType=VARCHAR}
+      </if>
+      <if test="ccbh != null">
+        and ccbh = #{ccbh,jdbcType=VARCHAR}
+      </if>
+      <if test="deptNo != null">
+        and dept_no = #{deptNo,jdbcType=INTEGER}
+      </if>
+      <if test="deptName != null">
+        and dept_name = #{deptName,jdbcType=VARCHAR}
+      </if>
+      <if test="fzr != null">
+        and fzr = #{fzr,jdbcType=VARCHAR}
+      </if>
+      <if test="num != null">
+        and num = #{num,jdbcType=INTEGER}
+      </if>
+      <if test="cfdd != null">
+        and cfdd = #{cfdd,jdbcType=VARCHAR}
+      </if>
+      <if test="leftLimit != null">
+        and left_limit = #{leftLimit,jdbcType=INTEGER}
+      </if>
+      <if test="picUrl != null">
+        and PIC_URL = #{picUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="imgVersion != null">
+        and IMG_VERSION = #{imgVersion,jdbcType=BIGINT}
+      </if>
+  </sql>
+  <sql id="deptnoAndYHPLX_where_Caluse">
+      <if test="appId != null">
+        and app_id= #{appId,jdbcType=INTEGER}
+      </if>
+      <if test="lxId !=null">
+      	and lx_id like concat(#{lxId,jdbcType=VARCHAR},'%');
+      </if>
+      <if test="list !=null and list.size() > 0">
+			dept_no in
+		    	<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+	       			#{item}
+	  			 </foreach>
+  			</if>
+  </sql>
+  <select id="selectYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultMap="BaseResultMap">
+      select * from v_yhp
+      <where>
+      <include refid="where_Caluse"/>
+    </where>
+		<if test="start != null and offset != null">
+			limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+		</if>
+  </select>
+  <select id="countYhpList" parameterType="org.lf.admin.db.pojo.VYHP" resultType="int">
+      select count(*) from v_yhp
+      	<where>
+      <include refid="where_Caluse"/>
+    </where>
+  </select>
+  <select id="selectYHPListByDeptNoAndYHPLX" resultMap="BaseResultMap" parameterType="java.util.Map">
+  	select * from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
+  </select>
+  <select id="countYHPListByDeptNoAndYHPLX" resultType="int" parameterType="java.util.Map">
+  	select count(*) from v_yhp
+  	<where>
+  		<include refid="deptnoAndYHPLX_where_Caluse"/>
+  	</where>
+  </select>
+</mapper>
+>>>>>>> upstream/master

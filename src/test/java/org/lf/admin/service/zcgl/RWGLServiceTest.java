@@ -183,5 +183,15 @@ public class RWGLServiceTest {
 		JRW rw = createGZWX();
 		rwglService.delGZWX(rw.getId(), cjr);
 	}
+<<<<<<< HEAD
+=======
+	
+	@Test
+	public void createManyGZWX() throws Exception{
+		for(int i=0;i<10;i++){
+			createGZWX();
+		}
+	}
+>>>>>>> upstream/master
 
 }

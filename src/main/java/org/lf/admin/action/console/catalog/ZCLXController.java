@@ -143,7 +143,11 @@ public class ZCLXController extends BaseController {
 			Integer appid = getAppId(session);
 			// 根据appid生成文件前缀
 			String prePath = ZCGLProperties.URL_ZCLX_TARGET_DIR + "/" + appid;
+<<<<<<< HEAD
 			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+=======
+			String pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
+>>>>>>> upstream/master
 			zclxService.insertZCLX(getAppId(session), lxid, null, mc, null, remark, pic_url, 0);
 			return SUCCESS;
 		} catch (OperException e) {
@@ -212,7 +216,11 @@ public class ZCLXController extends BaseController {
 				Integer appid = getAppId(session);
 				// 根据appid生成文件前缀
 				String prePath = ZCGLProperties.URL_ZCLX_TARGET_DIR + "/" + appid;
+<<<<<<< HEAD
 				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, ".jpg", imageFile);
+=======
+				pic_url = wxMediaService.uploadMediaListToPath(session, prePath, WXMediaService.MAX_IMAGE_SIZE, WXMediaService.IMAGE_SUFFIX, imageFile);
+>>>>>>> upstream/master
 			}
 			zclxService.updateZCLX(id, zclx.getLxId(), zclx.getLxPid(), mc, zclx.getZjnx(), remark, pic_url, zclx.getImgVersion());
 		} catch (OperException e) {

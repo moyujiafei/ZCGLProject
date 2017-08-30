@@ -482,7 +482,11 @@ public class WXZCService {
 		AjaxResultModel result = new AjaxResultModel();
 		try {
 			String[] ids = imgId.split("###");
+<<<<<<< HEAD
 			String picUrl = wxMediaService.downloadMediaToPath("/upload/zc_images/" + appId, appService.getAccessToken(appId), ".jpg", ids[0]);
+=======
+			String picUrl = wxMediaService.downloadMediaToPath("/upload/zc_images/" + appId, appService.getAccessToken(appId), WXMediaService.IMAGE_SUFFIX, ids[0]);
+>>>>>>> upstream/master
 			zcdjService.registZC(appId, zcdm, zcmc, zcLx, new BigDecimal(cost), num, xh, ccbh, new SimpleDateFormat("yyyy-MM-dd").parse(gzsj), new BigDecimal(
 					zjnx), djr, picUrl);
 			result.setData("success");

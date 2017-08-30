@@ -71,7 +71,11 @@
       }
     },
     mounted: function () {
+<<<<<<< HEAD
       api.get('/wx/zczt/getUserPicker.do').then((response) => {
+=======
+      api.get('/wx/wxchuuser/getUserPicker.do').then((response) => {
+>>>>>>> upstream/master
         this.userList = response
       })
         .catch((response) => {
@@ -102,6 +106,10 @@
     margin: 0 15px;
   }
   .foot{position:fixed;left:0;height:42px;line-height:42px;width:100%;}
+<<<<<<< HEAD
   .foot{bottom:10px;}
+=======
+  .foot{bottom:0px;}
+>>>>>>> upstream/master
 
 </style>
